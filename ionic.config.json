@@ -1,0 +1,7 @@
+{
+  "name": "frontOutfitForYou",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
