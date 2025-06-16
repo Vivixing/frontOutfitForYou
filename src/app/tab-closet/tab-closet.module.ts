@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { TabClosetPageRoutingModule } from './tab-closet-routing.module';
 
 import { TabClosetPage } from './tab-closet.page';
+import { ExploreContainerComponentModule } from "../explore-container/explore-container.module";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TabClosetPageRoutingModule
-  ],
+    TabClosetPageRoutingModule,
+    ExploreContainerComponentModule
+],
   declarations: [TabClosetPage]
 })
 export class TabClosetPageModule {}
