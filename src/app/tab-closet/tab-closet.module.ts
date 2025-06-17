@@ -7,7 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { TabClosetPageRoutingModule } from './tab-closet-routing.module';
 
 import { TabClosetPage } from './tab-closet.page';
-import { ExploreContainerComponentModule } from "../explore-container/explore-container.module";
+import { PrendasModule } from "../prendas/prendas.module";
+
 
 @NgModule({
   imports: [
@@ -15,7 +16,7 @@ import { ExploreContainerComponentModule } from "../explore-container/explore-co
     FormsModule,
     IonicModule,
     TabClosetPageRoutingModule,
-    ExploreContainerComponentModule
+    PrendasModule
 ],
   declarations: [TabClosetPage]
 })
