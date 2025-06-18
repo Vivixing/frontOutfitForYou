@@ -6,26 +6,27 @@
   <div class="flex items-center gap-6 mb-6">
     <!-- Filtro -->
     <div class="flex flex-col items-center text-sm ">
-      <div class="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center">
+      <div class="w-12 h-12 bg-[color:--ion-icons-bg-40] hover:bg-[color:--ion-icons-bg-60] rounded-full flex items-center justify-center">
         <!-- Ícono (ojo - ver todo) -->
-        <ion-icon name="eye-outline" class="w-6 h-6"></ion-icon>
+        <ion-icon name="eye-outline" class="w-6 h-6 text-white"></ion-icon>
       </div>
       <span class="mt-1">Ver todo</span>
     </div>
 
     <!-- Filtro superior -->
     <div class="flex flex-col items-center text-sm">
-      <div class="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center">
+      <div class="w-12 h-12 bg-[color:--ion-icons-bg-40] hover:bg-[color:--ion-icons-bg-60] rounded-full flex items-center justify-center">
         <!-- Ícono de camiseta -->
-        <ion-icon name="shirt-outline" class="w-6 h-6"></ion-icon>
+        <ion-icon name="shirt-outline" class="w-6 h-6 text-white"></ion-icon>
       </div>
       <span class="mt-1">Superior</span>
     </div>
 
     <!-- Filtro inferior -->
     <div class="flex flex-col items-center text-sm">
-      <div class="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center">
+      <div class="w-12 h-12 bg-[color:--ion-icons-bg-40] hover:bg-[color:--ion-icons-bg-60] rounded-full flex items-center justify-center">
         <!-- Ícono de pantalón -->
+        <img class="w-7 h-7" src="https://img.icons8.com/ios/100/FFFFFF/trousers.png" alt="trousers"/>
       </div>
       <span class="mt-1">Inferior</span>
     </div>
@@ -34,28 +35,31 @@
   <!-- Grilla de prendas -->
   <div class="grid grid-cols-2 gap-4">
     <!-- Card de prenda -->
-    <div class="bg-white rounded-2xl shadow-sm p-3 relative">
-      <!-- Imagen -->
-      <img src="https://tse4.mm.bing.net/th?id=OIP.yDBB3ebZLGFuC2Qh4jc8tAHaHa&pid=Api&P=0&h=180" alt="Jean" class="w-full h-36 object-contain rounded-xl" />
-      <!-- Botón de selección (círculo de color) -->
-      <span class="absolute top-3 right-3 w-4 h-4 bg-blue-500 border-2 border-white rounded-full"></span>
-      <!-- Nombre -->
-      <p class="mt-2 text-center text-gray-800 text-sm">Jean</p>
-      <!-- Acciones -->
-      <div class="flex justify-center mt-1 gap-4 text-rose-400">
-        <!-- Editar -->
-        <button>
+    <div class="w-40 bg-white rounded-xl shadow-md p-3 relative">
+      <!-- Imagen del pantalón -->
+      <img src="https://elaco.vtexassets.com/arquivos/ids/731899/Newfits-AZULINDIGO-N740260-1.jpg?v=638599543335400000" alt="Jean" class="w-full h-32 object-contain mb-2" />
+
+      <!-- Círculo de color en la esquina superior derecha -->
+      <div class="w-4 h-4 bg-blue-900 rounded-full absolute top-2 right-2 border-2 border-[color:--ion-icons-color]"></div>
+
+      <!-- Nombre del producto -->
+      <p class="text-sm font-medium text-center border-t border-[color:--ion-icons-color] pt-1">Jean</p>
+
+      <!-- Iconos de editar y eliminar -->
+      <div class="flex justify-center gap-4 mt-2">
+        <!-- Icono de editar -->
+        <button class="text-[color:--ion-icons-color] hover:text-[color:--ion-text-color]">
           <ion-icon name="create-outline" class="w-5 h-5"></ion-icon>
         </button>
-        <!-- Eliminar -->
-        <button>
+
+        <!-- Icono de eliminar -->
+        <button class="text-[color:--ion-icons-color] hover:text-[color:--ion-text-color]">
           <ion-icon name="trash-outline" class="w-5 h-5"></ion-icon>
         </button>
       </div>
     </div>
 
+
     <!-- Duplicar esta tarjeta para más prendas -->
   </div>
 </div>
-
-

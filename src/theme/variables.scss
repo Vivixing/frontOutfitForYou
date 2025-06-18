@@ -2,7 +2,15 @@
 // http://ionicframework.com/docs/theming/
 :root{
 --font-family-base:'Noto Sans', sans-serif;
+
 --ion-background-color: #ffffff;
+
 --ion-text-color: #735E51;
 --texto-iconos: #735E51;
+
+--ion-icons-color: #D98B79;
+--ion-icons-color-rgb: 217, 139, 121;
+--ion-icons-bg-40: rgba(var(--ion-icons-color-rgb), 0.4);
+--ion-icons-bg-60: rgba(var(--ion-icons-color-rgb), 0.6);
+
 }
