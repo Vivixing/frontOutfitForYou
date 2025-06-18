@@ -11,10 +11,6 @@ const routes: Routes = [
     loadChildren: () => import('./tab-perfil/tab-perfil.module').then( m => m.TabPerfilPageModule)
   },
   {
-    path: 'tab-perfil',
-    loadChildren: () => import('./tab-perfil/tab-perfil.module').then( m => m.TabPerfilPageModule)
-  },
-  {
     path: 'tab-closet',
     loadChildren: () => import('./tab-closet/tab-closet.module').then( m => m.TabClosetPageModule)
   }
