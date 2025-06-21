@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-evento',
@@ -8,8 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormEventoComponent  implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {}
+
+  irAtabRecomendacion(){
+    this.router.navigate(['/tabs/tabRecomendacion']);
+  }
 
 }
