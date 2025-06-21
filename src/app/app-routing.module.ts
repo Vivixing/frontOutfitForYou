@@ -13,6 +13,10 @@ const routes: Routes = [
   {
     path: 'tab-closet',
     loadChildren: () => import('./tab-closet/tab-closet.module').then( m => m.TabClosetPageModule)
+  },
+  {
+    path: 'tab-recomendacion',
+    loadChildren: () => import('./tab-recomendacion/tab-recomendacion.module').then( m => m.TabRecomendacionPageModule)
   }
 ];
 @NgModule({

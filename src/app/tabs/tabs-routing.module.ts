@@ -28,6 +28,10 @@ const routes: Routes = [
         loadChildren: () => import('../tab-perfil/tab-perfil.module').then( m => m.TabPerfilPageModule)
       },
       {
+        path: 'tabRecomendacion',
+        loadChildren: () => import('../tab-recomendacion/tab-recomendacion.module').then( m => m.TabRecomendacionPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full'
