@@ -32,6 +32,10 @@ const routes: Routes = [
         loadChildren: () => import('../tab-recomendacion/tab-recomendacion.module').then( m => m.TabRecomendacionPageModule)
       },
       {
+        path: 'tabVisualizacion',
+        loadChildren: () => import('../tab-visualizacion/tab-visualizacion.module').then( m => m.TabVisualizacionPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full'

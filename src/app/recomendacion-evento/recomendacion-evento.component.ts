@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recomendacion-evento',
@@ -8,8 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RecomendacionEventoComponent  implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {}
 
+  irAtabVisualización(){
+    this.router.navigate(['/tabs/tabVisualizacion']);
+  }
 }
