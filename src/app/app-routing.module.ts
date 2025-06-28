@@ -17,6 +17,10 @@ const routes: Routes = [
   {
     path: 'tab-recomendacion',
     loadChildren: () => import('./tab-recomendacion/tab-recomendacion.module').then( m => m.TabRecomendacionPageModule)
+  },
+  {
+    path: 'tab-visualizacion',
+    loadChildren: () => import('./tab-visualizacion/tab-visualizacion.module').then( m => m.TabVisualizacionPageModule)
   }
 ];
 @NgModule({
