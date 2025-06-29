@@ -36,6 +36,10 @@ const routes: Routes = [
         loadChildren: () => import('../tab-visualizacion/tab-visualizacion.module').then( m => m.TabVisualizacionPageModule)
       },
       {
+        path: 'tabAgregarPrenda',
+        loadChildren: () => import('../tab-agregar-prenda/tab-agregar-prenda.module').then( m => m.TabAgregarPrendaPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full'
