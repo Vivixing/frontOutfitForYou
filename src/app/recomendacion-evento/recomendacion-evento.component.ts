@@ -13,7 +13,7 @@ export class RecomendacionEventoComponent  implements OnInit {
 
   ngOnInit() {}
 
-  irAtabVisualización(){
+  irAtabVisualizacion(){
     this.router.navigate(['/tabs/tabVisualizacion']);
   }
 }
