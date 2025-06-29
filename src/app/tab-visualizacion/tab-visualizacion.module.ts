@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { TabVisualizacionPageRoutingModule } from './tab-visualizacion-routing.module';
 
 import { TabVisualizacionPage } from './tab-visualizacion.page';
+import { VisualizarOutfitModule } from "../visualizar-outfit/visualizar-outfit.module";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TabVisualizacionPageRoutingModule
-  ],
+    TabVisualizacionPageRoutingModule,
+    VisualizarOutfitModule
+],
   declarations: [TabVisualizacionPage]
 })
 export class TabVisualizacionPageModule {}
