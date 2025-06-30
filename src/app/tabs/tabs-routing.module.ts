@@ -40,6 +40,10 @@ const routes: Routes = [
         loadChildren: () => import('../tab-agregar-prenda/tab-agregar-prenda.module').then( m => m.TabAgregarPrendaPageModule)
       },
       {
+        path: 'tabEditarPrenda',
+        loadChildren: () => import('../tab-editar-prenda/tab-editar-prenda.module').then( m => m.TabEditarPrendaPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full'

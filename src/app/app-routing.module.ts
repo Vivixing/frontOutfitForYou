@@ -25,6 +25,10 @@ const routes: Routes = [
   {
     path: 'tab-agregar-prenda',
     loadChildren: () => import('./tab-agregar-prenda/tab-agregar-prenda.module').then( m => m.TabAgregarPrendaPageModule)
+  },
+  {
+    path: 'tab-editar-prenda',
+    loadChildren: () => import('./tab-editar-prenda/tab-editar-prenda.module').then( m => m.TabEditarPrendaPageModule)
   }
 ];
 @NgModule({
