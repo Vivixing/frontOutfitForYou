@@ -12,4 +12,18 @@ export class AgregarPrendaComponent  implements OnInit {
 
   ngOnInit() {}
 
+  capturarImagen(){
+    //Lógica para abrir la cámara
+    console.log('Capturar imagen');
+  }
+
+  borrarCampos(){
+    //Lógíca de reset para los campos
+    console.log('Borrado campos');
+  }
+
+  guardarPrenda(){
+    //Lógica para guardado de prendas
+    console.log('Guardada prenda con éxito');
+  }
 }
