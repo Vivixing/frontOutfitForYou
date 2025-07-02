@@ -12,4 +12,14 @@ export class EditarPrendaComponent  implements OnInit {
 
   ngOnInit() {}
 
+  borrarCampos(){
+    //Lógíca de reset para los campos
+    console.log('Borrado campos');
+  }
+
+  editarPrenda(){
+    //Lógica para guardado de prendas
+    console.log('Editada prenda con éxito');
+  }
+
 }
