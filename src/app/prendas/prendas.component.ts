@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-prendas',
@@ -8,8 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrendasComponent  implements OnInit {
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit() {}
 
+  irAtabEditarPrenda(){
+    this.router.navigate(['/tabs/tabEditarPrenda'])
+  }
 }

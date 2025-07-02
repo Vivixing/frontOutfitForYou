@@ -1,9 +1,14 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Editar Prenda</ion-title>
+    <ion-button slot="start" fill="clear" color="light" class="flex flex-col items-center text-sm">
+      <div class="w-10 h-10 bg-[color:--ion-icons-bg-70] rounded-full flex items-center justify-center">
+        <ion-icon class="w-5 h-5" name="chevron-back-outline"></ion-icon>
+      </div>
+    </ion-button>
+    <ion-title class="ion-text-center">Editar Prenda</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-padding">
   <app-editar-prenda></app-editar-prenda>
 </ion-content>
