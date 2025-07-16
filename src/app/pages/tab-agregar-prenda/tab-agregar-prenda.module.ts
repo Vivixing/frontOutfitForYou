@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { TabAgregarPrendaPageRoutingModule } from './tab-agregar-prenda-routing.module';
 
 import { TabAgregarPrendaPage } from './tab-agregar-prenda.page';
-import { AgregarPrendaModule } from "../agregar-prenda/agregar-prenda.module";
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -15,7 +15,7 @@ import { AgregarPrendaModule } from "../agregar-prenda/agregar-prenda.module";
     FormsModule,
     IonicModule,
     TabAgregarPrendaPageRoutingModule,
-    AgregarPrendaModule
+    ComponentsModule
 ],
   declarations: [TabAgregarPrendaPage]
 })

@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { TabEditarPrendaPageRoutingModule } from './tab-editar-prenda-routing.module';
 
 import { TabEditarPrendaPage } from './tab-editar-prenda.page';
-import { EditarPrendaModule } from "../editar-prenda/editar-prenda.module";
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -15,7 +15,7 @@ import { EditarPrendaModule } from "../editar-prenda/editar-prenda.module";
     FormsModule,
     IonicModule,
     TabEditarPrendaPageRoutingModule,
-    EditarPrendaModule
+    ComponentsModule
 ],
   declarations: [TabEditarPrendaPage]
 })

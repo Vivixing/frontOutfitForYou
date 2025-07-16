@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { TabRecomendacionPageRoutingModule } from './tab-recomendacion-routing.module';
 
 import { TabRecomendacionPage } from './tab-recomendacion.page';
-import { RecomendacionEventoModule } from "../recomendacion-evento/recomendacion-evento.module";
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -15,7 +15,7 @@ import { RecomendacionEventoModule } from "../recomendacion-evento/recomendacion
     FormsModule,
     IonicModule,
     TabRecomendacionPageRoutingModule,
-    RecomendacionEventoModule
+    ComponentsModule
 ],
   declarations: [TabRecomendacionPage]
 })

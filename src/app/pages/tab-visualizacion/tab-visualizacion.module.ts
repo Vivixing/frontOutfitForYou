@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { TabVisualizacionPageRoutingModule } from './tab-visualizacion-routing.module';
 
 import { TabVisualizacionPage } from './tab-visualizacion.page';
-import { VisualizarOutfitModule } from "../visualizar-outfit/visualizar-outfit.module";
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -15,7 +15,7 @@ import { VisualizarOutfitModule } from "../visualizar-outfit/visualizar-outfit.m
     FormsModule,
     IonicModule,
     TabVisualizacionPageRoutingModule,
-    VisualizarOutfitModule
+    ComponentsModule
 ],
   declarations: [TabVisualizacionPage]
 })
