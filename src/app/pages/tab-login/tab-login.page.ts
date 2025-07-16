@@ -8,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabLoginPage implements OnInit {
 
+  showPassword = false;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
 }
