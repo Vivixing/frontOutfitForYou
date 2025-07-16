@@ -17,7 +17,7 @@ export class TabRegistroPage implements OnInit {
   }
 
   goBack() {
-  this.navCtrl.back();
+    this.navCtrl.back();
   }
 
   togglePasswordVisibility() {
