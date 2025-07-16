@@ -20,7 +20,6 @@ export class TabClosetPage implements OnInit {
   }
 
   irAtabAgregarPrenda(){
-    this.router.navigate(['/tabs/tabAgregarPrenda']);
+    this.router.navigate(['/tabs/tabs/tabAgregarPrenda']);
   }
-
 }

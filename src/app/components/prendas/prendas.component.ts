@@ -14,6 +14,6 @@ export class PrendasComponent  implements OnInit {
   ngOnInit() {}
 
   irAtabEditarPrenda(){
-    this.router.navigate(['/tabs/tabEditarPrenda'])
+    this.router.navigate(['/tabs/tabs/tabEditarPrenda'])
   }
 }
