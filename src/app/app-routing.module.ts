@@ -29,7 +29,11 @@ const routes: Routes = [
   {
     path: 'tab-editar-prenda',
     loadChildren: () => import('./pages/tab-editar-prenda/tab-editar-prenda.module').then( m => m.TabEditarPrendaPageModule)
+  },  {
+    path: 'tab-login',
+    loadChildren: () => import('./pages/tab-login/tab-login.module').then( m => m.TabLoginPageModule)
   }
+
 ];
 @NgModule({
   imports: [
