@@ -1,35 +1,26 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { authGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
+    redirectTo: 'login',
+    pathMatch: 'full',
   },
   {
-    path: 'tab-perfil',
-    loadChildren: () => import('./pages/tab-perfil/tab-perfil.module').then( m => m.TabPerfilPageModule)
+    path: 'login',
+    loadChildren: () => import('./pages/tab-login/tab-login.module').then(m => m.TabLoginPageModule)
   },
   {
-    path: 'tab-closet',
-    loadChildren: () => import('./pages/tab-closet/tab-closet.module').then( m => m.TabClosetPageModule)
+    path: 'registro',
+    loadChildren: () => import('./pages/tab-registro/tab-registro.module').then( m => m.TabRegistroPageModule)
   },
   {
-    path: 'tab-recomendacion',
-    loadChildren: () => import('./pages/tab-recomendacion/tab-recomendacion.module').then( m => m.TabRecomendacionPageModule)
+    path: 'tabs',
+    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule),
+    canActivate: [authGuard]
   },
-  {
-    path: 'tab-visualizacion',
-    loadChildren: () => import('./pages/tab-visualizacion/tab-visualizacion.module').then( m => m.TabVisualizacionPageModule)
-  },
-  {
-    path: 'tab-agregar-prenda',
-    loadChildren: () => import('./pages/tab-agregar-prenda/tab-agregar-prenda.module').then( m => m.TabAgregarPrendaPageModule)
-  },
-  {
-    path: 'tab-editar-prenda',
-    loadChildren: () => import('./pages/tab-editar-prenda/tab-editar-prenda.module').then( m => m.TabEditarPrendaPageModule)
-  }
 ];
 @NgModule({
   imports: [

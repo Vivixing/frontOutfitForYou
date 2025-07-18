@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab-editar-prenda',
@@ -8,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabEditarPrendaPage implements OnInit {
 
-  constructor() { }
+  constructor(private navCtrl: NavController) { }
 
   ngOnInit() {
   }
 
+  goBack() {
+    this.navCtrl.back();
+  }
 }

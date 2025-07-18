@@ -14,7 +14,7 @@ export class FormEventoComponent  implements OnInit {
   ngOnInit() {}
 
   irAtabRecomendacion(){
-    this.router.navigate(['/tabs/tabRecomendacion']);
+    this.router.navigate(['/tabs/tabs/tabRecomendacion']);
   }
 
 }

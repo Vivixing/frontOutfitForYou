@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-tab1',
@@ -6,8 +8,14 @@ import { Component } from '@angular/core';
   styleUrls: ['tab1.page.scss'],
   standalone: false,
 })
-export class Tab1Page {
+export class Tab1Page implements OnInit {
 
-  constructor() {}
+  nombre: string = '';
+
+  constructor(private authService: AuthService, private usuarioService: UsuarioService) {}
+  
+  async ngOnInit() {
+    this.nombre = await this.usuarioService.obtenerNombreUsuarioLogueado(this.authService);
+  }
 
 }
