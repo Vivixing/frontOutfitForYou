@@ -9,24 +9,24 @@
       class="w-20 h-20"
     />
   </div>
-  <h2 class="text-xl font-light">Nombre Usuario</h2>
+  <h2 class="text-xl font-light">{{nombre}}</h2>
 </div>
 
 <!-- Opciones -->
 <div class="mt-10 w-full max-w-sm space-y-4">
-  <div class="bg-white rounded-xl shadow p-4 flex items-center justify-between">
+  <button class="bg-white rounded-xl shadow p-4 flex items-center justify-between" (click)="irAFavoritos()">
     <div class="flex items-center space-x-2">
       <ion-icon class="w-5 h-5 text-[color:--ion-icons-color]" name="heart-outline"></ion-icon>
       <span>Favoritos</span>
     </div>
     <ion-icon class="w-4 h-4 text-gray-400" name="chevron-forward-outline"></ion-icon>
-  </div>
+  </button>
 
-  <div class="bg-white rounded-xl shadow p-4 flex items-center justify-between">
+  <button class="bg-white rounded-xl shadow p-4 flex items-center justify-between" (click)="alCerrarSesion()">
     <div class="flex items-center space-x-2">
       <ion-icon class="w-5 h-5 text-[color:--ion-icons-color]" name="log-out-outline"></ion-icon>
       <span>Cerrar Sesión</span>
     </div>
     <ion-icon class="w-4 h-4 text-gray-400" name="chevron-forward-outline"></ion-icon>
-  </div>
+  </button>
 </div>

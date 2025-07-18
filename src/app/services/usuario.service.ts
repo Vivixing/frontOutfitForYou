@@ -2,14 +2,29 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URL_BASE_API_BACK } from '../config/ur.api';
 import { procesarErrorHttp } from '../utils/error-handler';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private authService:AuthService){ }
   apiURLUsuario = `${URL_BASE_API_BACK}/users`;
+
+  async obtenerNombreUsuarioLogueado(authService:AuthService):Promise<string>{
+    try{
+      const id = authService.idUsuarioLogueado();
+      if (!id) throw new Error('ID no encontrado');
+
+      const usuario = await this.obtenerUsuarioId(id);
+      return usuario?.data?.nombre || 'Usuario';
+    }catch(error:any){
+      let mensajeError = procesarErrorHttp(error);
+      console.error('Error al obtener nombre del usuario logueado', mensajeError);
+      return 'Usuario';
+    }
+  }
 
   async obtenerUsuarioId(user_id:string){
     try{

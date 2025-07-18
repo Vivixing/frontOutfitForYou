@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output} from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-info-perfil',
@@ -8,8 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InfoPerfilComponent  implements OnInit {
 
-  constructor() { }
+  @Input() nombre: string = '';
+  @Output() cerrarSesion = new EventEmitter<void>();
+
+  constructor(private router:Router) { }
 
   ngOnInit() {}
 
+  alCerrarSesion(){
+    this.cerrarSesion.emit();
+  }
+
+  irAFavoritos(){
+    this.router.navigate(['/tabs/tabs/tab2']);
+  }
 }
