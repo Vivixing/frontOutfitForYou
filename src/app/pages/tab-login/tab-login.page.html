@@ -6,17 +6,17 @@
 
       <!-- Email -->
       <ion-item class="rounded-xl bg-[color:--ion-icons-bg-40] px-3 py-1">
-        <ion-input type="email" placeholder="Email" [(ngModel)]="nombreUsuario"></ion-input>
+        <ion-input type="email" placeholder="Email" [(ngModel)]="email"></ion-input>
       </ion-item>
 
       <!-- Contraseña -->
       <ion-item class="rounded-xl bg-[color:--ion-icons-bg-40] px-3 py-1">
-        <ion-input [type]="showPassword ? 'text' : 'password'" placeholder="Contraseña" [(ngModel)]="claveUsuario"></ion-input>
+        <ion-input [type]="showPassword ? 'text' : 'password'" placeholder="Contraseña" [(ngModel)]="contrasena"></ion-input>
         <ion-icon slot="end" [name]="showPassword ? 'eye' : 'eye-off'" class="text-[color:--ion-text-bg-40]" (click)="togglePasswordVisibility()"></ion-icon>
       </ion-item>
 
       <!-- Botón de Iniciar Sesión -->
-      <button class="w-full rounded-full bg-[color:--ion-icons-bg-60] text-white py-3 font-semibold shadow-md" (click)="login()">
+      <button class="w-full rounded-full bg-[color:--ion-icons-bg-60] text-white py-3 font-semibold shadow-md  disabled:bg-gray-400 disabled:cursor-not-allowed" (click)="login()" [disabled]="!isFormValid()">
         Iniciar Sesión
       </button>
 
