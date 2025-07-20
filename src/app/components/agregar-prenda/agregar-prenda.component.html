@@ -1,20 +1,26 @@
 <!-- clothing-form.component.html -->
 <ion-content class="flex flex-col items-center justify-start p-4">
   <!-- Área de imagen -->
-  <div class="w-full h-40 bg-gray-100 flex flex-col items-center justify-center rounded-md mb-4" (click)="capturarImagen()">
+  <div class="w-full h-40 bg-gray-100 flex flex-col items-center justify-center rounded-md mb-4" (click)="inputImagen.click()">
     <ion-icon name="camera-outline" class="text-3xl mb-2"></ion-icon>
     <p class="text-gray-600">Capturar imagen de la prenda</p>
+    <input #inputImagen type="file" accept="image/*" (change)="capturarImagen($event)" hidden />
   </div>
 
   <!-- Selector categoría -->
-  <ion-select interface="action-sheet" placeholder="Seleccionar categoría" class="w-full border border-[#E39D7C] rounded-md p-2 mb-4">
+  <ion-select interface="action-sheet" placeholder="Seleccionar categoría" class="w-full border border-[#E39D7C] rounded-md p-2 mb-4" [(ngModel)]="categoriaSeleccionada">
     <ion-select-option value="Camisa">Superior</ion-select-option>
     <ion-select-option value="Pantalón">Inferior</ion-select-option>
   </ion-select>
 
   <!-- Campo nombre -->
   <ion-item class="border border-[#E39D7C] rounded-md mb-2">
-    <ion-input placeholder="Nombre Prenda"></ion-input>
+    <ion-input placeholder="Nombre Prenda" [(ngModel)]="nombre"></ion-input>
+  </ion-item>
+
+  <!-- Campo Color -->
+  <ion-item class="border border-[#E39D7C] rounded-md mb-2">
+    <ion-input placeholder="Color Prenda" [(ngModel)]="color"></ion-input>
   </ion-item>
 
   <!-- Botones -->

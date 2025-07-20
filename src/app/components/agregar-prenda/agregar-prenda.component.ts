@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
 
 @Component({
   selector: 'app-agregar-prenda',
@@ -8,22 +8,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AgregarPrendaComponent  implements OnInit {
 
+  @Input() categoriaSeleccionada: string = '';
+  @Input() nombre: string = '';
+  @Input() color: string = '';
+  @Input() imagen_base64: string = '';
+
+  @Output() capturarImagenEvent = new EventEmitter<any>();
+  @Output() borrarCamposEvent = new EventEmitter<void>();
+  @Output() guardarPrendaEvent = new EventEmitter<void>();
+
   constructor() { }
 
   ngOnInit() {}
 
-  capturarImagen(){
-    //Lógica para abrir la cámara
-    console.log('Capturar imagen');
+  capturarImagen(event:any){
+    this.capturarImagenEvent.emit(event);
   }
 
   borrarCampos(){
-    //Lógíca de reset para los campos
-    console.log('Borrado campos');
+    this.borrarCamposEvent.emit();
   }
 
   guardarPrenda(){
-    //Lógica para guardado de prendas
-    console.log('Guardada prenda con éxito');
+    this.guardarPrendaEvent.emit();
   }
 }

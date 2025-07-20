@@ -10,5 +10,5 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <app-agregar-prenda></app-agregar-prenda>
+  <app-agregar-prenda [categoriaSeleccionada]="categoriaSeleccionada" [nombre]="nombre" [color]="color" [imagen_base64]="imagen_base64" (capturarImagenEvent)="archivoSeleccionado($event)" (borrarCamposEvent)="limpiarCampos()" (guardarPrendaEvent)="registrarPrenda()"></app-agregar-prenda>
 </ion-content>

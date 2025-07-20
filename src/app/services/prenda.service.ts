@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URL_BASE_API_BACK } from '../config/ur.api';
 import { procesarErrorHttp } from '../utils/error-handler';
-import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +15,12 @@ export class PrendaService {
 
   apiURLPrenda = `${URL_BASE_API_BACK}/clothe`;
 
-  async predecirPrenda(imagen:File){
-
+  async predecirPrenda(imagen:string):Promise<any>{
     const formData = new FormData();
-    formData.append('imagen', imagen);
+    const blob = this.base64ToBlob(imagen, 'image/jpeg');
+    const file = new File([blob], 'imagen.jpg');
+
+    formData.append('imagen', file);
 
     try{
 
@@ -37,6 +38,16 @@ export class PrendaService {
       console.error('Desde el front: Error al predecir nombre de la prenda', mensajeError);
       throw new Error(mensajeError);
     }
+  }
+
+  private base64ToBlob(base64: string, mime: string): Blob {
+    const byteCharacters = atob(base64);
+    const byteArrays = [];
+
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteArrays.push(byteCharacters.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(byteArrays)], { type: mime });
   }
 
   async registrarPrenda(prenda:any){
