@@ -8,8 +8,7 @@ import { Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
 })
 export class AgregarPrendaComponent  implements OnInit {
 
-  imagenPreview: string = '';
-
+  @Input() imagenPreview: string = '';
   @Input() categoriaSeleccionada: string = '';
   @Input() nombre: string = '';
   @Input() color: string = '';
@@ -24,17 +23,7 @@ export class AgregarPrendaComponent  implements OnInit {
   ngOnInit() {}
 
   capturarImagen(event:any){
-    const archivo: File = event.target.files[0];
-
-    if(archivo && archivo.type.startsWith('image/')){
-      const lector = new FileReader();
-      
-      lector.onload = () => {
-        this.imagenPreview = lector.result as string;
-        this.capturarImagenEvent.emit(event);
-      };
-      lector.readAsDataURL(archivo);
-    }
+    this.capturarImagenEvent.emit(event);
   }
 
   borrarCampos(){

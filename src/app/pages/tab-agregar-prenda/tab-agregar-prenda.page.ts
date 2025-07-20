@@ -18,6 +18,7 @@ export class TabAgregarPrendaPage implements OnInit {
   nombre = '';
   color= '';
   imagen_base64 = '';
+  imagenPreview = '';
 
   constructor(private navCtrl: NavController, private authService:AuthService, private tipoPrendaService: TipoPrendaService, private prendaService:PrendaService, private alertController: AlertController, private router:Router) { }
 
@@ -55,10 +56,11 @@ export class TabAgregarPrendaPage implements OnInit {
       lector.onload = async () => {
         const base64String = (lector.result as string).split(',')[1];
         this.imagen_base64 = base64String;
+        this.imagenPreview = lector.result as string;
 
         try{
           const response = await this.prendaService.predecirPrenda(base64String);
-          this.categoriaSeleccionada = response.nombre_prenda_predicha;
+          this.nombre = response.nombre_prenda_predicha;
           this.showSuccess(`🔍 Prenda detectada: ${response.nombre_prenda_predicha}`)
         }catch(error:any){
           console.error(error);
@@ -102,5 +104,6 @@ export class TabAgregarPrendaPage implements OnInit {
     this.nombre = '';
     this.color = '';
     this.imagen_base64 = '';
+    this.imagenPreview = '';
   }
 }
