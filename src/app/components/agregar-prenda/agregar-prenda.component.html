@@ -1,19 +1,33 @@
 <!-- clothing-form.component.html -->
 <ion-content class="flex flex-col items-center justify-start p-4">
-  <!-- Área de imagen -->
-  <div class="w-full flex flex-col items-center justify-center mb-4">
-    <!-- Click para abrir el input -->
-    <div class="w-full h-40 bg-gray-100 flex flex-col items-center justify-center rounded-md mb-2" (click)="inputImagen.click()">
+
+  <!-- Área de imagen (clickeable y con preview integrada) -->
+  <div class="w-full h-40 bg-gray-100 relative rounded-md mb-4 overflow-hidden cursor-pointer group"
+      (click)="inputImagen.click()">
+
+    <!-- Input oculto -->
+    <input #inputImagen type="file" accept="image/*" (change)="capturarImagen($event)" hidden />
+
+    <!-- Imagen de previsualización -->
+    <img *ngIf="imagenPreview"
+        [src]="imagenPreview"
+        alt="Previsualización"
+        class="w-full h-full object-contain z-0" />
+
+    <!-- Overlay para ícono y texto si no hay imagen -->
+    <div *ngIf="!imagenPreview" class="absolute inset-0 flex flex-col items-center justify-center text-gray-500 z-10">
       <ion-icon name="camera-outline" class="text-3xl mb-2"></ion-icon>
-      <p class="text-gray-600">Capturar imagen de la prenda</p>
-      <input #inputImagen type="file" accept="image/*" (change)="capturarImagen($event)" hidden />
+      <p class="text-sm">Capturar imagen de la prenda</p>
     </div>
 
-    <!-- Previsualización -->
-    <div *ngIf="imagenPreview" class="w-full flex justify-center">
-      <img [src]="imagenPreview" alt="Previsualización" class="rounded-md w-32 h-32 object-cover border border-gray-300" />
+    <!-- Overlay de cambio (opcional) -->
+    <div *ngIf="imagenPreview" class="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-200 z-10 flex items-end justify-end p-2">
+      <button (click)="inputImagen.click(); $event.stopPropagation()" class="text-xs bg-white bg-opacity-90 px-2 py-1 rounded shadow text-gray-700">
+        Cambiar
+      </button>
     </div>
   </div>
+
 
 
   <!-- Selector categoría -->
