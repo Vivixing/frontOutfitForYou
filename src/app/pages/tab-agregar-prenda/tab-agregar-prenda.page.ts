@@ -74,17 +74,36 @@ export class TabAgregarPrendaPage implements OnInit {
   }
 
   async registrarPrenda(){
+
+    if (!this.nombre ) {
+      this.showAlert('Por favor, complete el campo del nombre de la prenda');
+      return;
+    }
+
+    if(!this.imagen_base64){
+      this.showAlert('Por favor, complete el campo de la imagen');
+      return;
+    }
+
+    if(!this.categoriaSeleccionada){
+      this.showAlert('Por favor, complete el campo de la categoría seleccionada');
+      return;
+    }
+
+    if(!this.color){
+      this.showAlert('Por favor, complete el campo del color');
+      return;
+    }
+
     try{
       const usuarioId = this.authService.idUsuarioLogueado();
 
-      let tipoPrenda = await this.tipoPrendaService.obtenerTipoPorCategoria(this.categoriaSeleccionada);
-      if (!tipoPrenda) {
-        tipoPrenda = await this.tipoPrendaService.crearTipoPrenda(this.categoriaSeleccionada);
-      }
-
+      const tipoPrenda = await this.tipoPrendaService.crearTipoPrenda(this.categoriaSeleccionada);
+      console.log(tipoPrenda);
+      
       const prenda = {
-        usuarioId,
-        tipoPrendaId: tipoPrenda.id,
+        usuarioId: usuarioId,
+        tipoPrendaId: tipoPrenda._id,
         nombre: this.nombre,
         color: this.color,
         imagen_base64: this.imagen_base64
@@ -92,6 +111,7 @@ export class TabAgregarPrendaPage implements OnInit {
 
       const response = await this.prendaService.registrarPrenda(prenda);
       this.showSuccess('✅ Prenda registrada correctamente');
+      this.limpiarCampos();
       this.router.navigate(['/tabs/tabs/tabCloset']);
     }catch(error:any){
       console.error(error);

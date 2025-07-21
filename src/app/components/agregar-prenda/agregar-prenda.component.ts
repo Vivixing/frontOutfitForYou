@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, output} from '@angular/core';
 
 @Component({
   selector: 'app-agregar-prenda',
@@ -14,6 +14,8 @@ export class AgregarPrendaComponent  implements OnInit {
   @Input() color: string = '';
   @Input() imagen_base64: string = '';
 
+  @Output() colorChange = new EventEmitter<string>();
+  @Output() categoriaSeleccionadaChange = new EventEmitter<string>();
   @Output() capturarImagenEvent = new EventEmitter<any>();
   @Output() borrarCamposEvent = new EventEmitter<void>();
   @Output() guardarPrendaEvent = new EventEmitter<void>();

@@ -31,9 +31,9 @@
 
 
   <!-- Selector categoría -->
-  <ion-select interface="action-sheet" placeholder="Seleccionar categoría" class="w-full border border-[#E39D7C] rounded-md p-2 mb-4" [(ngModel)]="categoriaSeleccionada">
-    <ion-select-option value="Camisa">Superior</ion-select-option>
-    <ion-select-option value="Pantalón">Inferior</ion-select-option>
+  <ion-select interface="action-sheet" placeholder="Seleccionar categoría" class="w-full border border-[#E39D7C] rounded-md p-2 mb-4" [(ngModel)]="categoriaSeleccionada" (ngModelChange)="categoriaSeleccionadaChange.emit($event)">
+    <ion-select-option>Superior</ion-select-option>
+    <ion-select-option>Inferior</ion-select-option>
   </ion-select>
 
   <!-- Campo nombre -->
@@ -43,7 +43,7 @@
 
   <!-- Campo Color -->
   <ion-item class="border border-[#E39D7C] rounded-md mb-2">
-    <ion-input placeholder="Color Prenda" [(ngModel)]="color"></ion-input>
+    <ion-input placeholder="Color Prenda" [(ngModel)]="color" (ngModelChange)="colorChange.emit($event)"></ion-input>
   </ion-item>
 
   <!-- Botones -->
