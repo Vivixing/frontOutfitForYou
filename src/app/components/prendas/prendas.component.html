@@ -35,7 +35,7 @@
   <!-- Grilla de prendas -->
   <div class="grid grid-cols-2 gap-4">
     <!-- Card de prenda -->
-    <div *ngFor="let prenda of prendas" class="w-40 bg-white rounded-xl shadow-md p-3 relative">
+    <div *ngFor="let prenda of prendas" class="bg-white rounded-xl shadow-md p-3 relative">
       <!-- Imagen del pantalón -->
       <img [src]="'data:image/jpeg;base64,' + prenda.imagen"  alt="{{ prenda.nombre }}" class="w-full h-32 object-contain mb-2" />
 
