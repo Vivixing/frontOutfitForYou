@@ -17,7 +17,9 @@ export class TabClosetPage implements OnInit {
 
   constructor(private router: Router, private navCtrl: NavController, private prendaService: PrendaService, private authService:AuthService,  private alertController: AlertController) { }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ionViewWillEnter() {
     this.cargarPrendas();
   }
 

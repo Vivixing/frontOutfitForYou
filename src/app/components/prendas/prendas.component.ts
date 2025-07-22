@@ -20,7 +20,14 @@ export class PrendasComponent  implements OnInit {
     this.VerPrendaEvent.emit();
   }
 
+  isHexColorValido(color: string): boolean {
+    // Valida colores hexadecimales de 3 o 6 caracteres (sin incluir el '#')
+    const hexPattern = /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+    return hexPattern.test(color);
+  }
+
   irAtabEditarPrenda(){
     this.router.navigate(['/tabs/tabs/tabEditarPrenda'])
   }
+
 }

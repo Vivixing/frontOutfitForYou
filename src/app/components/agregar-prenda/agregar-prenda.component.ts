@@ -36,4 +36,5 @@ export class AgregarPrendaComponent  implements OnInit {
   guardarPrenda(){
     this.guardarPrendaEvent.emit();
   }
+
 }

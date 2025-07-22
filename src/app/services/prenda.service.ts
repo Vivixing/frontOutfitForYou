@@ -10,6 +10,7 @@ export class PrendaService {
 
   predictedName: string = '';
   imageBase64: string = '';
+  color: string = '';
 
   constructor(private http:HttpClient) { }
 
@@ -24,18 +25,19 @@ export class PrendaService {
 
     try{
 
-      const response = await this.http.post<any>(`${this.apiURLPrenda}/predict_name`, formData).toPromise();
+      const response = await this.http.post<any>(`${this.apiURLPrenda}/predict_clothe`, formData).toPromise();
       console.log('Predicción:', response);
 
       this.predictedName = response.nombre_prenda_predicha;
       this.imageBase64 = response.imagen_base64;
+      this.color = response.color;
 
       return response;
 
     }catch(error:any){
 
       let mensajeError = procesarErrorHttp(error);
-      console.error('Desde el front: Error al predecir nombre de la prenda', mensajeError);
+      console.error('Desde el front: Error al predecir la prenda', mensajeError);
       throw new Error(mensajeError);
     }
   }
