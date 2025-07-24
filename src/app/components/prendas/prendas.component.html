@@ -35,15 +35,15 @@
   <!-- Grilla de prendas -->
   <div class="grid grid-cols-2 gap-4">
     <!-- Card de prenda -->
-    <div class="w-40 bg-white rounded-xl shadow-md p-3 relative">
+    <div *ngFor="let prenda of prendas" class="bg-white rounded-xl shadow-md p-3 relative">
       <!-- Imagen del pantalón -->
-      <img src="https://elaco.vtexassets.com/arquivos/ids/731899/Newfits-AZULINDIGO-N740260-1.jpg?v=638599543335400000" alt="Jean" class="w-full h-32 object-contain mb-2" />
+      <img [src]="'data:image/jpeg;base64,' + prenda.imagen"  alt="{{ prenda.nombre }}" class="w-full h-32 object-contain mb-2" />
 
       <!-- Círculo de color en la esquina superior derecha -->
-      <div class="w-4 h-4 bg-blue-900 rounded-full absolute top-2 right-2 border-2 border-[color:--ion-icons-color]"></div>
+      <div *ngIf="isHexColorValido(prenda.color)" class="w-4 h-4 rounded-full absolute top-2 right-2 border-2 border-[color:--ion-icons-color]" [ngStyle]="{ 'background-color': prenda.color }"></div>
 
       <!-- Nombre del producto -->
-      <p class="text-sm font-medium text-center border-t border-[color:--ion-icons-color] pt-1">Jean</p>
+      <p class="text-sm font-medium text-center border-t border-[color:--ion-icons-color] pt-1">{{ prenda.nombre }}</p>
 
       <!-- Iconos de editar y eliminar -->
       <div class="flex justify-center gap-4 mt-2">
@@ -58,8 +58,11 @@
         </button>
       </div>
     </div>
-
-
-    <!-- Duplicar esta tarjeta para más prendas -->
   </div>
+
+  <!-- Mostrar mensaje si no hay prendas -->
+  <div *ngIf="prendas.length === 0" class="text-center mt-8 text-gray-500">
+    No hay prendas registradas.
+  </div>
+  
 </div>
