@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,9 +11,12 @@ export class RecomendacionEventoComponent  implements OnInit {
 
   constructor(private router: Router) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 
   irAtabVisualizacion(){
     this.router.navigate(['/tabs/tabs/tabVisualizacion']);
   }
+
 }

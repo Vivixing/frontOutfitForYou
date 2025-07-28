@@ -76,4 +76,17 @@ export class PrendaService {
 
     }
   }
+
+  async obtenerPrendasPorIdPrenda(id_prenda:string){
+    try{
+      const response = await this.http.get<any>(`${this.apiURLPrenda}/get_by_id/${id_prenda}`).toPromise();
+      return response;
+    }catch(error:any){
+
+      let mensajeError = procesarErrorHttp(error);
+      console.error('Desde el front: Error al obtener la prenda por id', mensajeError);
+      throw new Error(mensajeError);
+
+    }
+  }
 }

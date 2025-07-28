@@ -11,7 +11,7 @@ export class TabRecomendacionPage implements OnInit {
 
   constructor(private navCtrl: NavController) { }
 
-  ngOnInit() {
+  ngOnInit() { 
   }
   goBack() {
     this.navCtrl.back();

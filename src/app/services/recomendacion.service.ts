@@ -12,13 +12,22 @@ export class RecomendacionService {
 
   apiURLPrenda = `${URL_BASE_API_BACK}/recomendation`;
 
-  async recomendacion(recomendacion:any){
+  async recomendacion(usuarioId: string, ocasion:string): Promise<any> {
     try{
-      const response = await this.http.post<any>(`${this.apiURLPrenda}/recomendation_clothe`, recomendacion).toPromise();
+      const response = await this.http.post<any>(`${this.apiURLPrenda}/recomendation_clothe/${usuarioId}`, {usuarioId, ocasion}).toPromise();
       return response;
     }catch (error:any){
       let mensajeError = procesarErrorHttp(error);
-      console.error('Desde el front: Error al generar la recomendación', mensajeError);
+      console.error('Desde el front: Error al generar la recomendación: ', mensajeError);
+      throw new Error(mensajeError);
+    }
+  }
+  async guardarRecomendacion(usuarioId: string, ocasion: string, vestuarioSugerido:string[]): Promise<any> {
+    try {
+      return await this.http.post<any>(`${this.apiURLPrenda}/create`, { usuarioId, ocasion, vestuarioSugerido }).toPromise();
+    } catch (error: any) {
+      let mensajeError = procesarErrorHttp(error);
+      console.error('Desde el front: Error al guardar la recomendación', mensajeError);
       throw new Error(mensajeError);
     }
   }
