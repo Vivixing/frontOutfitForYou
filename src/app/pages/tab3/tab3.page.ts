@@ -48,10 +48,14 @@ export class Tab3Page implements OnInit {
   }
 
    async generarRecomendacion() {
+
+    if (!this.ocasion || this.ocasion.trim()===""){
+      this.showAlert("Debes ingresar una ocasión antes de generar la recomendación");
+      return;
+    }
+
     try {
-      const ids = await this.recomendacionService.recomendacion(this.usuarioId, this.ocasion);
-      this.vestuarioSugerido = await Promise.all(ids.map((id: string) => this.prendaService.obtenerPrendasPorIdPrenda(id)));
-      
+      this.vestuarioSugerido = await this.recomendacionService.recomendacion(this.usuarioId, this.ocasion);    
       console.log('Vestuario sugerido:', this.vestuarioSugerido);
 
     } catch (error: any) {
@@ -63,7 +67,7 @@ export class Tab3Page implements OnInit {
 
   async guardarRecomendacion() {
     try {
-      await this.recomendacionService.guardarRecomendacion(this.usuarioId, this.ocasion, this.vestuarioSugerido.map(prenda => prenda.id));
+      await this.recomendacionService.guardarRecomendacion(this.usuarioId, this.ocasion);
       this.showSuccess('Recomendación guardada exitosamente');
     } catch (error: any) {
       const mensajeError = procesarErrorHttp(error);

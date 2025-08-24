@@ -12,5 +12,12 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <app-form-evento [ocasion]="ocasion" [vestuarioSugerido]="vestuarioSugerido" [usuarioId]="usuarioId" (generarRecomendacionEvent)="generarRecomendacion()" (guardarRecomendacionEvent)="guardarRecomendacion()"></app-form-evento>
+  <app-form-evento 
+    [ocasion]="ocasion"
+    (ocasionChange)="ocasion = $event"
+    [vestuarioSugerido]="vestuarioSugerido" 
+    [usuarioId]="usuarioId" 
+    (generarRecomendacionEvent)="generarRecomendacion()" 
+    (guardarRecomendacionEvent)="guardarRecomendacion()">
+  </app-form-evento>
 </ion-content>

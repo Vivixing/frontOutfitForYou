@@ -14,7 +14,8 @@ export class FormEventoComponent  implements OnInit {
     @Input() ocasion: string = '';
     @Input() vestuarioSugerido: any[] = [];
     @Input() usuarioId: string = '';
-  
+
+    @Output() ocasionChange = new EventEmitter<string>();
     @Output() generarRecomendacionEvent = new EventEmitter<void>();
     @Output() guardarRecomendacionEvent = new EventEmitter<void>();
 

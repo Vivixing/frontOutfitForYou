@@ -4,6 +4,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-tab-login',
   templateUrl: './tab-login.page.html',
@@ -19,6 +20,11 @@ export class TabLoginPage implements OnInit {
   constructor(private authService: AuthService, private router:Router, private usuarioService: UsuarioService, private alertController: AlertController) { }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter() {
+    this.email = '';
+    this.contrasena = '';
   }
 
   togglePasswordVisibility() {
