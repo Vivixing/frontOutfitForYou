@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 import { RecomendacionService } from '../../services/recomendacion.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { procesarErrorHttp } from '../../utils/error-handler';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -23,7 +24,7 @@ export class Tab3Page implements OnInit {
     console.log('ID de usuario logueado:', this.usuarioId);
   }
 
-  constructor(private navCtrl: NavController, private authService: AuthService, private recomendacionService: RecomendacionService, private router: Router, private alertController: AlertController) {}
+  constructor(private navCtrl: NavController, private authService: AuthService, private recomendacionService: RecomendacionService, private localStorageService:LocalStorageService , private router: Router, private alertController: AlertController) {}
 
     async showSuccess(mensaje: string) {
     const alert = await this.alertController.create({
@@ -57,6 +58,7 @@ export class Tab3Page implements OnInit {
     try {
       this.vestuarioSugerido = await this.recomendacionService.recomendacion(this.usuarioId, this.ocasion);    
       console.log('Vestuario sugerido:', this.vestuarioSugerido);
+      this.localStorageService.setItem('vestuarioSugerido', this.vestuarioSugerido);
       this.router.navigate(['/tabs/tabs/tabRecomendacion']);
     } catch (error: any) {
       const mensajeError = procesarErrorHttp(error);
