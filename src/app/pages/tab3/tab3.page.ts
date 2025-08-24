@@ -3,8 +3,8 @@ import { NavController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 import { RecomendacionService } from '../../services/recomendacion.service';
 import { procesarErrorHttp } from '../../utils/error-handler';
-import { PrendaService } from 'src/app/services/prenda.service';
 import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab3',
@@ -23,7 +23,7 @@ export class Tab3Page implements OnInit {
     console.log('ID de usuario logueado:', this.usuarioId);
   }
 
-  constructor(private navCtrl: NavController, private authService: AuthService, private recomendacionService: RecomendacionService, private prendaService: PrendaService, private alertController: AlertController) {}
+  constructor(private navCtrl: NavController, private authService: AuthService, private recomendacionService: RecomendacionService, private router: Router, private alertController: AlertController) {}
 
     async showSuccess(mensaje: string) {
     const alert = await this.alertController.create({
@@ -57,7 +57,7 @@ export class Tab3Page implements OnInit {
     try {
       this.vestuarioSugerido = await this.recomendacionService.recomendacion(this.usuarioId, this.ocasion);    
       console.log('Vestuario sugerido:', this.vestuarioSugerido);
-
+      this.router.navigate(['/tabs/tabs/tabRecomendacion']);
     } catch (error: any) {
       const mensajeError = procesarErrorHttp(error);
       console.error('Error desde el front al generar la recomendación:', mensajeError);
