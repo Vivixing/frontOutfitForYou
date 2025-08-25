@@ -1,4 +1,4 @@
-<ion-content class="p-4 font-sans">
+<ion-content *ngIf="vestuarioSugerido?.data?.length > 0" class="p-4 font-sans">
   <!-- Sección de prendas -->
   <div class="flex justify-between gap-3">
     <!-- Prenda Superior -->
@@ -7,13 +7,9 @@
         Prenda Superior
       </ion-card-header>
       <ion-card-content class="flex flex-col items-center">
-        <ion-icon name="image-outline" class="text-3xl text-gray-400 mb-2"></ion-icon>
-        <span class="text-gray-500 text-sm mb-2">Visualización Prenda</span>
+        <img *ngIf="prendaSuperior?.imagen" [src]="'data:image/jpeg;base64,' + prendaSuperior.imagen" alt="Prenda superior">
         <div class="flex items-center justify-between border-t pt-2 w-full">
-          <input type="text" placeholder="Nombre Prenda" class="w-full bg-transparent outline-none text-sm" disabled>
-          <ion-button fill="clear" size="small" class="text-[color:--ion-icons-color]">
-            <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
-          </ion-button>
+          <input type="text" placeholder="{{ prendaSuperior?.nombre }}" class="w-full bg-transparent outline-none text-center text-sm" disabled>
         </div>
       </ion-card-content>
     </ion-card>
@@ -24,13 +20,9 @@
         Prenda Inferior
       </ion-card-header>
       <ion-card-content class="flex flex-col items-center">
-        <ion-icon name="image-outline" class="text-3xl text-gray-400 mb-2"></ion-icon>
-        <span class="text-gray-500 text-sm mb-2">Visualización Prenda</span>
+        <img *ngIf="prendaInferior?.imagen" [src]="'data:image/jpg;base64,' + prendaInferior.imagen" alt="Prenda inferior">
         <div class="flex items-center justify-between border-t pt-2 w-full">
-          <input type="text" placeholder="Nombre Prenda" class="w-full bg-transparent outline-none text-sm" disabled>
-          <ion-button fill="clear" size="small" class="text-[color:--ion-icons-color]">
-            <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
-          </ion-button>
+          <input type="text" placeholder="{{ prendaInferior?.nombre }}" class="w-full bg-transparent outline-none text-center text-sm" disabled>
         </div>
       </ion-card-content>
     </ion-card>
@@ -43,9 +35,24 @@
 
     <ion-card class="rounded-2xl shadow-md flex items-center justify-center h-36">
       <ion-card-content class="flex flex-col items-center justify-center h-full">
-        <ion-icon name="image-outline" class="text-3xl text-gray-400 mb-2"></ion-icon>
-        <span class="text-gray-500 text-sm">Subir foto de cuerpo completo</span>
+        <!-- Mostrar preview si ya cargó una imagen -->
+        <img *ngIf="imagenUsuario" [src]="imagenUsuario" alt="Foto cuerpo completo" class="w-full h-full object-cover rounded-2xl"/>
+        <!-- Placeholder si aún no hay imagen -->
+        <ng-container *ngIf="!imagenUsuario">
+          <ion-icon name="image-outline" class="text-3xl text-gray-400 mb-2"></ion-icon>
+          <span class="text-gray-500 text-sm">Subir foto de cuerpo completo</span>
+        </ng-container>
       </ion-card-content>
+
+      <!-- Input invisible -->
+      <input type="file" accept="image/*" hidden #fileInput (change)="cargarImagenUsuario($event)"/>
+
+      <!-- Botón para abrir el input -->
+      <button (click)="fileInput.click()"
+        class="absolute bottom-2 right-2 bg-[#E39D7C] hover:bg-[#C48465] text-white px-3 py-1 text-sm rounded-full">
+        Seleccionar
+      </button>
+
     </ion-card>
   </div>
 
