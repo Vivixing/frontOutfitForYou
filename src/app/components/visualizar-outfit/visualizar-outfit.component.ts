@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-visualizar-outfit',
@@ -7,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
   standalone: false,
 })
 export class VisualizarOutfitComponent  implements OnInit {
+
+  @Input() imageBase64: string | null = null;
+  @Input() loading: boolean = false;
+  @Input() error: string | null = null;
 
   constructor() { }
 

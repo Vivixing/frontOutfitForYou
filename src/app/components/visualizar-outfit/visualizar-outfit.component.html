@@ -1,8 +1,20 @@
 <ion-content class="flex items-center justify-center bg-white">
 
   <div class="flex flex-col items-center space-y-6">
-    <!-- Tarjeta -->
-    <div class="w-64 h-80 bg-gray-100 rounded-3xl shadow-md flex flex-col items-center justify-center">
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="text-gray-500">Cargando visualización...</div>
+
+    <!-- Error -->
+    <div *ngIf="error" class="text-red-500">{{ error }}</div>
+
+    <!-- Imagen -->
+    <div *ngIf="imageBase64 && !loading" class="w-64 h-80 bg-gray-100 rounded-3xl shadow-md flex items-center justify-center">
+      <img [src]="imageBase64" alt="Outfit generado" class="rounded-3xl object-contain w-full h-full"/>
+    </div>
+
+    <!-- Placeholder si no hay imagen -->
+    <div *ngIf="!imageBase64 && !loading && !error" class="w-64 h-80 bg-gray-100 rounded-3xl shadow-md flex flex-col items-center justify-center">
       <ion-icon name="image-outline" class="text-3xl text-gray-400 mb-2 w-12 h-12"></ion-icon>
       <p class="text-center text-gray-500 text-sm px-4">Visualización Previa de la Vestimenta</p>
     </div>

@@ -1,6 +1,6 @@
 import { Component,EventEmitter,Input, OnInit, Output} from '@angular/core';
 import { Router } from '@angular/router';
-import { every } from 'rxjs';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-recomendacion-evento',
@@ -18,7 +18,7 @@ export class RecomendacionEventoComponent  implements OnInit {
   prendaSuperior : any
   prendaInferior : any
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private localStorageService:LocalStorageService) { }
 
   ngOnInit() {
     if(this.vestuarioSugerido?.data){
@@ -33,6 +33,11 @@ export class RecomendacionEventoComponent  implements OnInit {
   }
 
   irAtabVisualizacion(){
+    const data = {
+      persona: this.imagenUsuario,
+      prendas: this.vestuarioSugerido?.data || []
+    };
+    this.localStorageService.setItem('visualizacionData',data);
     this.router.navigate(['/tabs/tabs/tabVisualizacion']);
   }
 

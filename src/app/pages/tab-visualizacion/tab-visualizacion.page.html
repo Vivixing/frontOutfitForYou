@@ -10,5 +10,9 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <app-visualizar-outfit></app-visualizar-outfit>
+  <app-visualizar-outfit
+    [imageBase64]="imageBase64"
+    [loading]="loading"
+    [error]="error"
+  ></app-visualizar-outfit>
 </ion-content>

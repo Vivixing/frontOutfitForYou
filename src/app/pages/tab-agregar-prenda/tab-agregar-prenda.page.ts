@@ -62,7 +62,12 @@ export class TabAgregarPrendaPage implements OnInit {
           const response = await this.prendaService.predecirPrenda(base64String);
           this.nombre = response.nombre_prenda_predicha;
           this.color = response.color;
-          this.showSuccess(`🔍 Prenda detectada: ${response.nombre_prenda_predicha}`)
+
+          if(this.nombre === "No detectada"){
+            this.showAlert("⚠️ No se pudo detectar la prenda")
+          }else{
+            this.showSuccess(`🔍 Prenda detectada: ${response.nombre_prenda_predicha}`)
+          }
         }catch(error:any){
           console.error(error);
           this.showAlert('❌ Error al predecir la prenda');
