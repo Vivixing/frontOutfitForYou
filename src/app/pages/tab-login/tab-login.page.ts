@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { UiService } from 'src/app/services/ui.service';
 
 
 @Component({
@@ -17,7 +17,12 @@ export class TabLoginPage implements OnInit {
   email: string = '';
   contrasena: string = '';
 
-  constructor(private authService: AuthService, private router:Router, private usuarioService: UsuarioService, private alertController: AlertController) { }
+  constructor(
+    private authService: AuthService, 
+    private router:Router, 
+    private usuarioService: UsuarioService, 
+    private uiService: UiService
+  ) { }
 
   ngOnInit() {
   }
@@ -31,22 +36,12 @@ export class TabLoginPage implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
-  async showSuccess(mensaje: string) {
-    const alert = await this.alertController.create({
-      header: '¡Bienvenido!',
-      subHeader: mensaje,
-      buttons: ['OK'],
-    });
-    await alert.present();
+  async showMensajeBienvenida(mensaje: string) {
+    this.uiService.showSuccessWelcome(mensaje)
   }
 
-  async showAlert(mensaje:string) {
-    const alert = await this.alertController.create({
-      header: 'Error',
-      subHeader: mensaje,
-      buttons: ['OK'],
-    });
-    await alert.present();
+  async showMensajeError(mensaje:string) {
+    this.uiService.showAlert(mensaje)
   }
 
   isFormValid(): boolean {
@@ -58,17 +53,17 @@ export class TabLoginPage implements OnInit {
 
   async login() {
     if(!this.isFormValid()){
-      this.showAlert('Por favor, rellene todos los campos con información válida');
+      this.showMensajeError('Por favor, rellene todos los campos con información válida');
       return;
     }
     try {
       const user = await this.usuarioService.inicioSesionUsuario(this.email, this.contrasena);
       this.authService.login(user.user_id);
-      await this.showSuccess('Credenciales válidas. Bienvenido/a 😄');
+      await this.showMensajeBienvenida('Credenciales válidas. Bienvenido/a 😄');
       this.router.navigate(['tabs/tabs/tab1']);
     }catch(error: any) {
       console.log('Desde el page:', error.message);
-      this.showAlert(error.message);
+      this.showMensajeError(error.message);
     }
   }
 }
