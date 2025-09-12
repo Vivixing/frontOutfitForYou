@@ -29,20 +29,16 @@
   </div>
 
   <!-- Selector categoría -->
-  <ion-select interface="action-sheet" placeholder="Seleccionar categoría" class="w-full border border-[#E39D7C] rounded-md p-2 mb-4" [(ngModel)]="categoriaSeleccionada" (ngModelChange)="categoriaSeleccionadaChange.emit($event)">
-    <ion-select-option>Superior</ion-select-option>
-    <ion-select-option>Inferior</ion-select-option>
+  <ion-select class="mb-4 custom-outline" [(ngModel)]="categoriaSeleccionada" (ngModelChange)="categoriaSeleccionadaChange.emit($event)" label="Categoría Prenda" label-placement="floating" fill="outline">
+    <ion-select-option value="apple">Superior</ion-select-option>
+    <ion-select-option value="banana">Inferior</ion-select-option>
   </ion-select>
 
   <!-- Campo nombre -->
-  <ion-item class="border border-[#E39D7C] rounded-md mb-2">
-    <ion-input placeholder="Nombre Prenda" [(ngModel)]="nombre" (ngModelChange)="nombrePrendaChange.emit($event)"></ion-input>
-  </ion-item>
+  <ion-input class="mb-4 custom-outline" [(ngModel)]="nombre" (ngModelChange)="nombrePrendaChange.emit($event)" label="Nombre Prenda" label-placement="floating" fill="outline" placeholder="Ingresa el nombre de la prenda"></ion-input>
 
   <!-- Campo Color -->
-  <ion-item class="border border-[#E39D7C] rounded-md mb-2">
-    <ion-input placeholder="Color Prenda" [(ngModel)]="color" (ngModelChange)="colorChange.emit($event)"></ion-input>
-  </ion-item>
+  <ion-input class="mb-4 custom-outline" [(ngModel)]="color" (ngModelChange)="colorChange.emit($event)" label="Color" labelPlacement="floating" fill="outline" placeholder="Ingresa el color de la prenda en HEX"></ion-input>
 
   <!-- Botones -->
   <div class="flex w-full justify-between">

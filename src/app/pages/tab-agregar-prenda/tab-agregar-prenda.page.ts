@@ -5,6 +5,8 @@ import { TipoPrendaService } from 'src/app/services/tipo-prenda.service';
 import { PrendaService } from 'src/app/services/prenda.service';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-tab-agregar-prenda',
@@ -20,10 +22,30 @@ export class TabAgregarPrendaPage implements OnInit {
   imagen_base64 = '';
   imagenPreview = '';
 
-  constructor(private navCtrl: NavController, private authService:AuthService, private tipoPrendaService: TipoPrendaService, private prendaService:PrendaService, private alertController: AlertController, private router:Router) { }
+  constructor(
+    private navCtrl: NavController, 
+    private authService:AuthService, 
+    private tipoPrendaService: TipoPrendaService, 
+    private prendaService:PrendaService, 
+    private alertController: AlertController, 
+    private router:Router,
+    private loadingController: LoadingController
+  ) { }
 
   ngOnInit() {
   }
+
+  async presentLoading(message: string = 'Procesando...') {
+    const loading = await this.loadingController.create({
+      message,
+      spinner: 'circles', // estilo de spinner
+      translucent: true,
+      backdropDismiss: false
+    });
+    await loading.present();
+    return loading; // devolvemos para cerrarlo después
+  }
+
 
   async showSuccess(mensaje: string) {
     const alert = await this.alertController.create({
@@ -55,27 +77,46 @@ export class TabAgregarPrendaPage implements OnInit {
       
       lector.onload = async () => {
         const base64String = (lector.result as string).split(',')[1];
-        this.imagen_base64 = base64String;
+
         this.imagenPreview = lector.result as string;
 
-        try{
-          const response = await this.prendaService.predecirPrenda(base64String);
-          this.nombre = response.nombre_prenda_predicha;
-          this.color = response.color;
+        const loading = await this.presentLoading('Analizando la prenda...'); // ✅ mostrar loading
 
-          if(this.nombre === "No detectada"){
-            this.showAlert("⚠️ No se pudo detectar la prenda")
-          }else{
+        try{
+
+          const response = await this.prendaService.predecirPrenda(base64String);
+
+          // Nombre y color siempre
+          this.nombre = response.nombre_prenda_predicha;
+          this.color = response.color || "No detectado";
+
+          if(this.nombre !== "No detectada"){
             this.showSuccess(`🔍 Prenda detectada: ${response.nombre_prenda_predicha}`)
+          }else{
+            this.showAlert(`⚠️ ${response.mensaje_usuario}`)
           }
+
+          // Imagen sin fondo si el backend la generó
+          if (response.imagen_base64) {
+            this.imagen_base64 = response.imagen_base64;
+            this.imagenPreview = `data:image/png;base64,${response.imagen_base64}`;
+          } else {
+            // fallback: imagen original
+            this.imagen_base64 = base64String;
+          }
+
         }catch(error:any){
           console.error(error);
-          this.showAlert('❌ Error al predecir la prenda');
+          const mensaje = error?.message || '❌ Error al procesar la imagen';
+          this.showAlert(mensaje);
+          this.imagen_base64 = base64String;
+        } finally {
+          loading.dismiss(); // ✅ cerrar loading al final
         }
       };
       lector.readAsDataURL(archivo);
     } else{
-      this.showAlert('❌ Por favor selecciona un archivo de imagen válido')
+      this.showAlert('⚠️ Por favor selecciona un archivo de imagen válido')
     }
   }
 
@@ -101,6 +142,8 @@ export class TabAgregarPrendaPage implements OnInit {
       return;
     }
 
+    const loading = await this.presentLoading('Registrando prenda...');
+
     try{
       const usuarioId = this.authService.idUsuarioLogueado();
 
@@ -122,6 +165,8 @@ export class TabAgregarPrendaPage implements OnInit {
     }catch(error:any){
       console.error(error);
       this.showAlert('❌ Error al registrar la prenda');
+    } finally {
+      loading.dismiss(); // cerrar loading
     }
   }
 
