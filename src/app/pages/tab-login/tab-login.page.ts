@@ -36,14 +36,6 @@ export class TabLoginPage implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
-  async showMensajeBienvenida(mensaje: string) {
-    this.uiService.showSuccessWelcome(mensaje)
-  }
-
-  async showMensajeError(mensaje:string) {
-    this.uiService.showAlert(mensaje)
-  }
-
   isFormValid(): boolean {
     return (
       this.email.trim() !== '' &&
@@ -53,17 +45,16 @@ export class TabLoginPage implements OnInit {
 
   async login() {
     if(!this.isFormValid()){
-      this.showMensajeError('Por favor, rellene todos los campos con información válida');
+      this.uiService.showAlert('Por favor, rellene todos los campos con información válida');
       return;
     }
     try {
       const user = await this.usuarioService.inicioSesionUsuario(this.email, this.contrasena);
       this.authService.login(user.user_id);
-      await this.showMensajeBienvenida('Credenciales válidas. Bienvenido/a 😄');
+      await this.uiService.showSuccessWelcome('Credenciales válidas. Bienvenido/a 😄');
       this.router.navigate(['tabs/tabs/tab1']);
     }catch(error: any) {
-      console.log('Desde el page:', error.message);
-      this.showMensajeError(error.message);
+      this.uiService.showAlert(error.message);
     }
   }
 }
