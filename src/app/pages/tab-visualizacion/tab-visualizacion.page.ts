@@ -1,8 +1,8 @@
+import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { VisualizacionService } from 'src/app/services/visualizacion.service';
+import { UiService } from 'src/app/services/ui.service';
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { VisualizacionService } from 'src/app/services/visualizacion.service';
-import { AlertController } from '@ionic/angular';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-tab-visualizacion',
@@ -16,16 +16,12 @@ export class TabVisualizacionPage implements OnInit {
   loading: boolean = false;
   error: string | null = null;
 
-  constructor(private navCtrl: NavController, private visualizacionService:VisualizacionService, private alertController: AlertController, private localStorageService: LocalStorageService) { }
-
-  async showAlert(error: string) {
-    const alert = await this.alertController.create({
-      header: 'Error',
-      subHeader: error,
-      buttons: ['OK'],
-    });
-    await alert.present();
-  }
+  constructor(
+    private navCtrl: NavController, 
+    private visualizacionService:VisualizacionService, 
+    private uiService: UiService, 
+    private localStorageService: LocalStorageService
+  ) { }
 
   ngOnInit() {
 
@@ -55,7 +51,7 @@ export class TabVisualizacionPage implements OnInit {
       this.imageBase64 =`data:image/png;base64,${response.image_base64}`;
     }catch (err:any){
       this.error = err.message;
-      this.showAlert('❌ Error al generar la visualización')
+      this.uiService.showAlert('❌ Error al generar la visualización')
     } finally{
       this.loading = false;
     }
