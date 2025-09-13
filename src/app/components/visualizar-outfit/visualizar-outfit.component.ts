@@ -11,6 +11,7 @@ export class VisualizarOutfitComponent  implements OnInit {
   @Input() imageBase64: string | null = null;
   @Input() loading: boolean = false;
   @Input() error: string | null = null;
+  @Input() onAgregarFavorito!: () => void;
 
   constructor() { }
 

@@ -16,13 +16,10 @@ export class FormEventoComponent  implements OnInit {
 
     @Output() ocasionChange = new EventEmitter<string>();
     @Output() generarRecomendacionEvent = new EventEmitter<void>();
-    @Output() guardarRecomendacionEvent = new EventEmitter<void>();
+
 
   ngOnInit() {}
 
-  guardar() {
-    this.guardarRecomendacionEvent.emit();
-  }
 
   generar() {
     this.generarRecomendacionEvent.emit();

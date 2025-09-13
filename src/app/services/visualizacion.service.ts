@@ -15,10 +15,10 @@ export class VisualizacionService {
   async visualizacion(personFile:File, garmentFiles:File[]):Promise<any>{
     try{
       const formData = new FormData();
-      formData.append('person', personFile); // archivo de la persona
+      formData.append('person', personFile);
 
       garmentFiles.forEach((file, index) => {
-        formData.append('garment', file); // varios archivos
+        formData.append('garment', file);
       });
 
       return await this.http.post(`${this.apiURLVisualizacion}/tryon`,formData).toPromise();
@@ -28,5 +28,16 @@ export class VisualizacionService {
       throw new Error(mensajeError);
     }
 
+  }
+
+  async guardarVisualizacion(usuarioId:string, vestuarioId:string, imagen_visualizacion:string):Promise<any>{
+    try{
+      const body = { usuarioId, vestuarioId, imagen_visualizacion };
+      return await this.http.post(`${this.apiURLVisualizacion}/create`, body).toPromise();
+    }catch(error:any){
+      let mensajeError = procesarErrorHttp(error);
+      console.error('Desde el front: Error al guardar la visualización', mensajeError);
+      throw new Error(mensajeError);
+    }
   }
 }

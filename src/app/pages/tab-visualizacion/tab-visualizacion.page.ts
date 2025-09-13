@@ -1,8 +1,12 @@
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { VisualizacionService } from 'src/app/services/visualizacion.service';
+import { RecomendacionService } from '../../services/recomendacion.service';
+import { FavoritoService } from 'src/app/services/favorito.service';
 import { UiService } from 'src/app/services/ui.service';
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { procesarErrorHttp } from 'src/app/utils/error-handler';
 
 @Component({
   selector: 'app-tab-visualizacion',
@@ -15,15 +19,22 @@ export class TabVisualizacionPage implements OnInit {
   imageBase64: string | null = null;
   loading: boolean = false;
   error: string | null = null;
+  ocasion: string = '';
 
   constructor(
+    private visualizacionService:VisualizacionService,
+    private localStorageService: LocalStorageService,
+    private recomendacionService: RecomendacionService, 
+    private favoritoService: FavoritoService,
     private navCtrl: NavController, 
-    private visualizacionService:VisualizacionService, 
     private uiService: UiService, 
-    private localStorageService: LocalStorageService
+    private router:Router, 
   ) { }
 
   ngOnInit() {
+
+    this.ocasion = this.localStorageService.getItem('ocasion');
+    console.log("Ocasión en el tab visualización:", this.ocasion)
 
     const visualizacionData = this.localStorageService.getItem('visualizacionData');
     console.log("Visualización en el tab:", visualizacionData)
@@ -43,6 +54,10 @@ export class TabVisualizacionPage implements OnInit {
     }
   }
 
+  goBack() {
+    this.navCtrl.back();
+  }
+
   async visualizarOutfit(person:File, garments: File[]){
     this.loading = true;
     this.error = null;
@@ -51,7 +66,7 @@ export class TabVisualizacionPage implements OnInit {
       this.imageBase64 =`data:image/png;base64,${response.image_base64}`;
     }catch (err:any){
       this.error = err.message;
-      this.uiService.showAlert('❌ Error al generar la visualización')
+      this.uiService.showAlert('Error al generar la visualización')
     } finally{
       this.loading = false;
     }
@@ -69,7 +84,65 @@ export class TabVisualizacionPage implements OnInit {
     return new File([u8arr], filename, { type: mime });
   }
 
-  goBack() {
-    this.navCtrl.back();
+  async agregarAFavoritos(){
+    try{
+
+      const visualizacionData = this.localStorageService.getItem('visualizacionData');
+
+      if(!visualizacionData?.prendas[0]?.usuarioId?.id){
+        this.uiService.showAlert('No se encontró el ID de usuario');
+        return;
+      }
+      
+      const usuarioId = visualizacionData.prendas[0].usuarioId.id;     
+      await this.guardarRecomendacion(usuarioId, this.ocasion);
+
+      try{
+        const vestuarioId = this.localStorageService.getItem('vestuarioId');
+        if(!vestuarioId){
+          this.uiService.showAlert('No se encontró el ID de vestuario');
+          return;
+        }
+        await this.favoritoService.agregarFavorito(usuarioId, vestuarioId);
+        const imagen_visualizacion = visualizacionData.persona.replace(/^data:image\/\w+;base64,/, ""); // quita el prefijo data:image/png;base64,
+        await this.guardarVisualizacion(usuarioId, vestuarioId, imagen_visualizacion);
+        this.uiService.showSuccessAddClothe('Agregado a Favoritos');
+        localStorage.clear();
+        this.router.navigate(['tabs/tabs/tab2']);
+      }catch(error:any){
+        console.error('Error al agregar a favoritos:', error);
+        this.uiService.showAlert('Error al agregar a favoritos');
+      }
+    }catch(error:any){
+      console.error('Error al agregar a favoritos:', error);
+      this.uiService.showAlert('Error al agregar a favoritos');
+    }
+  }
+
+  async guardarRecomendacion(usuarioId: string, ocasion: string) {
+    try{
+      const response = await this.recomendacionService.guardarRecomendacion(usuarioId, ocasion);
+      console.log('Respuesta al guardar la recomendación:', response);
+      if(response?.data?.vestuarioId){
+        this.localStorageService.setItem('vestuarioId', response.data.vestuarioId);
+      }else {
+        this.uiService.showWarningMessage(`No vino vestuarioId en la respuesta del back: ${JSON.stringify(response)}`);
+      }
+    }catch(error:any){
+      const mensajeError = procesarErrorHttp(error);
+      console.error('Error desde el front al guardar la recomendación:', mensajeError);
+      this.uiService.showAlert(mensajeError);
+    }
+  }
+
+  async guardarVisualizacion(usuarioId:string, vestuarioId:string, imagen_visualizacion:string){
+    try{
+      await this.visualizacionService.guardarVisualizacion(usuarioId, vestuarioId, imagen_visualizacion);
+    }catch(error:any){
+      const mensajeError = procesarErrorHttp(error);
+      console.error('Error desde el front al guardar la visualización:', mensajeError);
+      this.uiService.showAlert(mensajeError);
+    }
   }
 }
+

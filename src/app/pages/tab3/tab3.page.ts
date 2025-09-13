@@ -45,6 +45,7 @@ export class Tab3Page implements OnInit {
     }
 
     try {
+      this.localStorageService.setItem('ocasion', this.ocasion);
       this.vestuarioSugerido = await this.recomendacionService.recomendacion(this.usuarioId, this.ocasion);    
       console.log('Vestuario sugerido:', this.vestuarioSugerido);
       this.localStorageService.setItem('vestuarioSugerido', this.vestuarioSugerido);
@@ -52,17 +53,6 @@ export class Tab3Page implements OnInit {
     } catch (error: any) {
       const mensajeError = procesarErrorHttp(error);
       console.error('Error desde el front al generar la recomendación:', mensajeError);
-      this.uiService.showAlert(mensajeError);
-    }
-  }
-
-  async guardarRecomendacion() {
-    try {
-      await this.recomendacionService.guardarRecomendacion(this.usuarioId, this.ocasion);
-      this.uiService.showSuccessCreateRecomendation('Recomendación guardada exitosamente');
-    } catch (error: any) {
-      const mensajeError = procesarErrorHttp(error);
-      console.error('Error desde el front al guardar la recomendación:', mensajeError);
       this.uiService.showAlert(mensajeError);
     }
   }
