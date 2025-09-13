@@ -1,9 +1,9 @@
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { UiService } from 'src/app/services/ui.service';
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { AuthService } from 'src/app/services/auth.service';
-import { UsuarioService } from 'src/app/services/usuario.service';
 import { Router } from '@angular/router';
-import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-tab-registro',
@@ -23,7 +23,8 @@ export class TabRegistroPage implements OnInit {
     private authService: AuthService, 
     private router: Router, 
     private usuarioService:UsuarioService, 
-    private uiService: UiService) { }
+    private uiService: UiService
+  ) { }
 
   ngOnInit() {
   }
