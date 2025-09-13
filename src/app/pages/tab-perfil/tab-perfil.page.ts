@@ -1,7 +1,7 @@
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { AuthService } from 'src/app/services/auth.service';
-import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-tab-perfil',
@@ -13,7 +13,10 @@ export class TabPerfilPage implements OnInit {
 
   nombre: string = '';
 
-  constructor(private navCtrl: NavController, private authService: AuthService, private usuarioService: UsuarioService) { }
+  constructor(
+    private navCtrl: NavController, 
+    private authService: AuthService, 
+    private usuarioService: UsuarioService) { }
 
   async ngOnInit() {
     this.nombre = await this.usuarioService.obtenerNombreUsuarioLogueado(this.authService);
