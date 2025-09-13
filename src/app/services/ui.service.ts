@@ -24,7 +24,16 @@ export class UiService {
 
   async showSuccessAddClothe(mensaje: string) {
     const alert = await this.alertController.create({
-      header: '¡Agregado!',
+      header: '✅ Agregado',
+      subHeader: mensaje,
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }
+
+  async showSuccessPredictClothe(mensaje: string) {
+    const alert = await this.alertController.create({
+      header: '¡🔍 Prenda detectada!',
       subHeader: mensaje,
       buttons: ['OK'],
     });
@@ -40,7 +49,16 @@ export class UiService {
     await alert.present();
   }
 
-   async showSuccessWelcome(mensaje: string) {
+  async showWarningMessage(mensaje: string) {
+    const alert = await this.alertController.create({
+      header: '⚠️ Advertencia',
+      subHeader: mensaje,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  async showSuccessWelcome(mensaje: string) {
     const alert = await this.alertController.create({
       header: '¡Bienvenido!',
       subHeader: mensaje,
@@ -51,7 +69,7 @@ export class UiService {
 
   async showAlert(error: string) {
     const alert = await this.alertController.create({
-      header: 'Error',
+      header: '❌ Error',
       subHeader: error,
       buttons: ['OK'],
     });

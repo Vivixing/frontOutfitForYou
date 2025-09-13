@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
-import { AuthService } from 'src/app/services/auth.service';
 import { TipoPrendaService } from 'src/app/services/tipo-prenda.service';
 import { PrendaService } from 'src/app/services/prenda.service';
-import { AlertController } from '@ionic/angular';
+import { AuthService } from 'src/app/services/auth.service';
+import { UiService } from 'src/app/services/ui.service';
+import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
-
 
 @Component({
   selector: 'app-tab-agregar-prenda',
@@ -27,42 +25,11 @@ export class TabAgregarPrendaPage implements OnInit {
     private authService:AuthService, 
     private tipoPrendaService: TipoPrendaService, 
     private prendaService:PrendaService, 
-    private alertController: AlertController, 
+    private uiService: UiService,
     private router:Router,
-    private loadingController: LoadingController
   ) { }
 
   ngOnInit() {
-  }
-
-  async presentLoading(message: string = 'Procesando...') {
-    const loading = await this.loadingController.create({
-      message,
-      spinner: 'circles', // estilo de spinner
-      translucent: true,
-      backdropDismiss: false
-    });
-    await loading.present();
-    return loading; // devolvemos para cerrarlo después
-  }
-
-
-  async showSuccess(mensaje: string) {
-    const alert = await this.alertController.create({
-      header: '¡Agregado!',
-      subHeader: mensaje,
-      buttons: ['OK'],
-    });
-    await alert.present();
-  }
-
-  async showAlert(error: string) {
-    const alert = await this.alertController.create({
-      header: 'Error',
-      subHeader: error,
-      buttons: ['OK'],
-    });
-    await alert.present();
   }
 
   goBack() {
@@ -80,7 +47,7 @@ export class TabAgregarPrendaPage implements OnInit {
 
         this.imagenPreview = lector.result as string;
 
-        const loading = await this.presentLoading('Analizando la prenda...'); // ✅ mostrar loading
+        const loading = await this.uiService.presentLoading('Analizando la prenda...'); // ✅ mostrar loading
 
         try{
 
@@ -91,9 +58,9 @@ export class TabAgregarPrendaPage implements OnInit {
           this.color = response.color || "No detectado";
 
           if(this.nombre !== "No detectada"){
-            this.showSuccess(`🔍 Prenda detectada: ${response.nombre_prenda_predicha}`)
+            this.uiService.showSuccessPredictClothe(`La prenda detectada es: ${response.nombre_prenda_predicha}`)
           }else{
-            this.showAlert(`⚠️ ${response.mensaje_usuario}`)
+            this.uiService.showWarningMessage(`${response.mensaje_usuario}`)
           }
 
           // Imagen sin fondo si el backend la generó
@@ -107,42 +74,42 @@ export class TabAgregarPrendaPage implements OnInit {
 
         }catch(error:any){
           console.error(error);
-          const mensaje = error?.message || '❌ Error al procesar la imagen';
-          this.showAlert(mensaje);
+          const mensaje = error?.message || 'Error al procesar la imagen';
+          this.uiService.showAlert(mensaje);
           this.imagen_base64 = base64String;
         } finally {
-          loading.dismiss(); // ✅ cerrar loading al final
+          loading.dismiss();
         }
       };
       lector.readAsDataURL(archivo);
     } else{
-      this.showAlert('⚠️ Por favor selecciona un archivo de imagen válido')
+      this.uiService.showAlert('Por favor selecciona un archivo de imagen válido')
     }
   }
 
   async registrarPrenda(){
 
     if (!this.nombre ) {
-      this.showAlert('Por favor, complete el campo del nombre de la prenda');
+      this.uiService.showWarningMessage('Por favor, complete el campo del nombre de la prenda');
       return;
     }
 
     if(!this.imagen_base64){
-      this.showAlert('Por favor, complete el campo de la imagen');
+      this.uiService.showWarningMessage('Por favor, complete el campo de la imagen');
       return;
     }
 
     if(!this.categoriaSeleccionada){
-      this.showAlert('Por favor, complete el campo de la categoría seleccionada');
+      this.uiService.showWarningMessage('Por favor, complete el campo de la categoría seleccionada');
       return;
     }
 
     if(!this.color){
-      this.showAlert('Por favor, complete el campo del color');
+      this.uiService.showWarningMessage('Por favor, complete el campo del color');
       return;
     }
 
-    const loading = await this.presentLoading('Registrando prenda...');
+    const loading = await this.uiService.presentLoading('Registrando prenda...');
 
     try{
       const usuarioId = this.authService.idUsuarioLogueado();
@@ -159,14 +126,14 @@ export class TabAgregarPrendaPage implements OnInit {
       };
 
       const response = await this.prendaService.registrarPrenda(prenda);
-      this.showSuccess('✅ Prenda registrada correctamente');
+      this.uiService.showSuccessAddClothe('Prenda registrada correctamente');
       this.limpiarCampos();
       this.router.navigate(['/tabs/tabs/tabCloset']);
     }catch(error:any){
       console.error(error);
-      this.showAlert('❌ Error al registrar la prenda');
+      this.uiService.showAlert('Error al registrar la prenda');
     } finally {
-      loading.dismiss(); // cerrar loading
+      loading.dismiss();
     }
   }
 
