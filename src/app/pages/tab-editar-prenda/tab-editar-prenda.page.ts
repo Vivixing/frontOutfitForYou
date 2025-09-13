@@ -9,7 +9,9 @@ import { NavController } from '@ionic/angular';
 })
 export class TabEditarPrendaPage implements OnInit {
 
-  constructor(private navCtrl: NavController) { }
+  constructor(
+    private navCtrl: NavController
+  ) { }
 
   ngOnInit() {
   }
