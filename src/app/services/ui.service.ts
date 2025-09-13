@@ -42,7 +42,7 @@ export class UiService {
 
   async showSuccessCreateRecomendation(mensaje: string) {
     const alert = await this.alertController.create({
-      header: '¡Guardada!',
+      header: '¡💾 Guardada!',
       subHeader: mensaje,
       buttons: ['OK'],
     });
@@ -60,7 +60,7 @@ export class UiService {
 
   async showSuccessWelcome(mensaje: string) {
     const alert = await this.alertController.create({
-      header: '¡Bienvenido!',
+      header: '¡👋🏻 Bienvenido!',
       subHeader: mensaje,
       buttons: ['OK'],
     });
