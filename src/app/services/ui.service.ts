@@ -31,6 +31,15 @@ export class UiService {
     await alert.present();
   }
 
+  async showSuccessCreateRecomendation(mensaje: string) {
+    const alert = await this.alertController.create({
+      header: '¡Guardada!',
+      subHeader: mensaje,
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }
+
    async showSuccessWelcome(mensaje: string) {
     const alert = await this.alertController.create({
       header: '¡Bienvenido!',
