@@ -12,7 +12,9 @@ export class Tab1Page implements OnInit {
 
   nombre: string = '';
 
-  constructor(private authService: AuthService, private usuarioService: UsuarioService) {}
+  constructor(
+    private authService: AuthService, 
+    private usuarioService: UsuarioService) {}
   
   async ngOnInit() {
     this.nombre = await this.usuarioService.obtenerNombreUsuarioLogueado(this.authService);
