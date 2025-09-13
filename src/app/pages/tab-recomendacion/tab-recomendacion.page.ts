@@ -1,7 +1,7 @@
+import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { UiService } from 'src/app/services/ui.service';
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { AlertController } from '@ionic/angular';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-tab-recomendacion',
@@ -14,20 +14,19 @@ export class TabRecomendacionPage implements OnInit {
   vestuarioSugerido: any[] = [];
   imagenUsuario: string | null = null;
 
-  constructor(private navCtrl: NavController, private localStorageService:LocalStorageService, private alertController: AlertController) { }
-
-  async showAlert(error: string) {
-    const alert = await this.alertController.create({
-      header: 'Error',
-      subHeader: error,
-      buttons: ['OK'],
-    });
-    await alert.present();
-  }
+  constructor(
+    private navCtrl: NavController, 
+    private localStorageService:LocalStorageService, 
+    private uiService: UiService
+  ) { }
 
   ngOnInit() { 
     this.vestuarioSugerido = this.localStorageService.getItem('vestuarioSugerido');
     console.log('Vestuario recuperado', this.vestuarioSugerido);
+  }
+
+  goBack() {
+    this.navCtrl.back();
   }
 
   seleccionarArchivo(event:any){
@@ -40,11 +39,8 @@ export class TabRecomendacionPage implements OnInit {
       };
       lector.readAsDataURL(archivo);
     }else{
-      this.showAlert('❌ Por favor selecciona un archivo de imagen válido')
+      this.uiService.showAlert('❌ Por favor selecciona un archivo de imagen válido')
     }
   }
 
-  goBack() {
-    this.navCtrl.back();
-  }
 }
