@@ -34,4 +34,14 @@ export class FavoritoService {
       throw new Error(mensajeError);
     }
   }
+
+  async eliminarFavorito(favoritoId:string): Promise<any>{
+    try{
+      return await this.http.delete(`${this.apiURLFavorito}/delete/${favoritoId}`).toPromise();
+    } catch (error:any){
+      let mensajeError = procesarErrorHttp(error);
+      console.error('Desde el front: Error al eliminar favorito', mensajeError);
+      throw new Error(mensajeError);
+    }
+  }
 }

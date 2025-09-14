@@ -12,5 +12,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <app-explore-container></app-explore-container>
+  <app-explore-container
+  [favoritos]="favoritos"
+  [cargarFavoritos]="cargarFavoritos.bind(this)"
+  [isLoading]="isLoading"
+  (eliminarFavorito)="onEliminarFavorito($event)">
+  </app-explore-container>
 </ion-content>
