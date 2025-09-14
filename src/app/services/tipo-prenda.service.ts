@@ -59,4 +59,14 @@ export class TipoPrendaService {
     }
     
   }
+
+  async editarTipoPrenda(id: string, update_tipoPrenda: any): Promise<any> {
+    try {
+      return await this.http.patch<any>(`${this.apiURLTipoPrenda}/update/${id}`, update_tipoPrenda).toPromise();
+    } catch (error: any) {
+      let mensajeError = procesarErrorHttp(error);
+      console.error('Desde el front: Error al actualizar tipo de prenda', mensajeError);
+      throw new Error(mensajeError);
+    }
+  }
 }

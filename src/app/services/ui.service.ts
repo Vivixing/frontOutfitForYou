@@ -31,6 +31,15 @@ export class UiService {
     await alert.present();
   }
 
+  async showSuccessUpdateClothe(mensaje: string) {
+    const alert = await this.alertController.create({
+      header: '✅ Actualizado',
+      subHeader: mensaje,
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }
+
   async showSuccessDeleteFavorite(mensaje: string) {
     const alert = await this.alertController.create({
       header: '✅ Eliminado',

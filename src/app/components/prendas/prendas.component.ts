@@ -26,8 +26,8 @@ export class PrendasComponent  implements OnInit {
     return hexPattern.test(color);
   }
 
-  irAtabEditarPrenda(){
-    this.router.navigate(['/tabs/tabs/tabEditarPrenda'])
+  irAtabEditarPrenda(prendaId: string){
+    this.router.navigate(['/tabs/tabs/tabEditarPrenda'], {queryParams: { id: prendaId } });
   }
 
 }

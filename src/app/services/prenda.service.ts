@@ -89,4 +89,14 @@ export class PrendaService {
 
     }
   }
+
+  async editarPrenda(id:string, update_prenda:any):Promise<any>{
+    try{
+      return await this.http.patch<any>(`${this.apiURLPrenda}/update/${id}`, update_prenda).toPromise();
+    }catch (error: any){
+      let mensajeError = procesarErrorHttp(error);
+      console.error('Desde el front: Error al actualizar la prenda', mensajeError);
+      throw new Error(mensajeError)
+    }
+  }
 }

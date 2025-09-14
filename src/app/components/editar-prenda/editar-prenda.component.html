@@ -1,23 +1,23 @@
-<ion-content class="flex flex-col items-center justify-start p-4">
+<ion-content *ngIf="prenda" class="flex flex-col items-center justify-start p-4">
   <!--Contenedor del card-->
   <div class="flex justify-center items-center mb-4">
     <ion-card class="rounded-2xl p-4 flex flex-col items-center relative w-48">
       <!-- Imagen de la prenda -->
-      <img src="https://elaco.vtexassets.com/arquivos/ids/731899/Newfits-AZULINDIGO-N740260-1.jpg?v=638599543335400000" alt="Pantalón" class="w-full mb-4"/>
-
+      <img *ngIf="prenda?.imagen" [src]="'data:image/jpeg;base64,' + prenda?.imagen" alt="{{ prenda?.nombre }}" class="w-full h-32 object-contain mb-2" />
       <!-- Círculo de color arriba a la derecha -->
-      <div class="absolute top-4 right-4 w-6 h-6 rounded-full border-4 border-[#E39D7C] bg-[#0D0B33]"></div>
+      <div *ngIf="isHexColorValido(prenda?.color)" class="w-4 h-4 rounded-full absolute top-2 right-2 border-2 border-[color:--ion-icons-color]" [ngStyle]="{ 'background-color': prenda.color }"></div>
     </ion-card>
   </div>
 
   <!-- Selector categoría -->
-  <ion-select interface="action-sheet" placeholder="Seleccionar categoría" class="w-full border border-[#E39D7C] rounded-md p-2 mb-4">
-    <ion-select-option value="Camisa">Superior</ion-select-option>
-    <ion-select-option value="Pantalón">Inferior</ion-select-option>
+  <ion-select *ngIf="prenda?.tipoPrendaId" class="mb-4 custom-outline" [(ngModel)]="prenda.tipoPrendaId.categoria" label="Categoría Prenda" label-placement="floating" fill="outline">
+    <ion-select-option [value]="null" disabled>Seleccione una categoría</ion-select-option>
+    <ion-select-option value="Superior" >Superior</ion-select-option>
+    <ion-select-option value="Inferior">Inferior</ion-select-option>
   </ion-select>
 
   <!-- Campo nombre -->
-  <ion-input placeholder="Nombre Prenda" class="w-full border border-[#E39D7C] rounded-md mb-4" style="--padding-start: 0.75rem;" ></ion-input>
+  <ion-input class="mb-4 custom-outline" [(ngModel)]="prenda.nombre" label="Nombre Prenda" label-placement="floating" fill="outline" placeholder="Ingresa el nombre de la prenda"></ion-input>
 
   <!-- Botones -->
   <div class="flex w-full justify-between">
