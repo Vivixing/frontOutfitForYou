@@ -40,4 +40,15 @@ export class VisualizacionService {
       throw new Error(mensajeError);
     }
   }
+
+  async obtenerVisualizacionesPorUsuario(usuarioId:string):Promise<any>{
+    try{
+      return await this.http.get(`${this.apiURLVisualizacion}/user/${usuarioId}`).toPromise();
+    }catch(error:any){
+      let mensajeError = procesarErrorHttp(error);
+      console.error('Desde el front: Error al obtener las visualizaciones del usuario', mensajeError);
+      throw new Error(mensajeError);
+    } 
+  }
+  
 }

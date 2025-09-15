@@ -4,18 +4,23 @@
     Vestirte <strong class="font-bold">nunca</strong><br>
     fue tan <span class="text-[#F4CFA6] font-semibold italic">fácil!</span>
   </h1>
+
   <!-- Subtítulo -->
   <p class="mt-4 text-sm text-brown-500 font-medium">Recomendaciones recientes</p>
-  <!-- Tarjeta de visualización -->
+
+  <!-- Lista de visualizaciones -->
   <div class="mt-4 grid grid-cols-2 gap-4">
-    <div class="bg-gray-100 rounded-xl p-6 shadow-sm flex flex-col items-center justify-center">
-      <svg class="w-8 h-8 mb-2 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none"
-           viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M3 5h18M3 10h18M3 15h18M3 20h18"/>
-      </svg>
-      <p class="text-xs text-gray-600 text-center">Visualización<br>Vestimenta</p>
+    <div *ngFor="let v of visualizaciones"
+      class="bg-gray-100 rounded-xl p-4 shadow-sm flex flex-col items-center justify-center">
+
+      <!-- Imagen -->
+      <img [src]="'data:image/jpeg;base64,' + v.imagen" alt="visualización"
+        class="w-20 h-20 object-cover rounded-lg mb-2" />
+
+      <!-- Fecha -->
+      <p class="text-[10px] text-gray-500 text-center">
+        {{ v.fechaCreado | date:'short' }}
+      </p>
     </div>
-    <!-- Puedes duplicar más tarjetas aquí -->
   </div>
 </div>
