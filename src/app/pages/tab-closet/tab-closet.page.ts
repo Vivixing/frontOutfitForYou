@@ -14,6 +14,8 @@ import { Router } from '@angular/router';
 export class TabClosetPage implements OnInit {
 
   prendas: any[] = [];
+  prendasFiltradas: any[] = [];
+  isLoading: boolean = true;
 
   constructor(
     private router: Router, 
@@ -34,21 +36,66 @@ export class TabClosetPage implements OnInit {
   }
 
   async cargarPrendas(){
-    
+
+    this.isLoading = true;
     const usuarioId = this.authService.idUsuarioLogueado();
-    console.log('Usuario obtenido por ID', usuarioId);
+    const loading = await this.uiService.presentLoading('Cargando Prendas...');
+
     if(!usuarioId) {
       this.uiService.showAlert('No se encontró el id del usuario')
     }
 
     try{
+
       const response = await this.prendaService.obtenerPrendasPorIdUsuario(usuarioId);
-      this.prendas = response.data;
-      console.log("Lista de prendas por Id usuario", this.prendas);
+      console.log('Prendas:',response)
+      this.prendas = response.data.filter((prenda:any )=> prenda.estado === true)
+      this.prendasFiltradas = [...this.prendas];
+
     }catch(error){
+
       console.error('Error al cargar prendas:', error);
+      this.uiService.showAlert('Error al cragar prendas')
+
+    }finally{
+      loading.dismiss();
+      this.isLoading = false;
     }
 
+  }
+
+  async eliminarPrenda(prendaId: string){
+    const confirm = await this.uiService.confirmDeleteClothe();
+    if (!confirm) return;
+
+    const loading = await this.uiService.presentLoading('Eliminando...');
+    try{
+      await this.prendaService.eliminarPrenda(prendaId);
+      this.prendasFiltradas = this.prendasFiltradas.filter(prenda => prenda._id !== prendaId)
+      this.uiService.showSuccessDelete('Prenda eliminada correctamente');
+    }catch (error){
+      console.error('Error al eliminar favorito', error);
+      this.uiService.showAlert('Error al eliminar favorito');
+    } finally{
+      loading.dismiss();
+    }
+  }
+
+  aplicarFiltroCategoria(categoria?: string) {
+    console.log('Categoría seleccionada:', categoria);
+    if (!categoria) {
+      this.prendasFiltradas = [...this.prendas];
+    } else {
+      this.prendasFiltradas = this.filtrarPrendasPorCategoria(categoria);
+    }
+    console.log('Prendas filtradas:', this.prendasFiltradas);
+  }
+
+  filtrarPrendasPorCategoria(categoria: string) {
+    console.log('Filtrando por categoría:', categoria);
+    console.log('Prendas disponibles:', this.prendas);
+    const response = this.prendas.filter(prenda => prenda.tipoPrendaId?.categoria === categoria);
+    return response
   }
 
   irAtabAgregarPrenda(){

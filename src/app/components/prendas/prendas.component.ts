@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,12 +9,18 @@ import { Router } from '@angular/router';
 })
 export class PrendasComponent  implements OnInit {
 
+  @Input() isLoading: boolean = false;
   @Input() prendas: any[] = [];
+  @Input() prendasFiltradas: any = [];
+
+  @Output() aplicarFiltroCategoriaEvent = new EventEmitter<string>()
   @Output() VerPrendaEvent= new EventEmitter<void>();
+  @Output() eliminarPrendaEvent = new EventEmitter<string>();
 
   constructor(private router:Router) { }
 
   ngOnInit() {}
+
 
   verPrenda(){
     this.VerPrendaEvent.emit();
@@ -24,6 +30,14 @@ export class PrendasComponent  implements OnInit {
     // Valida colores hexadecimales de 3 o 6 caracteres (sin incluir el '#')
     const hexPattern = /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
     return hexPattern.test(color);
+  }
+
+  onAplicarFiltro(categoria?: string) {
+    this.aplicarFiltroCategoriaEvent.emit(categoria);
+  }
+
+  onEliminarPrenda(prendaId: string) {
+    this.eliminarPrendaEvent.emit(prendaId);
   }
 
   irAtabEditarPrenda(prendaId: string){

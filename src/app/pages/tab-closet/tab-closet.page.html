@@ -15,5 +15,12 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <app-prendas [prendas]="prendas" (VerPrendaEvent)="cargarPrendas()"></app-prendas>
+  <app-prendas 
+  [prendas]="prendas" 
+  [prendasFiltradas]="prendasFiltradas"
+  (VerPrendaEvent)="cargarPrendas()"
+  (aplicarFiltroCategoriaEvent)="aplicarFiltroCategoria($event)"
+  (eliminarPrendaEvent)="eliminarPrenda($event)"
+
+  [isLoading]="isLoading"></app-prendas>
 </ion-content>

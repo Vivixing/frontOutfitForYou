@@ -56,7 +56,7 @@ export class Tab2Page implements OnInit {
     try{
       await this.favoritoService.eliminarFavorito(favoritoId);
       this.favoritos = this.favoritos.filter(favorito => favorito._id !== favoritoId);
-      this.uiService.showSuccessDeleteFavorite('Vestuario eliminado correctamente');
+      this.uiService.showSuccessDelete('Vestuario eliminado correctamente');
     }catch (error){
       console.error('Error al eliminar favorito', error);
       this.uiService.showAlert('Error al eliminar favorito');

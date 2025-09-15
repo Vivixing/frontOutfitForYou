@@ -40,7 +40,7 @@ export class UiService {
     await alert.present();
   }
 
-  async showSuccessDeleteFavorite(mensaje: string) {
+  async showSuccessDelete(mensaje: string) {
     const alert = await this.alertController.create({
       header: '✅ Eliminado',
       subHeader: mensaje,
@@ -90,6 +90,29 @@ export class UiService {
       const alert = await this.alertController.create({
         header : '¿Eliminar favorito?',
         message: '¿Quieres eliminar este vestuario de favoritos? ⚠️ Si lo eliminas, no se podrá recuperar este vestuario y tendrás que iniciar una nueva recomendación.',
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: () => resolve(false),
+          },
+          {
+            text: 'Eliminar',
+            role: 'destructive',
+            handler: () => resolve(true),
+          }
+        ]
+      });
+      await alert.present();
+    });
+  }
+
+  async confirmDeleteClothe(): Promise<boolean>{
+    return new Promise (async (resolve) => {
+      const alert = await this.alertController.create({
+        header : '¿Eliminar prenda?',
+        message: '¿Estás seguro que deseas eliminar esta prenda?',
         buttons: [
           {
             text: 'Cancelar',

@@ -95,7 +95,17 @@ export class PrendaService {
       return await this.http.patch<any>(`${this.apiURLPrenda}/update/${id}`, update_prenda).toPromise();
     }catch (error: any){
       let mensajeError = procesarErrorHttp(error);
-      console.error('Desde el front: Error al actualizar la prenda', mensajeError);
+      console.error('Desde el front: Error al editar la prenda', mensajeError);
+      throw new Error(mensajeError)
+    }
+  }
+
+  async eliminarPrenda(prenda_id:string):Promise<any>{
+    try{
+      return await this.http.delete<any>(`${this.apiURLPrenda}/delete/${prenda_id}`).toPromise();
+    }catch(error){
+      let mensajeError = procesarErrorHttp(error);
+      console.error('Desde el front: Error al eliminar la prenda', mensajeError);
       throw new Error(mensajeError)
     }
   }
