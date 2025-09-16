@@ -1,13 +1,26 @@
-<img src="../../assets/fondoEvento.svg" alt="fondo evento">
-<div class="max-w-sm mx-auto bg-[#FBE6D3] rounded-3xl shadow-md overflow-hidden p-6">
-  <h2 class="text-lg font-semibold text-[#4A3F35] mb-4">¿Para qué evento necesitas el vestuario?</h2>
-  <textarea
-    class="w-full h-32 p-3 rounded-md border border-[#E6CFC0] focus:outline-none focus:ring-2 focus:ring-[#D6A77A] placeholder-[#A59F9C] resize-none"
-    placeholder="Escribe algo como ‘Cena formal’ o ‘Salida con amigos’" [(ngModel)]="ocasion" (ngModelChange)="ocasionChange.emit($event)"
-  ></textarea>
-  <button class="mt-4 w-full bg-[#E39D7C] hover:bg-[#C48465] text-white font-semibold py-2 px-4 rounded-full transition duration-300 flex items-center justify-center"
-    (click)="generar()">
-    <img class="w-6 h-6 mr-2" src="https://img.icons8.com/material-outlined/24/FFFFFF/ai-generated-image--v1.png" alt="ai-generated-image--v1"/>
-    Generar Recomendación
-  </button>
+<div class="relative min-h-full bg-cover bg-center w-full flex items-center justify-center p-4 sm:p-6"
+  style="background-image: url('../../assets/fondoEvento.svg')">
+
+  <div class="absolute inset-0 bg-black/10"></div>
+
+  <div class="relative z-10 w-full max-w-sm bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl p-6 sm:p-8 text-center">
+
+    <h2 class="text-xl sm:text-2xl font-bold mb-6">
+      ¿Para qué evento necesitas el vestuario?
+    </h2>
+
+    <textarea
+      class="w-full h-32 p-4 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F4CFA6] placeholder-gray-400 resize-none text-base transition-all duration-300 shadow-inner"
+      placeholder="Escribe algo como ‘Cena formal’ o ‘Salida con amigos’" [(ngModel)]="ocasion"
+      (ngModelChange)="ocasionChange.emit($event)">
+    </textarea>
+
+    <button
+      class="mt-6 w-full bg-[#E39D7C] hover:bg-[#C48465] text-white font-bold py-4 rounded-full transition-colors duration-300 shadow-lg flex items-center justify-center text-base"
+      (click)="generar()">
+      <img class="w-6 h-6 mr-2" src="https://img.icons8.com/material-outlined/24/FFFFFF/ai-generated-image--v1.png"
+        alt="ai-generated-image" />
+      Generar Recomendación
+    </button>
+  </div>
 </div>

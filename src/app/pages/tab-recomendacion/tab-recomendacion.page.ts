@@ -25,6 +25,7 @@ export class TabRecomendacionPage implements OnInit {
     console.log('Vestuario recuperado', this.vestuarioSugerido);
   }
 
+
   goBack() {
     this.navCtrl.back();
   }

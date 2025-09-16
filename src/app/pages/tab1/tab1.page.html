@@ -2,9 +2,16 @@
   <ion-toolbar>
     <div class="w-full max-w-xs p-4">
       <!-- Perfil usuario -->
-      <div class="flex items-center space-x-2 mb-4">
-        <img src="https://img.icons8.com/color/48/user-male-circle--v1.png" alt="avatar" class="w-8 h-8 rounded-full">
-        <span class="bg-[color:--ion-icons-bg-60] text-white text-sm px-3 py-1 rounded-full">{{nombre}}</span>
+      <div class="flex items-center space-x-3 mb-4">
+        <!-- Contenedor del avatar -->
+        <div class="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-[#FFEADF] shadow-md flex items-center justify-center">
+          <ion-icon name="person-outline" class="text-lg sm:text-xl md:text-2xl text-[#D6A77A]"></ion-icon>
+        </div>
+
+        <!-- Nombre usuario -->
+        <span class="bg-[color:--ion-icons-bg-60] text-white text-xs sm:text-sm md:text-base px-2 sm:px-3 py-1 rounded-full truncate max-w-[120px]">
+          {{nombre}}
+        </span>
       </div>
     </div>
   </ion-toolbar>
@@ -12,6 +19,8 @@
 
 <ion-content [fullscreen]="true" class="ion-padding">
   <app-recomendacion-inicio
-  [visualizaciones]="visualizaciones"
+    [isLoading]="isLoading"
+    [visualizaciones]="visualizaciones"
+    (cargarVisualizacionesEvent)="cargarVisualizaciones()"
   ></app-recomendacion-inicio>
 </ion-content>

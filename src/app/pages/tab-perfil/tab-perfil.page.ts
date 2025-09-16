@@ -16,9 +16,13 @@ export class TabPerfilPage implements OnInit {
   constructor(
     private navCtrl: NavController, 
     private authService: AuthService, 
-    private usuarioService: UsuarioService) { }
+    private usuarioService: UsuarioService
+  ) { }
 
-  async ngOnInit() {
+   ngOnInit() {
+  }
+
+  async ionViewWillEnter(){
     this.nombre = await this.usuarioService.obtenerNombreUsuarioLogueado(this.authService);
   }
   

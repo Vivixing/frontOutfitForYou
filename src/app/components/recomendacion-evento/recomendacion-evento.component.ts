@@ -28,6 +28,7 @@ export class RecomendacionEventoComponent  implements OnInit {
     console.log("Vestuario recibido en el hijo:", this.vestuarioSugerido.data);
   }
 
+
   cargarImagenUsuario(event:any){
     this.capturarImagenUsuarioEvent.emit(event);
   }

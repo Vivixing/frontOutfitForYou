@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, signal } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,8 +19,12 @@ export class PrendasComponent  implements OnInit {
 
   constructor(private router:Router) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.verPrenda()
+  }
 
+  ionViewWillEnter() {
+  }
 
   verPrenda(){
     this.VerPrendaEvent.emit();
@@ -42,6 +46,10 @@ export class PrendasComponent  implements OnInit {
 
   irAtabEditarPrenda(prendaId: string){
     this.router.navigate(['/tabs/tabs/tabEditarPrenda'], {queryParams: { id: prendaId } });
+  }
+
+  irAtabAgregarPrenda() { 
+    this.router.navigate(['/tabs/tabs/tabAgregarPrenda'])
   }
 
 }

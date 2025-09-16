@@ -1,4 +1,5 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recomendacion-inicio',
@@ -8,10 +9,22 @@ import { Component, OnInit, Input} from '@angular/core';
 })
 export class RecomendacionInicioComponent  implements OnInit {
 
+  @Input() isLoading: boolean = false;
   @Input() visualizaciones: any[] = [];
+  @Output() cargarVisualizacionesEvent = new EventEmitter<any>();
 
-  constructor() { }
+  constructor(
+    private router:Router
+  ) {  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
+  cargaVisualizacion(){
+    this.cargarVisualizacionesEvent.emit();
+  }
+
+  irAPedirRecomendacion() { 
+    this.router.navigate(['/tabs/tabs/tab3'])
+  }
 }

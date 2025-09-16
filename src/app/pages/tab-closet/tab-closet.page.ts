@@ -27,12 +27,13 @@ export class TabClosetPage implements OnInit {
 
   ngOnInit() {}
 
-  ionViewWillEnter() {
-    this.cargarPrendas();
-  }
-
   goBack() {
     this.navCtrl.back();
+  }
+
+  ionViewWillEnter() {
+    // ✅ se ejecuta SIEMPRE que entres a la página
+    this.cargarPrendas();
   }
 
   async cargarPrendas(){
@@ -70,8 +71,11 @@ export class TabClosetPage implements OnInit {
 
     const loading = await this.uiService.presentLoading('Eliminando...');
     try{
+
       await this.prendaService.eliminarPrenda(prendaId);
-      this.prendasFiltradas = this.prendasFiltradas.filter(prenda => prenda._id !== prendaId)
+
+      this.prendas = this.prendas.filter(prenda => prenda._id !== prendaId);
+      this.prendasFiltradas = this.prendasFiltradas.filter(prenda => prenda._id !== prendaId);
       this.uiService.showSuccessDelete('Prenda eliminada correctamente');
     }catch (error){
       console.error('Error al eliminar favorito', error);

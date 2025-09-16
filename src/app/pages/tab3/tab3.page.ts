@@ -19,41 +19,49 @@ export class Tab3Page implements OnInit {
   vestuarioSugerido: any[] = [];
   usuarioId: string = '';
 
+  constructor(
+    private navCtrl: NavController,
+    private authService: AuthService,
+    private recomendacionService: RecomendacionService,
+    private localStorageService: LocalStorageService,
+    private router: Router,
+    private uiService: UiService
+  ) { }
+
   ngOnInit() {
-    this.usuarioId = this.authService.idUsuarioLogueado();
-    console.log('ID de usuario logueado:', this.usuarioId);
+  
   }
 
-  constructor(
-    private navCtrl: NavController, 
-    private authService: AuthService, 
-    private recomendacionService: RecomendacionService, 
-    private localStorageService:LocalStorageService , 
-    private router: Router, 
-    private uiService: UiService
-  ) {}
+  ionViewWillEnter(){
+    this.usuarioId = this.authService.idUsuarioLogueado();
+  }
 
   goBack() {
     this.navCtrl.back();
   }
 
-   async generarRecomendacion() {
+  async generarRecomendacion() {
 
-    if (!this.ocasion || this.ocasion.trim()===""){
+    if (!this.ocasion || this.ocasion.trim() === "") {
       this.uiService.showAlert("Debes ingresar una ocasión antes de generar la recomendación");
       return;
     }
 
+    const loading = await this.uiService.presentLoading('Generando una recomendación...');
+
     try {
       this.localStorageService.setItem('ocasion', this.ocasion);
-      this.vestuarioSugerido = await this.recomendacionService.recomendacion(this.usuarioId, this.ocasion);    
-      console.log('Vestuario sugerido:', this.vestuarioSugerido);
+      this.vestuarioSugerido = await this.recomendacionService.recomendacion(this.usuarioId, this.ocasion);
+      
       this.localStorageService.setItem('vestuarioSugerido', this.vestuarioSugerido);
       this.router.navigate(['/tabs/tabs/tabRecomendacion']);
+
     } catch (error: any) {
       const mensajeError = procesarErrorHttp(error);
       console.error('Error desde el front al generar la recomendación:', mensajeError);
       this.uiService.showAlert(mensajeError);
+    }finally {
+      loading.dismiss(); 
     }
   }
 

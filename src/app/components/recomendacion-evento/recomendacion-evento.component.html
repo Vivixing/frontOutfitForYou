@@ -1,66 +1,63 @@
-<ion-content *ngIf="vestuarioSugerido?.data?.length > 0" class="p-4 font-sans">
-  <!-- Sección de prendas -->
-  <div class="flex justify-between gap-3">
-    <!-- Prenda Superior -->
-    <ion-card class="w-1/2 rounded-2xl shadow-md">
-      <ion-card-header class="text-center text-sm font-semibold text-[color:--ion-text-color]">
-        Prenda Superior
-      </ion-card-header>
-      <ion-card-content class="flex flex-col items-center">
-        <img *ngIf="prendaSuperior?.imagen" [src]="'data:image/jpeg;base64,' + prendaSuperior.imagen" alt="Prenda superior">
-        <div class="flex items-center justify-between border-t pt-2 w-full">
-          <input type="text" placeholder="{{ prendaSuperior?.nombre }}" class="w-full bg-transparent outline-none text-center text-sm" disabled>
-        </div>
-      </ion-card-content>
-    </ion-card>
+<ion-content *ngIf="vestuarioSugerido?.data?.length > 0" class="p-4 sm:p-8 font-sans">
+  
+  <div class="max-w-2xl mx-auto space-y-8">
+    
+    <h1 class="text-2xl sm:text-3xl font-extrabold text-center">
+      Tu conjunto ideal
+    </h1>
 
-    <!-- Prenda Inferior -->
-    <ion-card class="w-1/2 rounded-2xl shadow-md">
-      <ion-card-header class="text-center text-sm font-semibold text-[color:--ion-text-color]">
-        Prenda Inferior
-      </ion-card-header>
-      <ion-card-content class="flex flex-col items-center">
-        <img *ngIf="prendaInferior?.imagen" [src]="'data:image/jpg;base64,' + prendaInferior.imagen" alt="Prenda inferior">
-        <div class="flex items-center justify-between border-t pt-2 w-full">
-          <input type="text" placeholder="{{ prendaInferior?.nombre }}" class="w-full bg-transparent outline-none text-center text-sm" disabled>
-        </div>
-      </ion-card-content>
-    </ion-card>
+    <div class="flex justify-center gap-4 sm:gap-6">
+      <ion-card class="w-1/2 rounded-2xl shadow-lg border border-gray-100 p-4">
+        <ion-card-header class="text-center text-sm text-[#735E51] font-bold">
+          Prenda Superior
+        </ion-card-header>
+        <ion-card-content class="flex flex-col items-center">
+          <div class="w-full h-32 flex items-center justify-center mb-2">
+            <img *ngIf="prendaSuperior?.imagen" [src]="'data:image/jpeg;base64,' + prendaSuperior.imagen" alt="Prenda superior" class="max-w-full max-h-full object-contain" />
+          </div>
+          <p class="text-center text-sm text-[#957A6A] font-medium mt-2">
+            {{ prendaSuperior?.nombre }}
+          </p>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="w-1/2 rounded-2xl shadow-lg border border-gray-100 p-4">
+        <ion-card-header class="text-center text-sm font-bold text-[#735E51]">
+          Prenda Inferior
+        </ion-card-header>
+        <ion-card-content class="flex flex-col items-center">
+          <div class="w-full h-32 flex items-center justify-center mb-2">
+            <img *ngIf="prendaInferior?.imagen" [src]="'data:image/jpg;base64,' + prendaInferior.imagen" alt="Prenda inferior" class="max-w-full max-h-full object-contain" />
+          </div>
+          <p class="text-center text-sm text-[#957A6A] font-medium mt-2">
+            {{ prendaInferior?.nombre }}
+          </p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <div class="mt-8">
+      <h2 class="text-lg font-bold mb-1">Tu foto</h2>
+      <p class="text-sm text-gray-500 mb-3">Sube una imagen de cuerpo completo para probarte el vestuario.</p>
+      
+      <ion-card class="rounded-2xl shadow-lg border border-gray-100 h-64 relative overflow-hidden cursor-pointer" (click)="fileInput.click()">
+        <ion-card-content class="flex flex-col items-center justify-center h-full p-0">
+          <img *ngIf="imagenUsuario" [src]="imagenUsuario" alt="Foto cuerpo completo" class="w-full h-full object-cover rounded-2xl"/>
+          
+          <ng-container *ngIf="!imagenUsuario">
+            <ion-icon name="image-outline" class="text-5xl text-gray-400 mb-2"></ion-icon>
+            <span class="text-gray-500 text-sm font-medium">Toca para subir tu foto</span>
+          </ng-container>
+        </ion-card-content>
+
+        <input type="file" accept="image/*" hidden #fileInput (change)="cargarImagenUsuario($event)"/>
+
+      </ion-card>
+    </div>
+
+    <ion-button expand="block" shape="round" class="mt-6 shadow-lg" (click)="irAtabVisualizacion()">
+      <ion-icon slot="start" name="sparkles-outline"></ion-icon>
+      Generar Visualización
+    </ion-button>
   </div>
-
-  <!-- Subir foto -->
-  <div class="mt-6">
-    <h2 class="text-base font-semibold mb-1">Subir Foto</h2>
-    <p class="text-sm text-gray-500 mb-3">Carga una imagen para visualizar como te quedaría este vestuario.</p>
-
-    <ion-card class="rounded-2xl shadow-md flex items-center justify-center h-36">
-      <ion-card-content class="flex flex-col items-center justify-center h-full">
-        <!-- Mostrar preview si ya cargó una imagen -->
-        <img *ngIf="imagenUsuario" [src]="imagenUsuario" alt="Foto cuerpo completo" class="w-full h-full object-cover rounded-2xl"/>
-        <!-- Placeholder si aún no hay imagen -->
-        <ng-container *ngIf="!imagenUsuario">
-          <ion-icon name="image-outline" class="text-3xl text-gray-400 mb-2"></ion-icon>
-          <span class="text-gray-500 text-sm">Subir foto de cuerpo completo</span>
-        </ng-container>
-      </ion-card-content>
-
-      <!-- Input invisible -->
-      <input type="file" accept="image/*" hidden #fileInput (change)="cargarImagenUsuario($event)"/>
-
-      <!-- Botón para abrir el input -->
-      <button (click)="fileInput.click()"
-        class="absolute bottom-2 right-2 bg-[#E39D7C] hover:bg-[#C48465] text-white px-3 py-1 text-sm rounded-full">
-        Seleccionar
-      </button>
-
-    </ion-card>
-  </div>
-
-  <!-- Botón de acción -->
-  <button class="mt-4 w-full bg-[#E39D7C] hover:bg-[#C48465] text-white font-semibold py-2 px-4 rounded-full transition duration-300 flex items-center justify-center"
-    (click)="irAtabVisualizacion()">
-    <img class="w-6 h-6 mr-2" src="https://img.icons8.com/stamp/32/FFFFFF/t-shirt-on-hanger.png" alt="t-shirt-on-hanger"/>
-    Generar Visualización
-  </button>
-
 </ion-content>

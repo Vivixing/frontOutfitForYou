@@ -24,8 +24,11 @@ export class Tab2Page implements OnInit {
   ) {}
 
   ngOnInit(){
+  }
+
+  ionViewWillEnter(){
     this.usuarioId = this.authService.idUsuarioLogueado();
-    console.log('UsuarioId',this.usuarioId);
+    this.cargarFavoritos()
   }
 
   goBack() {

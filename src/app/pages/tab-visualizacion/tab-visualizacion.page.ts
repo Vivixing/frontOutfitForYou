@@ -22,17 +22,16 @@ export class TabVisualizacionPage implements OnInit {
   ocasion: string = '';
 
   constructor(
-    private visualizacionService:VisualizacionService,
+    private visualizacionService: VisualizacionService,
     private localStorageService: LocalStorageService,
-    private recomendacionService: RecomendacionService, 
+    private recomendacionService: RecomendacionService,
     private favoritoService: FavoritoService,
-    private navCtrl: NavController, 
-    private uiService: UiService, 
-    private router:Router, 
+    private navCtrl: NavController,
+    private uiService: UiService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
-
     this.ocasion = this.localStorageService.getItem('ocasion');
     console.log("Ocasión en el tab visualización:", this.ocasion)
 
@@ -43,10 +42,10 @@ export class TabVisualizacionPage implements OnInit {
 
       const personaFile = this.base64ToFile(visualizacionData.persona, "persona.png");
 
-      const prendasFiles = visualizacionData.prendas.map((p: any, i:number) => {
+      const prendasFiles = visualizacionData.prendas.map((p: any, i: number) => {
         const b64 = p.imagen.startsWith("data:") ? p.imagen : `data:image/png;base64,${p.imagen}`;
-        return this.base64ToFile(b64,`prenda_${i}.png`);
-      } );
+        return this.base64ToFile(b64, `prenda_${i}.png`);
+      });
 
       if (personaFile && prendasFiles.length > 0) {
         this.visualizarOutfit(personaFile, prendasFiles);
@@ -58,17 +57,17 @@ export class TabVisualizacionPage implements OnInit {
     this.navCtrl.back();
   }
 
-  async visualizarOutfit(person:File, garments: File[]){
-    this.loading = true;
+  async visualizarOutfit(person: File, garments: File[]) {
+    const loading = await this.uiService.presentLoading('Generando Visualización...');
     this.error = null;
-    try{
-      const response = await this.visualizacionService.visualizacion(person,garments);
-      this.imageBase64 =`data:image/png;base64,${response.image_base64}`;
-    }catch (err:any){
+    try {
+      const response = await this.visualizacionService.visualizacion(person, garments);
+      this.imageBase64 = `data:image/png;base64,${response.image_base64}`;
+    } catch (err: any) {
       this.error = err.message;
       this.uiService.showAlert('Error al generar la visualización')
-    } finally{
-      this.loading = false;
+    } finally {
+      loading.dismiss();
     }
   }
 
@@ -84,61 +83,72 @@ export class TabVisualizacionPage implements OnInit {
     return new File([u8arr], filename, { type: mime });
   }
 
-  async agregarAFavoritos(){
-    try{
+  async agregarAFavoritos() {
 
+    const loading = await this.uiService.presentLoading('Agregando a favoritos...');
+
+    try {
       const visualizacionData = this.localStorageService.getItem('visualizacionData');
 
-      if(!visualizacionData?.prendas[0]?.usuarioId?.id){
+      if (!visualizacionData?.prendas[0]?.usuarioId?.id) {
         this.uiService.showAlert('No se encontró el ID de usuario');
         return;
       }
-      
-      const usuarioId = visualizacionData.prendas[0].usuarioId.id;     
+
+      const usuarioId = visualizacionData.prendas[0].usuarioId.id;
       await this.guardarRecomendacion(usuarioId, this.ocasion);
 
-      try{
+      try {
         const vestuarioId = this.localStorageService.getItem('vestuarioId');
-        if(!vestuarioId){
+        if (!vestuarioId) {
           this.uiService.showAlert('No se encontró el ID de vestuario');
           return;
         }
+
+        if (!this.imageBase64) {
+          this.uiService.showAlert('No se generó la visualización');
+          return;
+        }
+        const imagen_visualizacion = visualizacionData.persona.replace(/^data:image\/\w+;base64,/, "");
+
         await this.favoritoService.agregarFavorito(usuarioId, vestuarioId);
-        const imagen_visualizacion = visualizacionData.persona.replace(/^data:image\/\w+;base64,/, ""); // quita el prefijo data:image/png;base64,
         await this.guardarVisualizacion(usuarioId, vestuarioId, imagen_visualizacion);
+
         this.uiService.showSuccessAddClothe('Agregado a Favoritos');
         localStorage.clear();
         this.router.navigate(['tabs/tabs/tab2']);
-      }catch(error:any){
+      } catch (error: any) {
         console.error('Error al agregar a favoritos:', error);
         this.uiService.showAlert('Error al agregar a favoritos');
       }
-    }catch(error:any){
+    } catch (error: any) {
       console.error('Error al agregar a favoritos:', error);
       this.uiService.showAlert('Error al agregar a favoritos');
+    } finally {
+      loading.dismiss();
     }
   }
 
   async guardarRecomendacion(usuarioId: string, ocasion: string) {
-    try{
+    try {
       const response = await this.recomendacionService.guardarRecomendacion(usuarioId, ocasion);
       console.log('Respuesta al guardar la recomendación:', response);
-      if(response?.data?.vestuarioId){
+      if (response?.data?.vestuarioId) {
         this.localStorageService.setItem('vestuarioId', response.data.vestuarioId);
-      }else {
+      } else {
         this.uiService.showWarningMessage(`No vino vestuarioId en la respuesta del back: ${JSON.stringify(response)}`);
       }
-    }catch(error:any){
+    } catch (error: any) {
       const mensajeError = procesarErrorHttp(error);
       console.error('Error desde el front al guardar la recomendación:', mensajeError);
       this.uiService.showAlert(mensajeError);
     }
   }
 
-  async guardarVisualizacion(usuarioId:string, vestuarioId:string, imagen_visualizacion:string){
-    try{
+  async guardarVisualizacion(usuarioId: string, vestuarioId: string, imagen_visualizacion: string) {
+    try {
       await this.visualizacionService.guardarVisualizacion(usuarioId, vestuarioId, imagen_visualizacion);
-    }catch(error:any){
+    } catch (error: any) {
       const mensajeError = procesarErrorHttp(error);
       console.error('Error desde el front al guardar la visualización:', mensajeError);
       this.uiService.showAlert(mensajeError);
