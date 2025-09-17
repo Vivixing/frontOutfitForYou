@@ -32,7 +32,6 @@ export class TabClosetPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    // ✅ se ejecuta SIEMPRE que entres a la página
     this.cargarPrendas();
   }
 
@@ -47,39 +46,29 @@ export class TabClosetPage implements OnInit {
     }
 
     try{
-
       const response = await this.prendaService.obtenerPrendasPorIdUsuario(usuarioId);
       console.log('Prendas:',response)
       this.prendas = response.data.filter((prenda:any )=> prenda.estado === true)
       this.prendasFiltradas = [...this.prendas];
-
-    }catch(error){
-
-      console.error('Error al cargar prendas:', error);
-      this.uiService.showAlert('Error al cragar prendas')
-
+    }catch(error:any){
+      this.uiService.showAlert(error)
     }finally{
       loading.dismiss();
       this.isLoading = false;
     }
-
   }
 
   async eliminarPrenda(prendaId: string){
     const confirm = await this.uiService.confirmDeleteClothe();
     if (!confirm) return;
-
     const loading = await this.uiService.presentLoading('Eliminando...');
     try{
-
       await this.prendaService.eliminarPrenda(prendaId);
-
       this.prendas = this.prendas.filter(prenda => prenda._id !== prendaId);
       this.prendasFiltradas = this.prendasFiltradas.filter(prenda => prenda._id !== prendaId);
       this.uiService.showSuccessDelete('Prenda eliminada correctamente');
-    }catch (error){
-      console.error('Error al eliminar favorito', error);
-      this.uiService.showAlert('Error al eliminar favorito');
+    }catch(error:any){
+      this.uiService.showAlert(error);
     } finally{
       loading.dismiss();
     }

@@ -56,10 +56,8 @@ export class Tab3Page implements OnInit {
       this.localStorageService.setItem('vestuarioSugerido', this.vestuarioSugerido);
       this.router.navigate(['/tabs/tabs/tabRecomendacion']);
 
-    } catch (error: any) {
-      const mensajeError = procesarErrorHttp(error);
-      console.error('Error desde el front al generar la recomendación:', mensajeError);
-      this.uiService.showAlert(mensajeError);
+    } catch (error:any) {
+      this.uiService.showAlert(error);
     }finally {
       loading.dismiss(); 
     }

@@ -53,7 +53,7 @@ export class TabLoginPage implements OnInit {
       await this.uiService.showSuccessWelcome('Credenciales válidas. Bienvenido/a 😄');
       this.router.navigate(['tabs/tabs/tab1']);
     }catch(error: any) {
-      this.uiService.showAlert(error.message);
+      this.uiService.showAlert(error);
     }
   }
 }

@@ -18,7 +18,6 @@ export class TabVisualizacionPage implements OnInit {
 
   imageBase64: string | null = null;
   loading: boolean = false;
-  error: string | null = null;
   ocasion: string = '';
 
   constructor(
@@ -59,13 +58,11 @@ export class TabVisualizacionPage implements OnInit {
 
   async visualizarOutfit(person: File, garments: File[]) {
     const loading = await this.uiService.presentLoading('Generando Visualización...');
-    this.error = null;
     try {
       const response = await this.visualizacionService.visualizacion(person, garments);
       this.imageBase64 = `data:image/png;base64,${response.image_base64}`;
-    } catch (err: any) {
-      this.error = err.message;
-      this.uiService.showAlert('Error al generar la visualización')
+    } catch(error: any) {
+      this.uiService.showAlert(error)
     } finally {
       loading.dismiss();
     }
@@ -109,7 +106,7 @@ export class TabVisualizacionPage implements OnInit {
           this.uiService.showAlert('No se generó la visualización');
           return;
         }
-        const imagen_visualizacion = visualizacionData.persona.replace(/^data:image\/\w+;base64,/, "");
+        const imagen_visualizacion = this.imageBase64.replace(/^data:image\/\w+;base64,/, "");
 
         await this.favoritoService.agregarFavorito(usuarioId, vestuarioId);
         await this.guardarVisualizacion(usuarioId, vestuarioId, imagen_visualizacion);
@@ -118,12 +115,10 @@ export class TabVisualizacionPage implements OnInit {
         localStorage.clear();
         this.router.navigate(['tabs/tabs/tab2']);
       } catch (error: any) {
-        console.error('Error al agregar a favoritos:', error);
-        this.uiService.showAlert('Error al agregar a favoritos');
+        this.uiService.showAlert(error);
       }
     } catch (error: any) {
-      console.error('Error al agregar a favoritos:', error);
-      this.uiService.showAlert('Error al agregar a favoritos');
+      this.uiService.showAlert(error);
     } finally {
       loading.dismiss();
     }
@@ -139,9 +134,7 @@ export class TabVisualizacionPage implements OnInit {
         this.uiService.showWarningMessage(`No vino vestuarioId en la respuesta del back: ${JSON.stringify(response)}`);
       }
     } catch (error: any) {
-      const mensajeError = procesarErrorHttp(error);
-      console.error('Error desde el front al guardar la recomendación:', mensajeError);
-      this.uiService.showAlert(mensajeError);
+      this.uiService.showAlert(error);
     }
   }
 
@@ -149,9 +142,7 @@ export class TabVisualizacionPage implements OnInit {
     try {
       await this.visualizacionService.guardarVisualizacion(usuarioId, vestuarioId, imagen_visualizacion);
     } catch (error: any) {
-      const mensajeError = procesarErrorHttp(error);
-      console.error('Error desde el front al guardar la visualización:', mensajeError);
-      this.uiService.showAlert(mensajeError);
+      this.uiService.showAlert(error);
     }
   }
 }

@@ -2,23 +2,12 @@
 
   <div class="flex flex-col items-center w-full max-w-sm space-y-8">
 
-    <div *ngIf="loading" class="flex flex-col items-center text-gray-500 space-y-4">
-      <div class="animate-pulse w-72 h-96 bg-gray-200 rounded-3xl"></div>
-      <p class="font-medium text-lg">Generando tu outfit...</p>
-    </div>
-
-    <div *ngIf="error" class="flex flex-col items-center text-red-500 text-center space-y-4">
-      <ion-icon name="warning-outline" class="text-6xl text-red-400"></ion-icon>
-      <p class="font-bold text-lg">¡Ups! Ocurrió un error</p>
-      <p class="text-sm px-4">{{ error }}</p>
-    </div>
-
     <div *ngIf="imageBase64 && !loading"
       class="w-72 h-96 rounded-3xl shadow-xl flex items-center justify-center border border-gray-100 overflow-hidden">
       <img [src]="imageBase64" alt="Outfit generado" class="object-cover w-full h-full" />
     </div>
 
-    <div *ngIf="!imageBase64 && !loading && !error"
+    <div *ngIf="!imageBase64 && !loading"
       class="w-72 h-96 bg-gray-100 rounded-3xl shadow-inner flex flex-col items-center justify-center text-gray-400 space-y-2">
       <ion-icon name="sparkles-outline" class="text-6xl"></ion-icon>
       <p class="text-center font-semibold px-4">Aquí verás tu outfit generado</p>

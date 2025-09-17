@@ -24,8 +24,7 @@ export class VisualizacionService {
       return await this.http.post(`${this.apiURLVisualizacion}/tryon`,formData).toPromise();
     }catch(error:any){
       let mensajeError = procesarErrorHttp(error);
-      console.error('Desde el front: Error al generar la visualización', mensajeError);
-      throw new Error(mensajeError);
+      throw mensajeError;
     }
 
   }
@@ -36,8 +35,7 @@ export class VisualizacionService {
       return await this.http.post(`${this.apiURLVisualizacion}/create`, body).toPromise();
     }catch(error:any){
       let mensajeError = procesarErrorHttp(error);
-      console.error('Desde el front: Error al guardar la visualización', mensajeError);
-      throw new Error(mensajeError);
+      throw mensajeError;
     }
   }
 
@@ -46,8 +44,7 @@ export class VisualizacionService {
       return await this.http.get(`${this.apiURLVisualizacion}/user/${usuarioId}`).toPromise();
     }catch(error:any){
       let mensajeError = procesarErrorHttp(error);
-      console.error('Desde el front: Error al obtener las visualizaciones del usuario', mensajeError);
-      throw new Error(mensajeError);
+      throw mensajeError;
     } 
   }
   

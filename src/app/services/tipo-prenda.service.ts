@@ -18,8 +18,7 @@ export class TipoPrendaService {
       return response;
     }catch(error:any){
       let mensajeError = procesarErrorHttp(error);
-      console.error('Desde el front: Error al obtener todos los tipo prendas', mensajeError);
-      throw new Error(mensajeError);
+      throw mensajeError;
     }
   }
 
@@ -29,8 +28,7 @@ export class TipoPrendaService {
       return response;
     }catch(error:any){
       let mensajeError = procesarErrorHttp(error);
-      console.error('Desde el front: Error al obtener el tipo por categoría', mensajeError);
-      throw new Error(mensajeError);
+      throw mensajeError;
     }
   }
 
@@ -54,8 +52,7 @@ export class TipoPrendaService {
       
     }catch(error:any){
       let mensajeError = procesarErrorHttp(error);
-      console.error('Desde el front: Error al crear el tipoPrenda', mensajeError);
-      throw new Error(mensajeError);
+      throw mensajeError;
     }
     
   }
@@ -65,8 +62,7 @@ export class TipoPrendaService {
       return await this.http.patch<any>(`${this.apiURLTipoPrenda}/update/${id}`, update_tipoPrenda).toPromise();
     } catch (error: any) {
       let mensajeError = procesarErrorHttp(error);
-      console.error('Desde el front: Error al actualizar tipo de prenda', mensajeError);
-      throw new Error(mensajeError);
+      throw mensajeError;
     }
   }
 }

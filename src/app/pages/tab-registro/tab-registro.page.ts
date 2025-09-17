@@ -69,7 +69,7 @@ export class TabRegistroPage implements OnInit {
         this.login(reponse.user_id);
       }
     }catch(error:any){
-      this.uiService.showAlert(error.message || 'Ocurrió un error al crear el usuario.');
+      this.uiService.showAlert(error);
     }
   }
 

@@ -39,9 +39,8 @@ export class Tab1Page implements OnInit {
         this.authService.idUsuarioLogueado()
       );
       this.visualizaciones = response.data;
-    } catch (error) {
-      console.error('Error al obtener visualizaciones:', error);
-      this.uiService.showAlert('Error al cargar visualizaciones');
+    } catch (error:any) {
+      this.uiService.showAlert(error);
     } finally {
       loading.dismiss();
       this.isLoading = false;

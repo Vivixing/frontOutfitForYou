@@ -41,10 +41,8 @@ export class Tab2Page implements OnInit {
     try{
       const response = await this.favoritoService.obtenerFavoritosPorUsuario(this.usuarioId);
       this.favoritos = response.data.filter((favorito: any) => favorito.estado === true);
-      console.log('Favoritos obtenidos:', this.favoritos);
-    }catch(error){
-      console.error('Error al cargar favoritos', error);
-      this.uiService.showAlert('Error al cargar favoritos');
+    }catch(error:any){
+      this.uiService.showAlert(error);
     }finally {
       loading.dismiss();
       this.isLoading = false;
@@ -54,15 +52,13 @@ export class Tab2Page implements OnInit {
   async onEliminarFavorito(favoritoId:string){
     const confirm = await this.uiService.confirmDeleteFavorite();
     if (!confirm) return;
-
     const loading = await this.uiService.presentLoading('Eliminando...');
     try{
       await this.favoritoService.eliminarFavorito(favoritoId);
       this.favoritos = this.favoritos.filter(favorito => favorito._id !== favoritoId);
       this.uiService.showSuccessDelete('Vestuario eliminado correctamente');
-    }catch (error){
-      console.error('Error al eliminar favorito', error);
-      this.uiService.showAlert('Error al eliminar favorito');
+    }catch(error:any){
+      this.uiService.showAlert(`${error}`);
     }finally {
       loading.dismiss();
     }

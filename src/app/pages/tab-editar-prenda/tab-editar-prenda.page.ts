@@ -48,9 +48,8 @@ export class TabEditarPrendaPage implements OnInit {
       const prenda = await this.prendaService.obtenerPrendasPorIdPrenda(id);
       this.prenda = JSON.parse(JSON.stringify(prenda.data));
       this.prendaOriginal = JSON.parse(JSON.stringify(prenda.data));
-    } catch (error) {
-      console.error('Error cargando la prenda', error);
-      this.uiService.showAlert('Error cargando la prenda'); 
+    } catch (error:any) {
+      this.uiService.showAlert(error); 
     }finally{
       loading.dismiss();
     }
@@ -81,9 +80,8 @@ export class TabEditarPrendaPage implements OnInit {
       this.uiService.showSuccessUpdateClothe('Prenda actualizada');
       this.navCtrl.back();
 
-    } catch (error) {
-      console.log('Error al actualizar prenda:', error);
-      this.uiService.showAlert('Error al actualizar la prenda');
+    } catch (error:any) {
+      this.uiService.showAlert(error);
     } finally{
       loading.dismiss();
     }

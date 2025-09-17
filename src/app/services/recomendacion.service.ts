@@ -17,8 +17,7 @@ export class RecomendacionService {
       return await this.http.post<any>(`${this.apiURLRecomendacion}/generate_recomendation/${usuarioId}`, {ocasion}).toPromise();
     }catch (error:any){
       let mensajeError = procesarErrorHttp(error);
-      console.error('Desde el front: Error al generar la recomendación: ', mensajeError);
-      throw new Error(mensajeError);
+      throw mensajeError;
     }
   }
   async guardarRecomendacion(usuarioId: string, ocasion: string): Promise<any> {
@@ -26,8 +25,7 @@ export class RecomendacionService {
       return await this.http.post<any>(`${this.apiURLRecomendacion}/save_recomendation/${usuarioId}`, {ocasion}).toPromise();
     } catch (error: any) {
       let mensajeError = procesarErrorHttp(error);
-      console.error('Desde el front: Error al guardar la recomendación', mensajeError);
-      throw new Error(mensajeError);
+      throw mensajeError;
     }
   }
 }

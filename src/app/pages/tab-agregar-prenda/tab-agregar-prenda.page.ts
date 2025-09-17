@@ -73,9 +73,7 @@ export class TabAgregarPrendaPage implements OnInit {
           }
 
         }catch(error:any){
-          console.error(error);
-          const mensaje = error?.message || 'Error al procesar la imagen';
-          this.uiService.showAlert(mensaje);
+          this.uiService.showAlert(error);
           this.imagen_base64 = base64String;
         } finally {
           loading.dismiss();
@@ -125,13 +123,12 @@ export class TabAgregarPrendaPage implements OnInit {
         imagen_base64: this.imagen_base64
       };
 
-      const response = await this.prendaService.registrarPrenda(prenda);
+      await this.prendaService.registrarPrenda(prenda);
       this.uiService.showSuccessAddClothe('Prenda registrada correctamente');
       this.limpiarCampos();
       this.router.navigate(['/tabs/tabs/tabCloset']);
     }catch(error:any){
-      console.error(error);
-      this.uiService.showAlert('Error al registrar la prenda');
+      this.uiService.showAlert(error);
     } finally {
       loading.dismiss();
     }

@@ -20,8 +20,7 @@ export class FavoritoService {
       return await this.http.post(`${this.apiURLFavorito}/create`, body).toPromise();
     } catch (error: any) {
       let mensajeError = procesarErrorHttp(error);
-      console.error('Desde el front: Error al agregar favorito', mensajeError);
-      throw new Error(mensajeError);
+      throw mensajeError;
     } 
   }
 
@@ -30,8 +29,7 @@ export class FavoritoService {
       return await this.http.get(`${this.apiURLFavorito}/${usuarioId}`).toPromise();
     } catch (error: any) {
       let mensajeError = procesarErrorHttp(error);
-      console.error('Desde el front: Error al obtener favoritos', mensajeError);
-      throw new Error(mensajeError);
+      throw mensajeError;
     }
   }
 
@@ -40,8 +38,7 @@ export class FavoritoService {
       return await this.http.delete(`${this.apiURLFavorito}/delete/${favoritoId}`).toPromise();
     } catch (error:any){
       let mensajeError = procesarErrorHttp(error);
-      console.error('Desde el front: Error al eliminar favorito', mensajeError);
-      throw new Error(mensajeError);
+      throw mensajeError;
     }
   }
 }
