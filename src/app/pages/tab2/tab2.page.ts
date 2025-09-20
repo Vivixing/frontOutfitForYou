@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { FavoritoService } from 'src/app/services/favorito.service';
@@ -21,12 +21,12 @@ export class Tab2Page implements OnInit {
     private favoritoService: FavoritoService,
     private authService: AuthService,
     private uiService: UiService
-  ) {}
+  ) { }
 
-  ngOnInit(){
+  ngOnInit() {
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.usuarioId = this.authService.idUsuarioLogueado();
     this.cargarFavoritos()
   }
@@ -35,31 +35,33 @@ export class Tab2Page implements OnInit {
     this.navCtrl.back();
   }
 
-  async cargarFavoritos(){
+  async cargarFavoritos() {
     this.isLoading = true;
-    const loading = await this.uiService.presentLoading('Cargando Favoritos...');
-    try{
-      const response = await this.favoritoService.obtenerFavoritosPorUsuario(this.usuarioId);
-      this.favoritos = response.data.filter((favorito: any) => favorito.estado === true);
-    }catch(error:any){
+    //const loading = await this.uiService.presentLoading('Cargando Favoritos...');
+    try {
+      this.favoritoService.obtenerFavoritosPorUsuario(this.usuarioId)
+        .then(response => {
+          this.favoritos = response.data.filter((f:any) => f.estado === true);
+        })
+    } catch (error: any) {
       this.uiService.showAlert(error);
-    }finally {
-      loading.dismiss();
+    } finally {
+      //loading.dismiss();
       this.isLoading = false;
     }
   }
 
-  async onEliminarFavorito(favoritoId:string){
+  async onEliminarFavorito(favoritoId: string) {
     const confirm = await this.uiService.confirmDeleteFavorite();
     if (!confirm) return;
     const loading = await this.uiService.presentLoading('Eliminando...');
-    try{
+    try {
       await this.favoritoService.eliminarFavorito(favoritoId);
       this.favoritos = this.favoritos.filter(favorito => favorito._id !== favoritoId);
       this.uiService.showSuccessDelete('Vestuario eliminado correctamente');
-    }catch(error:any){
+    } catch (error: any) {
       this.uiService.showAlert(`${error}`);
-    }finally {
+    } finally {
       loading.dismiss();
     }
   }

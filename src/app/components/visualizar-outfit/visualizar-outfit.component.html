@@ -4,7 +4,7 @@
 
     <div *ngIf="imageBase64 && !loading"
       class="w-72 h-96 rounded-3xl shadow-xl flex items-center justify-center border border-gray-100 overflow-hidden">
-      <img [src]="imageBase64" alt="Outfit generado" class="object-cover w-full h-full" />
+      <img [src]="imageBase64" alt="Outfit generado" class="object-cover w-full h-full"  loading="lazy"/>
     </div>
 
     <div *ngIf="!imageBase64 && !loading"

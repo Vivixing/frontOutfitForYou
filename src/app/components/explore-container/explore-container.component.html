@@ -40,8 +40,8 @@
           @for (prenda of favorito.vestuarioId.prendas; track prenda._id) {
           <div
             class="flex-shrink-0 w-10 h-10 rounded-xl sm:rounded-2xl bg-gray-100 flex items-center justify-center border hover:border-blue-400 transition-colors">
-            <img *ngIf="prenda.imagen" [src]="'data:image/png;base64,' + prenda.imagen" [alt]="prenda.nombre"
-              class="w-full h-full rounded-xl sm:rounded-2xl object-cover" />
+            <img *ngIf="prenda.imagen" [src]="'data:image/png;base64,' + prenda.imagen" [attr.loading]="'lazy'"
+              [alt]="prenda.nombre" class="w-full h-full rounded-xl sm:rounded-2xl object-cover" />
             <svg *ngIf="!prenda.imagen" class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor"
               viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

@@ -4,6 +4,10 @@
     Tu Clóset
   </h2>
 
+  <div *ngIf="isLoading" class="grid grid-cols-2 md:grid-cols-3 gap-4 animate-pulse">
+    <div *ngFor="let i of [1,2,3,4]" class="bg-gray-200 h-40 rounded-lg"></div>
+  </div>
+
   @if (prendasFiltradas.length > 0) {
   <div class="flex items-center justify-center gap-6 mb-10">
 
@@ -26,7 +30,8 @@
     <div class="flex flex-col items-center cursor-pointer group" (click)="onAplicarFiltro('Inferior')">
       <div
         class="w-16 h-16 bg-[#FBEFEA] rounded-full flex items-center justify-center transition-colors group-hover:bg-[#EAB69E]">
-        <img class="w-9 h-9 opacity-30 group-hover:opacity-60" src="https://img.icons8.com/ios/100/trousers.png" alt="trousers" />
+        <img class="w-9 h-9 opacity-30 group-hover:opacity-60" src="https://img.icons8.com/ios/100/trousers.png"
+          alt="trousers" />
       </div>
       <span class="mt-2 text-sm font-medium text-[#BBAAA0] group-hover:text-[#735E51]">Inferior</span>
     </div>
@@ -40,7 +45,7 @@
 
       <div class="w-full h-32 flex items-center justify-center mb-2">
         <img [src]="'data:image/jpeg;base64,' + prenda.imagen" alt="{{ prenda.nombre }}"
-          class="max-w-full max-h-full object-contain" />
+          class="max-w-full max-h-full object-contain" loading="lazy" />
       </div>
 
       <div *ngIf="isHexColorValido(prenda.color)"

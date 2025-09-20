@@ -3,10 +3,9 @@ import { VisualizacionService } from 'src/app/services/visualizacion.service';
 import { RecomendacionService } from '../../services/recomendacion.service';
 import { FavoritoService } from 'src/app/services/favorito.service';
 import { UiService } from 'src/app/services/ui.service';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { procesarErrorHttp } from 'src/app/utils/error-handler';
 
 @Component({
   selector: 'app-tab-visualizacion',
@@ -32,25 +31,25 @@ export class TabVisualizacionPage implements OnInit {
 
   ngOnInit() {
     this.ocasion = this.localStorageService.getItem('ocasion');
-    console.log("Ocasión en el tab visualización:", this.ocasion)
-
     const visualizacionData = this.localStorageService.getItem('visualizacionData');
-    console.log("Visualización en el tab:", visualizacionData)
 
     if (visualizacionData?.persona) {
+      // 👇 Procesar imágenes de manera diferida (no en el hilo inicial)
+      setTimeout(() => {
+        const personaFile = this.base64ToFile(visualizacionData.persona, "persona.png");
 
-      const personaFile = this.base64ToFile(visualizacionData.persona, "persona.png");
+        const prendasFiles = visualizacionData.prendas.map((p: any, i: number) => {
+          const b64 = p.imagen.startsWith("data:") ? p.imagen : `data:image/png;base64,${p.imagen}`;
+          return this.base64ToFile(b64, `prenda_${i}.png`);
+        });
 
-      const prendasFiles = visualizacionData.prendas.map((p: any, i: number) => {
-        const b64 = p.imagen.startsWith("data:") ? p.imagen : `data:image/png;base64,${p.imagen}`;
-        return this.base64ToFile(b64, `prenda_${i}.png`);
-      });
-
-      if (personaFile && prendasFiles.length > 0) {
-        this.visualizarOutfit(personaFile, prendasFiles);
-      }
+        if (personaFile && prendasFiles.length > 0) {
+          this.visualizarOutfit(personaFile, prendasFiles);
+        }
+      }, 0); // 👈 libera el main thread
     }
   }
+
 
   goBack() {
     this.navCtrl.back();
@@ -69,16 +68,16 @@ export class TabVisualizacionPage implements OnInit {
   }
 
   base64ToFile(base64: string, filename: string): File {
-    const arr = base64.split(',');
-    const mime = arr[0].match(/:(.*?);/)?.[1] || "image/jpeg"; // detecta mime o usa jpeg
-    const bstr = atob(arr.length > 1 ? arr[1] : arr[0]); // quita "data:image/...;base64," si existe
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
+    const [meta, data] = base64.split(',');
+    const mime = meta.match(/:(.*?);/)?.[1] || "image/jpeg";
+    const binary = atob(data);
+    const u8arr = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) {
+      u8arr[i] = binary.charCodeAt(i);
     }
     return new File([u8arr], filename, { type: mime });
   }
+
 
   async agregarAFavoritos() {
 

@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 export class ExploreContainerComponent implements OnInit {
 
   @Input() favoritos: any[] = [];
-  @Input() cargarFavoritos!: () => void; 
   @Input() isLoading: boolean = false;
   @Output() eliminarFavorito = new EventEmitter<string>();
 

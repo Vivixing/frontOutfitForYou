@@ -13,6 +13,7 @@ export class TabPerfilPage implements OnInit {
 
   nombre: string = '';
 
+  
   constructor(
     private navCtrl: NavController, 
     private authService: AuthService, 

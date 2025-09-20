@@ -9,12 +9,12 @@
       <div class="space-y-5">
         <ion-item class="ion-no-padding" fill="outline" shape="round">
           <ion-label position="floating">Correo electrónico</ion-label>
-          <ion-input type="email" [(ngModel)]="email"></ion-input>
+          <ion-input type="email" [(ngModel)]="email" autocomplete="email"></ion-input>
         </ion-item>
 
         <ion-item class="ion-no-padding" fill="outline" shape="round">
           <ion-label position="floating">Contraseña</ion-label>
-          <ion-input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="contrasena"></ion-input>
+          <ion-input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="contrasena" autocomplete="current-password"></ion-input>
           <ion-icon slot="end" [name]="showPassword ? 'eye' : 'eye-off'" class="text-[color:--ion-text-bg-40]" (click)="togglePasswordVisibility()"></ion-icon>
         </ion-item>
 

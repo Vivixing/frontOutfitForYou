@@ -6,7 +6,7 @@
       class="relative w-full aspect-video bg-gray-100 rounded-3xl mb-6 overflow-hidden cursor-pointer group shadow-inner"
       (click)="inputImagen.click()">
 
-      <input #inputImagen type="file" accept="image/*" (change)="capturarImagen($event)" hidden />
+      <input #inputImagen type="file" accept="image/png, image/jpeg" (change)="capturarImagen($event)" hidden />
 
       <img *ngIf="imagenPreview" [src]="imagenPreview" alt="Previsualización de la prenda"
         class="w-full h-full object-contain" />

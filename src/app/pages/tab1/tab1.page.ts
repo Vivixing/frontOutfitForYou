@@ -19,33 +19,29 @@ export class Tab1Page implements OnInit {
   constructor(
     private visualizacionService: VisualizacionService,
     private usuarioService: UsuarioService,
-    private authService: AuthService, 
+    private authService: AuthService,
     private uiService: UiService
-  ) {}
+  ) { }
 
   ngOnInit() {
   }
 
-  async ionViewWillEnter(){
-    this.nombre = await this.usuarioService.obtenerNombreUsuarioLogueado(this.authService);
-    this.cargarVisualizaciones()
-  }
-
-  async cargarVisualizaciones() {
+  async ionViewWillEnter() {
     this.isLoading = true;
-    const loading = await this.uiService.presentLoading('Cargando visualizaciones...');
-     try {
-      const response = await this.visualizacionService.obtenerVisualizacionesPorUsuario(
-        this.authService.idUsuarioLogueado()
-      );
-      this.visualizaciones = response.data;
-    } catch (error:any) {
+    try {
+      const [name, visualizaciones] = await Promise.all([
+        this.usuarioService.obtenerNombreUsuarioLogueado(this.authService),
+        this.visualizacionService.obtenerVisualizacionesPorUsuario(this.authService.idUsuarioLogueado())
+      ]);
+      this.nombre = name;
+      this.visualizaciones = visualizaciones.data;
+    } catch (error: any) {
       this.uiService.showAlert(error);
     } finally {
-      loading.dismiss();
       this.isLoading = false;
     }
   }
+
 
 
 }

@@ -1,7 +1,7 @@
 import { PrendaService } from 'src/app/services/prenda.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { UiService } from 'src/app/services/ui.service';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -39,7 +39,7 @@ export class TabClosetPage implements OnInit {
 
     this.isLoading = true;
     const usuarioId = this.authService.idUsuarioLogueado();
-    const loading = await this.uiService.presentLoading('Cargando Prendas...');
+    //const loading = await this.uiService.presentLoading('Cargando Prendas...');
 
     if(!usuarioId) {
       this.uiService.showAlert('No se encontró el id del usuario')
@@ -47,13 +47,12 @@ export class TabClosetPage implements OnInit {
 
     try{
       const response = await this.prendaService.obtenerPrendasPorIdUsuario(usuarioId);
-      console.log('Prendas:',response)
       this.prendas = response.data.filter((prenda:any )=> prenda.estado === true)
       this.prendasFiltradas = [...this.prendas];
     }catch(error:any){
       this.uiService.showAlert(error)
     }finally{
-      loading.dismiss();
+      //loading.dismiss();
       this.isLoading = false;
     }
   }
@@ -61,7 +60,7 @@ export class TabClosetPage implements OnInit {
   async eliminarPrenda(prendaId: string){
     const confirm = await this.uiService.confirmDeleteClothe();
     if (!confirm) return;
-    const loading = await this.uiService.presentLoading('Eliminando...');
+    //const loading = await this.uiService.presentLoading('Eliminando...');
     try{
       await this.prendaService.eliminarPrenda(prendaId);
       this.prendas = this.prendas.filter(prenda => prenda._id !== prendaId);
@@ -70,7 +69,7 @@ export class TabClosetPage implements OnInit {
     }catch(error:any){
       this.uiService.showAlert(error);
     } finally{
-      loading.dismiss();
+      //loading.dismiss();
     }
   }
 
@@ -81,12 +80,9 @@ export class TabClosetPage implements OnInit {
     } else {
       this.prendasFiltradas = this.filtrarPrendasPorCategoria(categoria);
     }
-    console.log('Prendas filtradas:', this.prendasFiltradas);
   }
 
   filtrarPrendasPorCategoria(categoria: string) {
-    console.log('Filtrando por categoría:', categoria);
-    console.log('Prendas disponibles:', this.prendas);
     const response = this.prendas.filter(prenda => prenda.tipoPrendaId?.categoria === categoria);
     return response
   }

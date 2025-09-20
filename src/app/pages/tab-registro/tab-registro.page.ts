@@ -51,11 +51,11 @@ export class TabRegistroPage implements OnInit {
       return;
     }
 
-    const nombreRegex = /^[A-Za-z]+$/;
-    if (!nombreRegex.test(this.nombre)) {
-      this.uiService.showAlert("El nombre solo debe contener letras");
-      return;
-    }
+    //const nombreRegex = /^[A-Za-z]+$/;
+    //if (!nombreRegex.test(this.nombre)) {
+    //  this.uiService.showAlert("El nombre solo debe contener letras");
+    //  return;
+    //}
 
     const usuario = {
       nombre: this.nombre,

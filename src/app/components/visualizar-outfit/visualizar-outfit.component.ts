@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
   selector: 'app-visualizar-outfit',
   templateUrl: './visualizar-outfit.component.html',
   styleUrls: ['./visualizar-outfit.component.scss'],
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VisualizarOutfitComponent  implements OnInit {
 
