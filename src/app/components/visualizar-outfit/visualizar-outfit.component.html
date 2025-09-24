@@ -1,23 +1,28 @@
-<ion-content class="flex items-center justify-center p-4 bg-white">
+<ion-content class="bg-white">
 
-  <div class="flex flex-col items-center w-full max-w-sm space-y-8">
+  <div class="flex flex-col items-center justify-start w-full p-4 space-y-8 mx-auto max-w-sm">
 
+    <!-- Imagen cargada -->
     <div *ngIf="imageBase64 && !loading"
-      class="w-72 h-96 rounded-3xl shadow-xl flex items-center justify-center border border-gray-100 overflow-hidden">
-      <img [src]="imageBase64" alt="Outfit generado" class="object-cover w-full h-full"  loading="lazy"/>
+      class="w-full aspect-[3/4] rounded-3xl shadow-xl flex items-center justify-center border border-gray-100 overflow-hidden">
+      <img [src]="imageBase64" alt="Outfit generado"
+        class="object-cover w-full h-full" loading="lazy" />
     </div>
 
+    <!-- Imagen vacía -->
     <div *ngIf="!imageBase64 && !loading"
-      class="w-72 h-96 bg-gray-100 rounded-3xl shadow-inner flex flex-col items-center justify-center text-gray-400 space-y-2">
+      class="w-full aspect-[3/4] bg-gray-100 rounded-3xl shadow-inner flex flex-col items-center justify-center text-gray-400 space-y-2">
       <ion-icon name="sparkles-outline" class="text-6xl"></ion-icon>
       <p class="text-center font-semibold px-4">Aquí verás tu outfit generado</p>
     </div>
 
+    <!-- Botón -->
     <div *ngIf="imageBase64 && !loading" class="w-full">
-      <ion-button expand="block" shape="round"  class="shadow-lg" (click)="onAgregarFavorito()">
+      <ion-button expand="block" shape="round" class="shadow-lg" (click)="onAgregarFavorito()">
         <ion-icon slot="start" name="heart-outline"></ion-icon>
         Guardar en favoritos
       </ion-button>
     </div>
+
   </div>
 </ion-content>
