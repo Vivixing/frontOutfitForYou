@@ -13,5 +13,8 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <app-info-perfil (cerrarSesion)="cerrarSesion()"></app-info-perfil>
+  <app-info-perfil 
+  (cerrarSesion)="cerrarSesion()"
+  [nombre]="nombre"
+  ></app-info-perfil>
 </ion-content>
