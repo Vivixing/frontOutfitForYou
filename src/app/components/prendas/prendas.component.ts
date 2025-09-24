@@ -30,6 +30,11 @@ export class PrendasComponent  implements OnInit {
     this.VerPrendaEvent.emit();
   }
 
+  get skeletonArray() {
+    // Si hay prendas filtradas, usa esa cantidad; si no, muestra 4 por defecto
+    return Array(this.prendasFiltradas.length || 4).fill(0);
+  }
+
   isHexColorValido(color: string): boolean {
     // Valida colores hexadecimales de 3 o 6 caracteres (sin incluir el '#')
     const hexPattern = /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;

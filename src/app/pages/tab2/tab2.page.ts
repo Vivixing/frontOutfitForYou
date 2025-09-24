@@ -39,10 +39,8 @@ export class Tab2Page implements OnInit {
     this.isLoading = true;
     //const loading = await this.uiService.presentLoading('Cargando Favoritos...');
     try {
-      this.favoritoService.obtenerFavoritosPorUsuario(this.usuarioId)
-        .then(response => {
-          this.favoritos = response.data.filter((f:any) => f.estado === true);
-        })
+      const response = await this.favoritoService.obtenerFavoritosPorUsuario(this.usuarioId);
+      this.favoritos = response.data.filter((f: any) => f.estado === true);
     } catch (error: any) {
       this.uiService.showAlert(error);
     } finally {

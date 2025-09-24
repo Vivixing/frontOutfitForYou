@@ -36,7 +36,7 @@ export class Tab1Page implements OnInit {
       this.nombre = name;
       this.visualizaciones = visualizaciones.data;
     } catch (error: any) {
-      this.uiService.showAlert(error);
+      //this.uiService.showAlert(error);
     } finally {
       this.isLoading = false;
     }

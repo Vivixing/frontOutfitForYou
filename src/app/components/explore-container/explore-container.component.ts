@@ -19,6 +19,11 @@ export class ExploreContainerComponent implements OnInit {
   ngOnInit() {
   }
 
+  get skeletonArray() {
+    // Si hay prendas filtradas, usa esa cantidad; si no, muestra 4 por defecto
+    return Array(this.favoritos.length || 4).fill(0);
+  }
+
   onEliminar(favoritoId: string) {
     this.eliminarFavorito.emit(favoritoId);
   }

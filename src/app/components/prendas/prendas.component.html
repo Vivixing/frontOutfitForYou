@@ -4,10 +4,6 @@
     Tu Clóset
   </h2>
 
-  <div *ngIf="isLoading" class="grid grid-cols-2 md:grid-cols-3 gap-4 animate-pulse">
-    <div *ngFor="let i of [1,2,3,4]" class="bg-gray-200 h-40 rounded-lg"></div>
-  </div>
-
   @if (prendasFiltradas.length > 0) {
   <div class="flex items-center justify-center gap-6 mb-10">
 
@@ -39,7 +35,13 @@
   }
 
   @if (prendasFiltradas.length > 0) {
-  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+
+  <!-- Loading skeleton -->
+  <div *ngIf="isLoading" class="grid grid-cols-2 md:grid-cols-3 gap-4 animate-pulse">
+    <div *ngFor="let i of skeletonArray" class="bg-gray-200 h-40 rounded-lg"></div>
+  </div>
+
+  <div *ngIf="!isLoading" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
     <div *ngFor="let prenda of prendasFiltradas"
       class="bg-white rounded-2xl shadow-md p-4 relative transform transition-all duration-200 hover:scale-[1.02]">
 
