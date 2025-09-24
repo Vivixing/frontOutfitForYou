@@ -1,13 +1,14 @@
-<ion-content *ngIf="vestuarioSugerido?.data?.length > 0" class="p-4 sm:p-8 font-sans">
-  
-  <div class="max-w-2xl mx-auto space-y-8">
-    
+<ion-content *ngIf="vestuarioSugerido?.data?.length > 0" class="font-sans">
+
+  <div class="max-w-2xl mx-auto space-y-8 px-4 sm:px-6 md:px-8 py-6">
+
     <h1 class="text-2xl sm:text-3xl font-extrabold text-center">
       Tu conjunto ideal
     </h1>
 
-    <div class="flex justify-center gap-4 sm:gap-6">
-      <ion-card class="w-1/2 rounded-2xl shadow-lg border border-gray-100 p-4">
+    <!-- Tarjetas de prendas -->
+    <div class="flex flex-row gap-4 sm:gap-6">
+      <ion-card class="flex-1 min-w-0 rounded-2xl shadow-lg border border-gray-100 p-4">
         <ion-card-header class="text-center text-sm text-[#735E51] font-bold">
           Prenda Superior
         </ion-card-header>
@@ -21,7 +22,7 @@
         </ion-card-content>
       </ion-card>
 
-      <ion-card class="w-1/2 rounded-2xl shadow-lg border border-gray-100 p-4">
+      <ion-card class="flex-1 min-w-0 rounded-2xl shadow-lg border border-gray-100 p-4">
         <ion-card-header class="text-center text-sm font-bold text-[#735E51]">
           Prenda Inferior
         </ion-card-header>
@@ -36,13 +37,16 @@
       </ion-card>
     </div>
 
+    <!-- Tu foto -->
     <div class="mt-8">
       <h2 class="text-lg font-bold mb-1">Tu foto</h2>
-      <p class="text-sm text-gray-500 mb-3">Sube una imagen de cuerpo completo para probarte el vestuario.</p>
-      
+      <p class="text-sm text-gray-500 mb-3">
+        Sube una imagen de cuerpo completo para probarte el vestuario.
+      </p>
+
       <ion-card class="rounded-2xl shadow-lg border border-gray-100 h-64 relative overflow-hidden cursor-pointer" (click)="fileInput.click()">
         <ion-card-content class="flex flex-col items-center justify-center h-full p-0">
-          <img *ngIf="imagenUsuario" [src]="imagenUsuario" alt="Foto cuerpo completo" class="w-full h-full object-cover rounded-2xl"/>
+          <img *ngIf="imagenUsuario" [src]="imagenUsuario" alt="Foto cuerpo completo" class="w-full h-full object-contain rounded-2xl"/>
           
           <ng-container *ngIf="!imagenUsuario">
             <ion-icon name="image-outline" class="text-5xl text-gray-400 mb-2"></ion-icon>
@@ -51,11 +55,11 @@
         </ion-card-content>
 
         <input type="file" accept="image/png, image/jpeg" hidden #fileInput (change)="cargarImagenUsuario($event)"/>
-
       </ion-card>
     </div>
 
-    <ion-button expand="block" shape="round" class="mt-6 shadow-lg" (click)="irAtabVisualizacion()">
+    <!-- Botón -->
+    <ion-button expand="block" shape="round" class="mt-6 shadow-lg" (click)="irAtabVisualizacion()" [disabled]="!imagenUsuario">
       <ion-icon slot="start" name="sparkles-outline"></ion-icon>
       Generar Visualización
     </ion-button>

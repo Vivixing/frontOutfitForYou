@@ -17,7 +17,9 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <app-recomendacion-evento [vestuarioSugerido]="vestuarioSugerido" [imagenUsuario]="imagenUsuario"
+  <app-recomendacion-evento 
+    [vestuarioSugerido]="vestuarioSugerido" 
+    [imagenUsuario]="imagenUsuario"
     (capturarImagenUsuarioEvent)="seleccionarArchivo($event)">
   </app-recomendacion-evento>
 </ion-content>
