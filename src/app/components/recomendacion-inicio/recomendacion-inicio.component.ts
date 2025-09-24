@@ -19,6 +19,12 @@ export class RecomendacionInicioComponent  implements OnInit {
 
   ngOnInit() {
   }
+
+   get skeletonArray() {
+    // Si hay prendas filtradas, usa esa cantidad; si no, muestra 4 por defecto
+    return Array(this.visualizaciones.length || 4).fill(0);
+  }
+
   irAPedirRecomendacion() { 
     this.router.navigate(['/tabs/tabs/tab3'])
   }
