@@ -37,8 +37,28 @@
   @if (prendasFiltradas.length > 0) {
 
   <!-- Loading skeleton -->
-  <div *ngIf="isLoading" class="grid grid-cols-2 md:grid-cols-3 gap-4 animate-pulse">
-    <div *ngFor="let i of skeletonArray" class="bg-gray-200 h-40 rounded-lg"></div>
+  <div *ngIf="isLoading" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 animate-pulse">
+    <div *ngFor="let i of skeletonArray" class="bg-white rounded-2xl shadow-md p-4 relative">
+
+      <!-- Imagen -->
+      <div class="w-full h-32 flex items-center justify-center mb-2">
+        <div class="w-20 h-20 bg-gray-200 rounded-md"></div>
+      </div>
+
+      <!-- Círculo de color (fake) -->
+      <div class="w-5 h-5 rounded-full absolute top-4 right-4 border-2 border-gray-200 bg-gray-200"></div>
+
+      <!-- Nombre -->
+      <div class="pt-2 border-t border-gray-100">
+        <div class="h-4 bg-gray-200 rounded w-3/4 mx-auto"></div>
+      </div>
+
+      <!-- Botones -->
+      <div class="flex justify-center gap-6 mt-4">
+        <div class="w-6 h-6 bg-gray-200 rounded-full"></div>
+        <div class="w-6 h-6 bg-gray-200 rounded-full"></div>
+      </div>
+    </div>
   </div>
 
   <div *ngIf="!isLoading" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
