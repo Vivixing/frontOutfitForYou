@@ -42,3 +42,14 @@
 @import "@ionic/angular/css/palettes/dark.system.css";
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+ion-toolbar {
+  position: relative;
+}
+
+ion-title {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
