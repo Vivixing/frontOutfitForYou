@@ -16,8 +16,10 @@
     </textarea>
 
     <button
-      class="mt-6 w-full bg-[#E39D7C] hover:bg-[#C48465] text-white font-bold py-4 rounded-full transition-colors duration-300 shadow-lg flex items-center justify-center text-base"
-      (click)="generar()">
+      class="mt-6 w-full bg-[#E39D7C] text-white font-bold py-4 rounded-full transition-colors duration-300 shadow-lg flex items-center justify-center text-base 
+         hover:bg-[#C48465] 
+         disabled:bg-[#E39D7C60] disabled:shadow-none disabled:cursor-not-allowed"
+      (click)="generar()" [disabled]="!ocasion || ocasion.trim() === ''">
       <img class="w-6 h-6 mr-2" src="https://img.icons8.com/material-outlined/24/FFFFFF/ai-generated-image--v1.png"
         alt="ai-generated-image" />
       Generar Recomendación
