@@ -31,7 +31,6 @@ export class PrendasComponent  implements OnInit {
   }
 
   get skeletonArray() {
-    // Si hay prendas filtradas, usa esa cantidad; si no, muestra 4 por defecto
     return Array(this.prendasFiltradas.length || 4).fill(0);
   }
 
