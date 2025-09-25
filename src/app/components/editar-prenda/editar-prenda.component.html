@@ -1,7 +1,7 @@
-<ion-content class="flex flex-col items-center justify-center p-4 min-h-full">
+<ion-content class="flex flex-col justify-center items-center min-h-screen p-4">
 
   <!-- Skeleton Loader -->
-  <div *ngIf="!prenda || isLoading" class="w-full max-w-md animate-pulse">
+  <div *ngIf="!prenda || isLoading" class="w-full max-w-md mx-auto animate-pulse">
 
     <div class="flex flex-col items-center p-6 bg-white rounded-3xl shadow-lg mb-8">
       <div class="w-40 h-40 bg-gray-300 rounded-3xl mb-4"></div> <!-- Imagen placeholder -->
@@ -9,19 +9,19 @@
     </div>
 
     <div class="space-y-6">
-      <div class="h-12 bg-gray-300 rounded-md w-full"></div> <!-- Selector placeholder -->
-      <div class="h-12 bg-gray-300 rounded-md w-full"></div> <!-- Input placeholder -->
+      <div class="h-12 bg-gray-300 rounded-md w-full"></div>
+      <div class="h-12 bg-gray-300 rounded-md w-full"></div>
     </div>
 
     <div class="flex w-full justify-between mt-8 space-x-4">
-      <div class="h-12 bg-gray-300 rounded-full w-1/2"></div> <!-- Botón borrar placeholder -->
-      <div class="h-12 bg-gray-300 rounded-full w-1/2"></div> <!-- Botón editar placeholder -->
+      <div class="h-12 bg-gray-300 rounded-full w-1/2"></div>
+      <div class="h-12 bg-gray-300 rounded-full w-1/2"></div>
     </div>
 
   </div>
 
   <!-- Contenido real -->
-  <div *ngIf="prenda && !isLoading" class="w-full max-w-md">
+  <div *ngIf="prenda && !isLoading" class="w-full max-w-md mx-auto">
 
     <div class="flex flex-col items-center p-6 bg-white rounded-3xl shadow-lg mb-8">
       <div class="w-40 h-40 relative">
