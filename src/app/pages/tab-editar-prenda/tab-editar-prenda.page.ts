@@ -16,6 +16,7 @@ export class TabEditarPrendaPage implements OnInit {
   prendaId: string = '';
   prenda : any = {};
   prendaOriginal: any = {}; 
+  isLoading: boolean = false;
 
   constructor(
     private navCtrl: NavController,
@@ -43,7 +44,8 @@ export class TabEditarPrendaPage implements OnInit {
   }
 
   async cargarPrenda(id: string) {
-    const loading = await this.uiService.presentLoading('Cargando información de la prenda...')
+    //const loading = await this.uiService.presentLoading('Cargando información de la prenda...')
+    this.isLoading = true
     try {
       const prenda = await this.prendaService.obtenerPrendasPorIdPrenda(id);
       this.prenda = JSON.parse(JSON.stringify(prenda.data));
@@ -51,7 +53,8 @@ export class TabEditarPrendaPage implements OnInit {
     } catch (error:any) {
       this.uiService.showAlert(error); 
     }finally{
-      loading.dismiss();
+      //loading.dismiss();
+      this.isLoading = false
     }
   }
 
@@ -70,7 +73,7 @@ export class TabEditarPrendaPage implements OnInit {
       return;
     }
 
-    const loading = await this.uiService.presentLoading('Actualizando prenda...');
+    //const loading = await this.uiService.presentLoading('Actualizando prenda...');
     try {
       if (this.prendaOriginal.tipoPrendaId?.categoria !== prendaEditada.tipoPrendaId?.categoria && prendaEditada.tipoPrendaId?.categoria !== null) {
         await this.tipoPrendaService.editarTipoPrenda(prendaEditada.tipoPrendaId.id, { categoria: prendaEditada.tipoPrendaId.categoria });
@@ -83,7 +86,7 @@ export class TabEditarPrendaPage implements OnInit {
     } catch (error:any) {
       this.uiService.showAlert(error);
     } finally{
-      loading.dismiss();
+      //loading.dismiss();
     }
   }
 

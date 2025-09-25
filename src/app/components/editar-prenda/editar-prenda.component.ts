@@ -8,7 +8,8 @@ import { Component, OnInit, Input ,EventEmitter, Output } from '@angular/core';
 })
 export class EditarPrendaComponent  implements OnInit {
 
-  @Input() prenda: any = {};               
+  @Input() prenda: any = {};
+  @Input() isLoading: any ={};               
   @Output() onEditar = new EventEmitter<any>(); 
 
   constructor() { }

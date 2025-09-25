@@ -17,5 +17,9 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <app-editar-prenda [prenda]="prenda" (onEditar)="actualizarPrenda($event)"></app-editar-prenda>
+  <app-editar-prenda 
+  [prenda]="prenda" 
+  [isLoading]="isLoading"
+  (onEditar)="actualizarPrenda($event)">
+</app-editar-prenda>
 </ion-content>
