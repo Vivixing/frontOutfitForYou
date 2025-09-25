@@ -10,16 +10,22 @@ export class RecomendacionService {
 
   constructor(private http:HttpClient) { }
 
-  apiURLPrenda = `${URL_BASE_API_BACK}/recomendation`;
+  apiURLRecomendacion = `${URL_BASE_API_BACK}/recomendation`;
 
-  async recomendacion(recomendacion:any){
+  async recomendacion(usuarioId: string, ocasion:string): Promise<any> {
     try{
-      const response = await this.http.post<any>(`${this.apiURLPrenda}/recomendation_clothe`, recomendacion).toPromise();
-      return response;
+      return await this.http.post<any>(`${this.apiURLRecomendacion}/generate_recomendation/${usuarioId}`, {ocasion}).toPromise();
     }catch (error:any){
       let mensajeError = procesarErrorHttp(error);
-      console.error('Desde el front: Error al generar la recomendación', mensajeError);
-      throw new Error(mensajeError);
+      throw mensajeError;
+    }
+  }
+  async guardarRecomendacion(usuarioId: string, ocasion: string): Promise<any> {
+    try {
+      return await this.http.post<any>(`${this.apiURLRecomendacion}/save_recomendation/${usuarioId}`, {ocasion}).toPromise();
+    } catch (error: any) {
+      let mensajeError = procesarErrorHttp(error);
+      throw mensajeError;
     }
   }
 }

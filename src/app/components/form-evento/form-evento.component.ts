@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-form-evento',
@@ -9,12 +8,21 @@ import { Router } from '@angular/router';
 })
 export class FormEventoComponent  implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor() { }
+
+    @Input() ocasion: string = '';
+    @Input() vestuarioSugerido: any[] = [];
+    @Input() usuarioId: string = '';
+
+    @Output() ocasionChange = new EventEmitter<string>();
+    @Output() generarRecomendacionEvent = new EventEmitter<void>();
+
 
   ngOnInit() {}
 
-  irAtabRecomendacion(){
-    this.router.navigate(['/tabs/tabs/tabRecomendacion']);
+
+  generar() {
+    this.generarRecomendacionEvent.emit();
   }
 
 }

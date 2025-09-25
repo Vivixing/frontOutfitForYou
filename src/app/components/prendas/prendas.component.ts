@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,15 +9,29 @@ import { Router } from '@angular/router';
 })
 export class PrendasComponent  implements OnInit {
 
+  @Input() isLoading: boolean = false;
   @Input() prendas: any[] = [];
+  @Input() prendasFiltradas: any = [];
+
+  @Output() aplicarFiltroCategoriaEvent = new EventEmitter<string>()
   @Output() VerPrendaEvent= new EventEmitter<void>();
+  @Output() eliminarPrendaEvent = new EventEmitter<string>();
 
   constructor(private router:Router) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.verPrenda()
+  }
+
+  ionViewWillEnter() {
+  }
 
   verPrenda(){
     this.VerPrendaEvent.emit();
+  }
+
+  get skeletonArray() {
+    return Array(this.prendasFiltradas.length || 4).fill(0);
   }
 
   isHexColorValido(color: string): boolean {
@@ -26,8 +40,20 @@ export class PrendasComponent  implements OnInit {
     return hexPattern.test(color);
   }
 
-  irAtabEditarPrenda(){
-    this.router.navigate(['/tabs/tabs/tabEditarPrenda'])
+  onAplicarFiltro(categoria?: string) {
+    this.aplicarFiltroCategoriaEvent.emit(categoria);
+  }
+
+  onEliminarPrenda(prendaId: string) {
+    this.eliminarPrendaEvent.emit(prendaId);
+  }
+
+  irAtabEditarPrenda(prendaId: string){
+    this.router.navigate(['/tabs/tabs/tabEditarPrenda'], {queryParams: { id: prendaId } });
+  }
+
+  irAtabAgregarPrenda() { 
+    this.router.navigate(['/tabs/tabs/tabAgregarPrenda'])
   }
 
 }

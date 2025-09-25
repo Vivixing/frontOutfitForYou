@@ -1,32 +1,36 @@
-<ion-content class="bg-white" [fullscreen]="true" >
-  <div class="h-full flex items-center justify-center">
-    <div class="w-[90%] max-w-md text-center space-y-6">
-      <h1 class="text-2xl font-semibold text-[color:--ion-text-color]">Iniciar Sesión</h1>
-      <p class="text-sm text-[color:--ion-text-color]">Inicia sesión para continuar con la app</p>
+<ion-content class="ion-padding" [fullscreen]="true">
+  <div class="h-full flex flex-col justify-center items-center">
+    <div class="w-full max-w-sm text-center space-y-8">
+      <div class="space-y-2">
+        <h1 class="text-3xl font-bold">Iniciar Sesión</h1>
+        <p>Inicia sesión para acceder a tu cuenta.</p>
+      </div>
 
-      <!-- Email -->
-      <ion-item class="rounded-xl bg-[color:--ion-icons-bg-40] px-3 py-1">
-        <ion-input type="email" placeholder="Email" [(ngModel)]="email"></ion-input>
-      </ion-item>
+      <div class="space-y-5">
+        <ion-item class="ion-no-padding" fill="outline" shape="round">
+          <ion-label position="floating">Correo electrónico</ion-label>
+          <ion-input type="email" [(ngModel)]="email" autocomplete="email"></ion-input>
+        </ion-item>
 
-      <!-- Contraseña -->
-      <ion-item class="rounded-xl bg-[color:--ion-icons-bg-40] px-3 py-1">
-        <ion-input [type]="showPassword ? 'text' : 'password'" placeholder="Contraseña" [(ngModel)]="contrasena"></ion-input>
-        <ion-icon slot="end" [name]="showPassword ? 'eye' : 'eye-off'" class="text-[color:--ion-text-bg-40]" (click)="togglePasswordVisibility()"></ion-icon>
-      </ion-item>
+        <ion-item class="ion-no-padding" fill="outline" shape="round">
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="contrasena" autocomplete="current-password"></ion-input>
+          <ion-icon slot="end" [name]="showPassword ? 'eye' : 'eye-off'" class="text-[color:--ion-text-bg-40]" (click)="togglePasswordVisibility()"></ion-icon>
+        </ion-item>
 
-      <!-- Botón de Iniciar Sesión -->
-      <button class="w-full rounded-full bg-[color:--ion-icons-bg-60] text-white py-3 font-semibold shadow-md  disabled:bg-gray-400 disabled:cursor-not-allowed" (click)="login()" [disabled]="!isFormValid()">
-        Iniciar Sesión
-      </button>
+      </div>
 
-      <!-- Enlace de Registro -->
-      <p class="text-sm text-[color:--ion-text-color]">
-        ¿No tienes una cuenta?
-        <a routerLink="/registro" class="text-[color:--ion-color-salmon] font-medium">Regístrate</a>
-      </p>
+      <div class="space-y-4">
+        <ion-button expand="block" shape="round" (click)="login()" [disabled]="!isFormValid()">
+          Iniciar sesión
+        </ion-button>
+        
+        <p class="text-sm">
+          ¿No tienes una cuenta? 
+          <a routerLink="/registro" class="text-[color:--ion-color-salmon] font-medium hover:underline">Regístrate</a>
+        </p>
+      </div>
+      
     </div>
   </div>
-  
 </ion-content>
-

@@ -37,8 +37,7 @@ export class PrendaService {
     }catch(error:any){
 
       let mensajeError = procesarErrorHttp(error);
-      console.error('Desde el front: Error al predecir la prenda', mensajeError);
-      throw new Error(mensajeError);
+      throw mensajeError;
     }
   }
 
@@ -57,10 +56,8 @@ export class PrendaService {
       const response = await this.http.post<any>(`${this.apiURLPrenda}/create`, prenda).toPromise();
       return response;
     }catch(error:any){
-
       let mensajeError = procesarErrorHttp(error);
-      console.error('Desde el front: Error al crear la prenda', mensajeError);
-      throw new Error(mensajeError);
+      throw mensajeError;
     }
   }
 
@@ -69,11 +66,36 @@ export class PrendaService {
       const response = await this.http.get<any>(`${this.apiURLPrenda}/get_by_user/${user_id}`).toPromise();
       return response;
     }catch(error:any){
-
       let mensajeError = procesarErrorHttp(error);
-      console.error('Desde el front: Error al obtener la prenda por id del usuario', mensajeError);
-      throw new Error(mensajeError);
+      throw mensajeError;
+    }
+  }
 
+  async obtenerPrendasPorIdPrenda(id_prenda:string){
+    try{
+      const response = await this.http.get<any>(`${this.apiURLPrenda}/get_by_id/${id_prenda}`).toPromise();
+      return response;
+    }catch(error:any){
+      let mensajeError = procesarErrorHttp(error);
+      throw mensajeError;
+    }
+  }
+
+  async editarPrenda(id:string, update_prenda:any):Promise<any>{
+    try{
+      return await this.http.patch<any>(`${this.apiURLPrenda}/update/${id}`, update_prenda).toPromise();
+    }catch (error: any){
+      let mensajeError = procesarErrorHttp(error);
+      throw mensajeError;
+    }
+  }
+
+  async eliminarPrenda(prenda_id:string):Promise<any>{
+    try{
+      return await this.http.delete<any>(`${this.apiURLPrenda}/delete/${prenda_id}`).toPromise();
+    }catch(error){
+      let mensajeError = procesarErrorHttp(error);
+      throw mensajeError;
     }
   }
 }

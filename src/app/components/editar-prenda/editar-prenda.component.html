@@ -1,34 +1,64 @@
-<ion-content class="flex flex-col items-center justify-start p-4">
-  <!--Contenedor del card-->
-  <div class="flex justify-center items-center mb-4">
-    <ion-card class="rounded-2xl p-4 flex flex-col items-center relative w-48">
-      <!-- Imagen de la prenda -->
-      <img src="https://elaco.vtexassets.com/arquivos/ids/731899/Newfits-AZULINDIGO-N740260-1.jpg?v=638599543335400000" alt="Pantalón" class="w-full mb-4"/>
+<ion-content class="flex flex-col items-center justify-center p-4 min-h-full">
 
-      <!-- Círculo de color arriba a la derecha -->
-      <div class="absolute top-4 right-4 w-6 h-6 rounded-full border-4 border-[#E39D7C] bg-[#0D0B33]"></div>
-    </ion-card>
+  <!-- Skeleton Loader -->
+  <div *ngIf="!prenda || isLoading" class="w-full max-w-md animate-pulse">
+
+    <div class="flex flex-col items-center p-6 bg-white rounded-3xl shadow-lg mb-8">
+      <div class="w-40 h-40 bg-gray-300 rounded-3xl mb-4"></div> <!-- Imagen placeholder -->
+      <div class="w-5 h-5 rounded-full bg-gray-300 absolute top-2 right-2"></div> <!-- Color placeholder -->
+    </div>
+
+    <div class="space-y-6">
+      <div class="h-12 bg-gray-300 rounded-md w-full"></div> <!-- Selector placeholder -->
+      <div class="h-12 bg-gray-300 rounded-md w-full"></div> <!-- Input placeholder -->
+    </div>
+
+    <div class="flex w-full justify-between mt-8 space-x-4">
+      <div class="h-12 bg-gray-300 rounded-full w-1/2"></div> <!-- Botón borrar placeholder -->
+      <div class="h-12 bg-gray-300 rounded-full w-1/2"></div> <!-- Botón editar placeholder -->
+    </div>
+
   </div>
 
-  <!-- Selector categoría -->
-  <ion-select interface="action-sheet" placeholder="Seleccionar categoría" class="w-full border border-[#E39D7C] rounded-md p-2 mb-4">
-    <ion-select-option value="Camisa">Superior</ion-select-option>
-    <ion-select-option value="Pantalón">Inferior</ion-select-option>
-  </ion-select>
+  <!-- Contenido real -->
+  <div *ngIf="prenda && !isLoading" class="w-full max-w-md">
 
-  <!-- Campo nombre -->
-  <ion-input placeholder="Nombre Prenda" class="w-full border border-[#E39D7C] rounded-md mb-4" style="--padding-start: 0.75rem;" ></ion-input>
+    <div class="flex flex-col items-center p-6 bg-white rounded-3xl shadow-lg mb-8">
+      <div class="w-40 h-40 relative">
+        <img *ngIf="prenda?.imagen" [src]="'data:image/jpeg;base64,' + prenda?.imagen" alt="{{ prenda?.nombre }}"
+          class="w-full h-full object-contain" />
+        <div *ngIf="isHexColorValido(prenda?.color)"
+          class="w-5 h-5 rounded-full absolute top-2 right-2 border-2 border-gray-200 shadow-sm"
+          [ngStyle]="{ 'background-color': prenda.color }">
+        </div>
+      </div>
+    </div>
 
-  <!-- Botones -->
-  <div class="flex w-full justify-between">
-    <button class="w-[48%] border border-[#E39D7C] rounded-full py-2 text-[#E39D7C] flex items-center justify-center" (click)="borrarCampos()">
-      <ion-icon class="w-5 h-5 mr-1" name="trash-outline"></ion-icon>
-      Borrar
-    </button>
-    <button class="w-[48%] bg-[#E39D7C] rounded-full py-2 text-white flex items-center justify-center" (click)="editarPrenda()">
-      <ion-icon  class="w-5 h-5 mr-1" name="create-outline"></ion-icon>
-      Editar
-    </button>
+    <div class="space-y-6">
+      <ion-select class="custom-outline" *ngIf="prenda?.tipoPrendaId" [(ngModel)]="prenda.tipoPrendaId.categoria"
+        label="Categoría de la prenda" label-placement="floating" fill="outline">
+        <ion-select-option [value]="null" disabled>Seleccione una categoría</ion-select-option>
+        <ion-select-option value="Superior">Superior</ion-select-option>
+        <ion-select-option value="Inferior">Inferior</ion-select-option>
+      </ion-select>
+
+      <ion-input class="custom-outline" [(ngModel)]="prenda.nombre" label="Nombre de la prenda" label-placement="floating" fill="outline"
+        placeholder="Ingresa el nombre de la prenda">
+      </ion-input>
+    </div>
+
+    <div class="flex w-full justify-between mt-8 space-x-4">
+      <ion-button expand="block" fill="outline" shape="round" (click)="borrarCampos()" class="w-1/2 borrar">
+        <ion-icon slot="start" name="trash-outline"></ion-icon>
+        Borrar
+      </ion-button>
+
+      <ion-button expand="block" shape="round" (click)="editarPrenda()" class="w-1/2 editar">
+        <ion-icon slot="start" name="create-outline"></ion-icon>
+        Editar
+      </ion-button>
+    </div>
+
   </div>
+
 </ion-content>
-

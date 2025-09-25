@@ -1,21 +1,78 @@
-<div class="w-full max-w-xs p-4">
-  <!-- Título principal -->
-  <h1 class="text-2xl font-medium text-brown-700 leading-snug">
+<div class="w-full max-w-lg mx-auto p-4 sm:p-6 lg:p-8">
+
+  <h1 class="text-3xl font-light text-brown-700 leading-snug text-center mb-10">
     Vestirte <strong class="font-bold">nunca</strong><br>
     fue tan <span class="text-[#F4CFA6] font-semibold italic">fácil!</span>
   </h1>
-  <!-- Subtítulo -->
-  <p class="mt-4 text-sm text-brown-500 font-medium">Recomendaciones recientes</p>
-  <!-- Tarjeta de visualización -->
-  <div class="mt-4 grid grid-cols-2 gap-4">
-    <div class="bg-gray-100 rounded-xl p-6 shadow-sm flex flex-col items-center justify-center">
-      <svg class="w-8 h-8 mb-2 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none"
-           viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M3 5h18M3 10h18M3 15h18M3 20h18"/>
-      </svg>
-      <p class="text-xs text-gray-600 text-center">Visualización<br>Vestimenta</p>
+
+  <!-- Loading skeleton -->
+  <div *ngIf="isLoading" class="space-y-6 animate-pulse">
+    <p class="text-sm font-medium text-gray-400 text-center">Visualizaciones recientes</p>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+      <div *ngFor="let i of skeletonArray"
+        class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+
+        <!-- Imagen cuadrada -->
+        <div class="relative w-full aspect-square">
+          <div class="w-full h-full bg-gray-300"></div>
+        </div>
+
+        <!-- Fecha (texto simulado) -->
+        <div class="p-3 text-center">
+          <div class="h-3 bg-gray-300 rounded w-2/3 mx-auto"></div>
+        </div>
+      </div>
     </div>
-    <!-- Puedes duplicar más tarjetas aquí -->
+  </div>
+
+
+  <div class="space-y-6">
+
+    @if (!isLoading && visualizaciones.length === 0) {
+    <div class="flex flex-col items-center justify-center p-8 bg-white rounded-3xl shadow-lg border border-gray-100">
+
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-red-400 mb-6 opacity-75" fill="currentColor"
+        viewBox="0 0 24 24">
+        <path d="M16 3c-1.1 0-2 .9-2 2h-4c0-1.1-.9-2-2-2H4l4 5v13h8V8l4-5h-4z" />
+      </svg>
+
+      <p class="text-center text-lg text-gray-600 font-medium mb-2">
+        ¡Guarda tus recomendaciones!
+      </p>
+      <p class="text-center text-sm text-gray-400">
+        Aún no tienes visualizaciones guardadas. Haz clic abajo para generar una.
+      </p>
+
+      <button (click)="irAPedirRecomendacion()"
+        class="mt-6 w-full py-3 bg-[#F4CFA6] text-brown-700 font-semibold rounded-full shadow-lg transition hover:bg-[#e0b98f] focus:outline-none focus:ring-2 focus:ring-[#e0b98f] focus:ring-offset-2">
+        Generar una recomendación
+      </button>
+    </div>
+    }
+
+    @if (!isLoading && visualizaciones.length > 0) {
+    <div class="space-y-6">
+      <p class="text-sm font-medium text-gray-500 text-center">Visualizaciones recientes</p>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+        <div *ngFor="let visualizacion of visualizaciones"
+          class="bg-gray-50 rounded-2xl shadow-sm border border-gray-200 overflow-hidden transform transition-all duration-200 hover:scale-[1.02] cursor-pointer">
+
+          <div class="relative w-full aspect-square">
+            <img [src]="'data:image/jpeg;base64,' + visualizacion.imagen" alt="visualización"
+              class="w-full h-full object-cover" loading="lazy" />
+          </div>
+
+          <div class="p-3 text-center">
+            <p class="text-[10px] sm:text-xs text-gray-500 font-medium">
+              {{ visualizacion.fechaCreado | date:'mediumDate' }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+
   </div>
 </div>

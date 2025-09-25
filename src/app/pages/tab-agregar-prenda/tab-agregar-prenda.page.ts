@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
-import { AuthService } from 'src/app/services/auth.service';
 import { TipoPrendaService } from 'src/app/services/tipo-prenda.service';
 import { PrendaService } from 'src/app/services/prenda.service';
-import { AlertController } from '@ionic/angular';
+import { AuthService } from 'src/app/services/auth.service';
+import { UiService } from 'src/app/services/ui.service';
+import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
@@ -20,27 +20,16 @@ export class TabAgregarPrendaPage implements OnInit {
   imagen_base64 = '';
   imagenPreview = '';
 
-  constructor(private navCtrl: NavController, private authService:AuthService, private tipoPrendaService: TipoPrendaService, private prendaService:PrendaService, private alertController: AlertController, private router:Router) { }
+  constructor(
+    private navCtrl: NavController, 
+    private authService:AuthService, 
+    private tipoPrendaService: TipoPrendaService, 
+    private prendaService:PrendaService, 
+    private uiService: UiService,
+    private router:Router,
+  ) { }
 
   ngOnInit() {
-  }
-
-  async showSuccess(mensaje: string) {
-    const alert = await this.alertController.create({
-      header: '¡Agregado!',
-      subHeader: mensaje,
-      buttons: ['OK'],
-    });
-    await alert.present();
-  }
-
-  async showAlert(error: string) {
-    const alert = await this.alertController.create({
-      header: 'Error',
-      subHeader: error,
-      buttons: ['OK'],
-    });
-    await alert.present();
   }
 
   goBack() {
@@ -55,46 +44,70 @@ export class TabAgregarPrendaPage implements OnInit {
       
       lector.onload = async () => {
         const base64String = (lector.result as string).split(',')[1];
-        this.imagen_base64 = base64String;
+
         this.imagenPreview = lector.result as string;
 
+        const loading = await this.uiService.presentLoading('Analizando la prenda...'); // ✅ mostrar loading
+
         try{
+
           const response = await this.prendaService.predecirPrenda(base64String);
+
+          // Nombre y color siempre
           this.nombre = response.nombre_prenda_predicha;
-          this.color = response.color;
-          this.showSuccess(`🔍 Prenda detectada: ${response.nombre_prenda_predicha}`)
+          this.color = response.color || "No detectado";
+
+          if(this.nombre !== "No detectada"){
+            this.uiService.showSuccessPredictClothe(`La prenda detectada es: ${response.nombre_prenda_predicha}`)
+          }else{
+            this.uiService.showWarningMessage(`${response.mensaje_usuario}`)
+          }
+
+          // Imagen sin fondo si el backend la generó
+          if (response.imagen_base64) {
+            this.imagen_base64 = response.imagen_base64;
+            this.imagenPreview = `data:image/png;base64,${response.imagen_base64}`;
+          } else {
+            // fallback: imagen original
+            this.imagen_base64 = base64String;
+          }
+
         }catch(error:any){
-          console.error(error);
-          this.showAlert('❌ Error al predecir la prenda');
+          this.uiService.showAlert(error);
+          this.imagen_base64 = base64String;
+        } finally {
+          loading.dismiss();
         }
       };
       lector.readAsDataURL(archivo);
     } else{
-      this.showAlert('❌ Por favor selecciona un archivo de imagen válido')
+      this.uiService.showAlert('Por favor selecciona un archivo de imagen válido')
     }
   }
 
   async registrarPrenda(){
 
     if (!this.nombre ) {
-      this.showAlert('Por favor, complete el campo del nombre de la prenda');
+      this.uiService.showWarningMessage('Por favor, complete el campo del nombre de la prenda');
       return;
     }
 
     if(!this.imagen_base64){
-      this.showAlert('Por favor, complete el campo de la imagen');
+      this.uiService.showWarningMessage('Por favor, complete el campo de la imagen');
       return;
     }
 
     if(!this.categoriaSeleccionada){
-      this.showAlert('Por favor, complete el campo de la categoría seleccionada');
+      this.uiService.showWarningMessage('Por favor, complete el campo de la categoría seleccionada');
       return;
     }
 
     if(!this.color){
-      this.showAlert('Por favor, complete el campo del color');
+      this.uiService.showWarningMessage('Por favor, complete el campo del color');
       return;
     }
+
+    const loading = await this.uiService.presentLoading('Registrando prenda...');
 
     try{
       const usuarioId = this.authService.idUsuarioLogueado();
@@ -110,13 +123,14 @@ export class TabAgregarPrendaPage implements OnInit {
         imagen_base64: this.imagen_base64
       };
 
-      const response = await this.prendaService.registrarPrenda(prenda);
-      this.showSuccess('✅ Prenda registrada correctamente');
+      await this.prendaService.registrarPrenda(prenda);
+      this.uiService.showSuccessAddClothe('Prenda registrada correctamente');
       this.limpiarCampos();
       this.router.navigate(['/tabs/tabs/tabCloset']);
     }catch(error:any){
-      console.error(error);
-      this.showAlert('❌ Error al registrar la prenda');
+      this.uiService.showAlert(error);
+    } finally {
+      loading.dismiss();
     }
   }
 

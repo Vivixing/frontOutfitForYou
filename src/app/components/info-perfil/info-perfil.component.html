@@ -1,32 +1,41 @@
-<!-- Avatar y nombre -->
-<div class="flex flex-col items-center">
-  <div
-    class="w-24 h-24 rounded-full bg-[#FFEADF] flex items-center justify-center mb-3"
-  >
-    <img
-      src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/160px-User-avatar.svg.png"
-      alt="avatar"
-      class="w-20 h-20"
-    />
+<!-- Contenedor general -->
+<div class="flex flex-col items-center px-4 sm:px-6 md:px-8 lg:px-12 py-6">
+
+  <!-- Avatar y nombre -->
+  <div class="flex flex-col items-center mt-6">
+    <div
+      class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full bg-[#FFEADF] shadow-md flex items-center justify-center mb-3">
+      <ion-icon name="person-outline" class="text-5xl sm:text-6xl md:text-7xl text-[#D6A77A]"></ion-icon>
+    </div>
+    <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold text-center break-words">
+      {{ nombre }}
+    </h2>
   </div>
-  <h2 class="text-xl font-light">{{nombre}}</h2>
-</div>
 
-<!-- Opciones -->
-<div class="mt-10 w-full max-w-sm space-y-4">
-  <button class="bg-white rounded-xl shadow p-4 flex items-center justify-between" (click)="irAFavoritos()">
-    <div class="flex items-center space-x-2">
-      <ion-icon class="w-5 h-5 text-[color:--ion-icons-color]" name="heart-outline"></ion-icon>
-      <span>Favoritos</span>
-    </div>
-    <ion-icon class="w-4 h-4 text-gray-400" name="chevron-forward-outline"></ion-icon>
-  </button>
+  <!-- Opciones -->
+  <div class="mt-10 w-full max-w-sm md:max-w-md lg:max-w-lg bg-white rounded-2xl shadow-lg overflow-hidden">
+    <div class="divide-y divide-gray-200">
+      
+      <!-- Botón Favoritos -->
+      <button
+        class="w-full p-4 sm:p-5 flex items-center justify-between hover:bg-gray-50 active:bg-gray-100 transition" (click)="irAFavoritos()">
+        <div class="flex items-center space-x-3 sm:space-x-4">
+          <ion-icon class="w-5 h-5 sm:w-6 sm:h-6 text-[#E39D7C]" name="heart-outline"></ion-icon>
+          <span class="text-base sm:text-lg">Favoritos</span>
+        </div>
+        <ion-icon class="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" name="chevron-forward-outline"></ion-icon>
+      </button>
 
-  <button class="bg-white rounded-xl shadow p-4 flex items-center justify-between" (click)="alCerrarSesion()">
-    <div class="flex items-center space-x-2">
-      <ion-icon class="w-5 h-5 text-[color:--ion-icons-color]" name="log-out-outline"></ion-icon>
-      <span>Cerrar Sesión</span>
+      <!-- Botón Cerrar Sesión -->
+      <button
+        class="w-full p-4 sm:p-5 flex items-center justify-between hover:bg-gray-50 active:bg-gray-100 transition"  (click)="alCerrarSesion()">
+        <div class="flex items-center space-x-3 sm:space-x-4">
+          <ion-icon class="w-5 h-5 sm:w-6 sm:h-6 text-[#E39D7C]" name="log-out-outline"></ion-icon>
+          <span class="text-base sm:text-lg">Cerrar Sesión</span>
+        </div>
+        <ion-icon class="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" name="chevron-forward-outline"></ion-icon>
+      </button>
+
     </div>
-    <ion-icon class="w-4 h-4 text-gray-400" name="chevron-forward-outline"></ion-icon>
-  </button>
+  </div>
 </div>

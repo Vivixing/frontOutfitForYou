@@ -21,8 +21,7 @@ export class UsuarioService {
       return usuario?.data?.nombre || 'Usuario';
     }catch(error:any){
       let mensajeError = procesarErrorHttp(error);
-      console.error('Error al obtener nombre del usuario logueado', mensajeError);
-      return 'Usuario';
+      throw mensajeError;
     }
   }
 
@@ -32,8 +31,7 @@ export class UsuarioService {
       return response;
     }catch (error:any){
       let mensajeError = procesarErrorHttp(error);
-      console.error('Desde el front: Error al cargar usuario por id', mensajeError);
-      throw new Error(mensajeError);
+      throw mensajeError;
     }
   }
 
@@ -43,8 +41,7 @@ export class UsuarioService {
       return response;
     }catch (error:any){
       let mensajeError = procesarErrorHttp(error);
-      console.error('Desde el front: Error al iniciar sesión', mensajeError);
-      throw new Error(mensajeError);
+      throw mensajeError;
     }
   }
 
@@ -54,8 +51,7 @@ export class UsuarioService {
       return response;
     } catch(error:any) {
       let mensajeError = procesarErrorHttp(error);
-      console.error('Desde el front: Error al crear usuario', mensajeError);
-      throw new Error(mensajeError);
+      throw mensajeError;
     }
   }
 

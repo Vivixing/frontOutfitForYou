@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-explore-container',
@@ -6,8 +7,27 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./explore-container.component.scss'],
   standalone: false,
 })
-export class ExploreContainerComponent {
+export class ExploreContainerComponent implements OnInit {
 
-  @Input() name?: string;
+  @Input() favoritos: any[] = [];
+  @Input() isLoading: boolean = false;
+  @Output() eliminarFavorito = new EventEmitter<string>();
 
+  constructor(private router:Router){
+  }
+
+  ngOnInit() {
+  }
+
+  get skeletonArray() {
+    return Array(this.favoritos.length || 4).fill(0);
+  }
+
+  onEliminar(favoritoId: string) {
+    this.eliminarFavorito.emit(favoritoId);
+  }
+
+  irAPedirRecomendacion() { 
+    this.router.navigate(['/tabs/tabs/tab3'])
+  }
 }

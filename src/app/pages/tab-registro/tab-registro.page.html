@@ -1,47 +1,51 @@
 <ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
-    <ion-button slot="start" fill="clear" color="light" class="flex flex-col items-center text-sm" (click)="goBack()">
-      <div class="w-10 h-10 bg-[color:--ion-icons-bg-70] rounded-full flex items-center justify-center">
-        <ion-icon class="w-5 h-5" name="chevron-back-outline"></ion-icon>
-      </div>
-    </ion-button>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="bg-white" [fullscreen]="true" >
-  <div class="h-full flex items-center justify-center">
-    <div class="w-[90%] max-w-md text-center space-y-6">
-      <h1 class="text-2xl font-semibold text-[color:--ion-text-color]">Registrarse</h1>
-      <p class="text-sm text-[color:--ion-text-color]">Completa con tus datos y regístrate</p>
+<ion-content class="ion-padding" [fullscreen]="true">
+  <div class="h-full flex flex-col justify-center items-center">
+    <div class="w-full max-w-sm text-center space-y-8">
 
-      <!-- Nombre -->
-      <ion-item class="rounded-xl bg-[color:--ion-icons-bg-40] px-3 py-1">
-        <ion-input type="text" placeholder="Nombre" [(ngModel)]="nombre"></ion-input>
-      </ion-item>
+      <div class="space-y-2">
+        <h1 class="text-3xl font-bold">Crea tu cuenta</h1>
+        <p>Completa con tus datos y regístrate.</p>
+      </div>
 
-      <!-- Email -->
-      <ion-item class="rounded-xl bg-[color:--ion-icons-bg-40] px-3 py-1">
-        <ion-input type="email" placeholder="Email" [(ngModel)]="email"></ion-input>
-      </ion-item>
+      <div class="space-y-5">
+        <ion-item class="ion-no-padding" fill="outline" shape="round">
+          <ion-label position="floating">Nombre completo</ion-label>
+          <ion-input type="text" [(ngModel)]="nombre"></ion-input>
+        </ion-item>
 
-      <!-- Contraseña -->
-      <ion-item class="rounded-xl bg-[color:--ion-icons-bg-40] px-3 py-1">
-        <ion-input
-          [type]="showPassword ? 'text' : 'password'" placeholder="Contraseña" [(ngModel)]="contrasena"></ion-input>
-        <ion-icon slot="end" [name]="showPassword ? 'eye' : 'eye-off'" class="text-[color:--ion-text-bg-40]" (click)="togglePasswordVisibility()"></ion-icon>
-      </ion-item>
+        <ion-item class="ion-no-padding" fill="outline" shape="round">
+          <ion-label position="floating">Correo electrónico</ion-label>
+          <ion-input type="email" [(ngModel)]="email" autocomplete="email"></ion-input>
+        </ion-item>
 
-      <!-- Botón de Registrarse -->
-      <button class="w-full rounded-full bg-[color:--ion-icons-bg-60] text-white py-3 font-semibold shadow-md disabled:bg-gray-400 disabled:cursor-not-allowed" (click)="crearUsuario()" [disabled]="!isFormValid()">
-        Registrarse
-      </button>
+        <ion-item class="ion-no-padding" fill="outline" shape="round">
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="contrasena" autocomplete="current-password"></ion-input>
+          <ion-icon slot="end" [name]="showPassword ? 'eye' : 'eye-off'" class="text-[color:--ion-text-bg-40]"
+            (click)="togglePasswordVisibility()">
+          </ion-icon>
+        </ion-item>
+      </div>
 
-      <!-- Enlace de Inicio de Sesión -->
-      <p class="text-sm text-[color:--ion-text-color]">
-        ¿Ya tienes una cuenta?
-        <a routerLink="/login" class="text-[color:--ion-color-salmon] font-medium">Inicia Sesión</a>
-      </p>
+      <div class="space-y-4">
+        <ion-button expand="block" shape="round" (click)="crearUsuario()" [disabled]="!isFormValid()">
+          Crear cuenta
+        </ion-button>
+
+        <p class="text-sm">
+          ¿Ya tienes una cuenta?
+          <a routerLink="/login" class="text-[color:--ion-color-salmon] font-medium hover:underline">Iniciar sesión</a>
+        </p>
+      </div>
+
     </div>
   </div>
-  
 </ion-content>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input ,EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-editar-prenda',
@@ -8,18 +8,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditarPrendaComponent  implements OnInit {
 
+  @Input() prenda: any = {};
+  @Input() isLoading: any ={};               
+  @Output() onEditar = new EventEmitter<any>(); 
+
   constructor() { }
 
   ngOnInit() {}
 
   borrarCampos(){
-    //Lógíca de reset para los campos
-    console.log('Borrado campos');
+    if (this.prenda) {
+      this.prenda.nombre = '';
+      if (this.prenda.tipoPrendaId) {
+        this.prenda.tipoPrendaId.categoria = null;
+      }
+    }
   }
 
   editarPrenda(){
-    //Lógica para guardado de prendas
-    console.log('Editada prenda con éxito');
+    console.log('Emitido al padre para actualizar:', this.prenda);
+    this.onEditar.emit(this.prenda);
+  }
+
+  isHexColorValido(color: string): boolean {
+    // Valida colores hexadecimales de 3 o 6 caracteres (sin incluir el '#')
+    const hexPattern = /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+    return hexPattern.test(color);
   }
 
 }

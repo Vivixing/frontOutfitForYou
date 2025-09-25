@@ -1,15 +1,28 @@
 <ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
-    <div class="w-full max-w-xs p-4 bg-white">
+    <div class="w-full p-4">
       <!-- Perfil usuario -->
-      <div class="flex items-center space-x-2 mb-4">
-        <img src="https://img.icons8.com/color/48/user-male-circle--v1.png" alt="avatar" class="w-8 h-8 rounded-full">
-        <span class="bg-[color:--ion-icons-bg-60] text-white text-sm px-3 py-1 rounded-full">{{nombre}}</span>
+      <div class="flex items-center space-x-4 mb-4">
+        <!-- Contenedor del avatar -->
+        <div class="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full bg-[#FFEADF] shadow-md flex items-center justify-center">
+          <ion-icon name="person-outline" class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-[#D6A77A]"></ion-icon>
+        </div>
+
+        <!-- Nombre usuario -->
+        <span class="bg-[color:--ion-icons-bg-60] text-white 
+                 text-sm sm:text-base md:text-lg lg:text-xl 
+                 px-3 sm:px-4 py-1.5 rounded-full truncate 
+                 max-w-[140px] sm:max-w-[180px] md:max-w-[220px]">
+          {{nombre}}
+        </span>
       </div>
     </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <app-recomendacion-inicio></app-recomendacion-inicio>
+  <app-recomendacion-inicio
+    [isLoading]="isLoading"
+    [visualizaciones]="visualizaciones"
+  ></app-recomendacion-inicio>
 </ion-content>

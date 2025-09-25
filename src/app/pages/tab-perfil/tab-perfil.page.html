@@ -1,23 +1,20 @@
 <ion-header [translucent]="true" class="ion-no-border">
+
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button  fill="clear" color="light" (click)="goBack()">
+        <div class="w-10 h-10 bg-[color:--ion-icons-bg-70] rounded-full flex items-center justify-center">
+          <ion-icon class="w-5 h-5" name="chevron-back-outline"></ion-icon>
+        </div>
+      </ion-button>
+    </ion-buttons>
 
-    <ion-button slot="start" fill="clear" color="light" class="flex flex-col items-center text-sm" (click)="goBack()">
-      <div class="w-10 h-10 bg-[color:--ion-icons-bg-70] rounded-full flex items-center justify-center">
-        <ion-icon class="w-5 h-5" name="chevron-back-outline"></ion-icon>
-      </div>
-    </ion-button>
+    <ion-title class="text-lg font-semibold">Perfil</ion-title>
 
-    <ion-title class="ion-text-center">Perfil</ion-title>
-
-    <ion-button slot="end" fill="clear" color="light" class="flex flex-col items-center text-sm">
-      <div class="w-10 h-10 bg-[color:--ion-icons-bg-70] rounded-full flex items-center justify-center">
-        <ion-icon class="w-5-h-5" name="create-outline"></ion-icon>
-      </div>
-    </ion-button>
-   
   </ion-toolbar>
+
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <app-info-perfil [nombre]="nombre" (cerrarSesion)="cerrarSesion()"></app-info-perfil>
+  <app-info-perfil (cerrarSesion)="cerrarSesion()" [nombre]="nombre"></app-info-perfil>
 </ion-content>

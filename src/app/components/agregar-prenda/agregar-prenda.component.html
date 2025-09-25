@@ -1,59 +1,56 @@
-<!-- clothing-form.component.html -->
-<ion-content class="flex flex-col items-center justify-start p-4">
+<ion-content class="flex flex-col items-center justify-center p-4 min-h-full">
 
-  <!-- Área de imagen (clickeable y con preview integrada) -->
-  <div class="w-full h-40 bg-gray-100 relative rounded-md mb-4 overflow-hidden cursor-pointer group"
+  <div class="w-full max-w-md">
+
+    <div
+      class="relative w-full aspect-video bg-gray-100 rounded-3xl mb-6 overflow-hidden cursor-pointer group shadow-inner"
       (click)="inputImagen.click()">
 
-    <!-- Input oculto -->
-    <input #inputImagen type="file" accept="image/*" (change)="capturarImagen($event)" hidden />
+      <input #inputImagen type="file" accept="image/png, image/jpeg" (change)="capturarImagen($event)" hidden />
 
-    <!-- Imagen de previsualización -->
-    <img *ngIf="imagenPreview"
-        [src]="imagenPreview"
-        alt="Previsualización"
-        class="w-full h-full object-contain z-0" />
+      <img *ngIf="imagenPreview" [src]="imagenPreview" alt="Previsualización de la prenda"
+        class="w-full h-full object-contain" />
 
-    <!-- Overlay para ícono y texto si no hay imagen -->
-    <div *ngIf="!imagenPreview" class="absolute inset-0 flex flex-col items-center justify-center text-gray-500 z-10">
-      <ion-icon name="camera-outline" class="text-3xl mb-2"></ion-icon>
-      <p class="text-sm">Capturar imagen de la prenda</p>
+      <div *ngIf="!imagenPreview" class="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
+        <ion-icon name="camera-outline" class="text-5xl mb-2"></ion-icon>
+        <p class="text-sm font-medium">Toca para añadir una imagen</p>
+      </div>
+
+      <div *ngIf="imagenPreview"
+        class="absolute inset-0 bg-black/10 transition-colors duration-200 opacity-0 group-hover:opacity-100 flex items-center justify-center">
+        <p class="text-white text-sm font-semibold p-2 rounded-full">Toca para cambiar la imagen</p>
+      </div>
     </div>
 
-    <!-- Overlay de cambio (opcional) -->
-    <div *ngIf="imagenPreview" class="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-200 z-10 flex items-end justify-end p-2">
-      <button (click)="inputImagen.click(); $event.stopPropagation()" class="text-xs bg-white bg-opacity-90 px-2 py-1 rounded shadow text-gray-700">
-        Cambiar
-      </button>
+    <div class="space-y-6">
+
+      <ion-select class="custom-outline" [(ngModel)]="categoriaSeleccionada"
+        (ngModelChange)="categoriaSeleccionadaChange.emit($event)" label="Categoría" label-placement="floating"
+        fill="outline">
+        <ion-select-option value="Superior">Superior</ion-select-option>
+        <ion-select-option value="Inferior">Inferior</ion-select-option>
+      </ion-select>
+
+      <ion-input class="custom-outline" [(ngModel)]="nombre" (ngModelChange)="nombrePrendaChange.emit($event)"
+        label="Nombre de la prenda" label-placement="floating" fill="outline"
+        placeholder="Ej. Camiseta, Pantalón, etc."></ion-input>
+
+      <ion-input class="custom-outline" [(ngModel)]="color" (ngModelChange)="colorChange.emit($event)"
+        label="Color (código HEX)" label-placement="floating" fill="outline"
+        placeholder="Ej. #FFFFFF o #FF5733"></ion-input>
     </div>
-  </div>
 
-  <!-- Selector categoría -->
-  <ion-select interface="action-sheet" placeholder="Seleccionar categoría" class="w-full border border-[#E39D7C] rounded-md p-2 mb-4" [(ngModel)]="categoriaSeleccionada" (ngModelChange)="categoriaSeleccionadaChange.emit($event)">
-    <ion-select-option>Superior</ion-select-option>
-    <ion-select-option>Inferior</ion-select-option>
-  </ion-select>
+    <div class="flex w-full justify-between mt-8 space-x-4">
+      <ion-button expand="block" fill="outline" shape="round" (click)="borrarCampos()" class="w-1/2 borrar">
+        <ion-icon slot="start" name="trash-outline"></ion-icon>
+        Borrar
+      </ion-button>
 
-  <!-- Campo nombre -->
-  <ion-item class="border border-[#E39D7C] rounded-md mb-2">
-    <ion-input placeholder="Nombre Prenda" [(ngModel)]="nombre" (ngModelChange)="nombrePrendaChange.emit($event)"></ion-input>
-  </ion-item>
+      <ion-button expand="block" shape="round" (click)="guardarPrenda()" class="w-1/2 guardar">
+        <ion-icon slot="start" name="save-outline"></ion-icon>
+        Guardar
+      </ion-button>
+    </div>
 
-  <!-- Campo Color -->
-  <ion-item class="border border-[#E39D7C] rounded-md mb-2">
-    <ion-input placeholder="Color Prenda" [(ngModel)]="color" (ngModelChange)="colorChange.emit($event)"></ion-input>
-  </ion-item>
-
-  <!-- Botones -->
-  <div class="flex w-full justify-between">
-    <button class="w-[48%] border border-[#E39D7C] rounded-full py-2 text-[#E39D7C] flex items-center justify-center" (click)="borrarCampos()">
-      <ion-icon class="w-5 h-5 mr-1" name="trash-outline"></ion-icon>
-      Borrar
-    </button>
-    <button class="w-[48%] bg-[#E39D7C] rounded-full py-2 text-white flex items-center justify-center" (click)="guardarPrenda()">
-      <ion-icon class="w-5 h-5 mr-1" name="save-outline"></ion-icon>
-      Guardar
-    </button>
   </div>
 </ion-content>
-
