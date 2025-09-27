@@ -12,8 +12,7 @@ import { Subscription } from 'rxjs';
 })
 export class Tab1Page implements OnInit {
 
-  isLoading: boolean = true; //Carga inicial
-  isRefreshing: boolean = false; //Carga con visualización existente
+  isLoading: boolean = true;
   nombre: string = '';
   visualizaciones: any[] = [];
   subs: Subscription[] = [];
@@ -41,7 +40,6 @@ export class Tab1Page implements OnInit {
     );
   }
 
-  // Este se ejecuta cada vez que entras a la tab
   ionViewWillEnter() {
     this.refrescarDatos();
   }
@@ -49,9 +47,7 @@ export class Tab1Page implements OnInit {
   async refrescarDatos() {
     this.isLoading = true;
     try {
-      // Esto sí trae los datos reales
       await this.usuarioService.obtenerNombreUsuarioLogueado(this.authService);
-
       await this.visualizacionService.obtenerVisualizacionesPorUsuario(this.authService.idUsuarioLogueado(), true);
     } catch (error) {
       console.error(error);
