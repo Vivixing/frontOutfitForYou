@@ -29,8 +29,8 @@ export class Tab1Page implements OnInit {
     this.isLoading = true;
     try {
       this.nombre = await this.usuarioService.obtenerNombreUsuarioLogueado(this.authService);
-      this.visualizaciones = await this.visualizacionService.obtenerVisualizacionesPorUsuario(this.authService.idUsuarioLogueado());
-      this.visualizaciones = this.visualizaciones.filter(v => v.estado === true);
+      const visualizaciones = await this.visualizacionService.obtenerVisualizacionesPorUsuario(this.authService.idUsuarioLogueado());
+      this.visualizaciones = visualizaciones.data
     } catch (error: any) {
       console.error(error);
     } finally {
