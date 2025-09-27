@@ -3,11 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { URL_BASE_API_BACK } from '../config/ur.api';
 import { procesarErrorHttp } from '../utils/error-handler';
 import { AuthService } from './auth.service';
+import { BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
+
+  private nombreUsuarioSubject = new BehaviorSubject<string>('');
+  public nombreUsuario$ = this.nombreUsuarioSubject.asObservable();
 
   constructor(private http:HttpClient, private authService:AuthService){ }
   apiURLUsuario = `${URL_BASE_API_BACK}/users`;
@@ -18,7 +22,9 @@ export class UsuarioService {
       if (!id) throw new Error('ID no encontrado');
 
       const usuario = await this.obtenerUsuarioId(id);
-      return usuario?.data?.nombre || 'Usuario';
+      const nombre = usuario?.data?.nombre || 'Usuario';
+      this.nombreUsuarioSubject.next(nombre);
+      return nombre;
     }catch(error:any){
       let mensajeError = procesarErrorHttp(error);
       throw mensajeError;
