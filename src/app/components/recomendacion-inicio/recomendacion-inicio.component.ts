@@ -20,7 +20,7 @@ export class RecomendacionInicioComponent  implements OnInit {
   }
 
   get skeletonArray() {
-    return Array(this.visualizaciones.length || 4).fill(0);
+    return Array(this.visualizaciones.length || 3).fill(0);
   }
 
   irAPedirRecomendacion() { 

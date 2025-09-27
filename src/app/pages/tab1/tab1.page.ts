@@ -12,11 +12,11 @@ import { Subscription } from 'rxjs';
 })
 export class Tab1Page implements OnInit {
 
-  isLoading: boolean = true;
+  isLoading: boolean = true; //Carga inicial
+  isRefreshing: boolean = false; //Carga con visualización existente
   nombre: string = '';
   visualizaciones: any[] = [];
-
-  private subs: Subscription[] = [];
+  subs: Subscription[] = [];
 
   constructor(
     private visualizacionService: VisualizacionService,
@@ -39,29 +39,24 @@ export class Tab1Page implements OnInit {
         this.visualizaciones = data;
       })
     );
-    this.cargarNombreUsuario();
-    this.cargaVisualizacionUsuario();
   }
 
-  async cargarNombreUsuario() {
+  // Este se ejecuta cada vez que entras a la tab
+  ionViewWillEnter() {
+    this.refrescarDatos();
+  }
+
+  async refrescarDatos() {
     this.isLoading = true;
     try {
+      // Esto sí trae los datos reales
       await this.usuarioService.obtenerNombreUsuarioLogueado(this.authService);
-    } catch (error: any) {
-      console.error(error);
-    } finally {
-      this.isLoading = false;
-    }
-  }
 
-  async cargaVisualizacionUsuario(){
-    this.isLoading = true;
-    try {
       await this.visualizacionService.obtenerVisualizacionesPorUsuario(this.authService.idUsuarioLogueado(), true);
-    } catch (error: any) {
+    } catch (error) {
       console.error(error);
-    } finally {
-      this.isLoading = false;
+    } finally{
+      this.isLoading= false;
     }
   }
 
