@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URL_BASE_API_BACK } from '../config/ur.api';
 import { procesarErrorHttp } from '../utils/error-handler';
+import { BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,9 @@ export class PrendaService {
   predictedName: string = '';
   imageBase64: string = '';
   color: string = '';
+
+  private prendasSubject = new BehaviorSubject<any[]>([]);
+  public prendas$ = this.prendasSubject.asObservable();
 
   constructor(private http:HttpClient) { }
 
@@ -61,10 +65,11 @@ export class PrendaService {
     }
   }
 
-  async obtenerPrendasPorIdUsuario(user_id:string){
+  async obtenerPrendasPorIdUsuario(user_id:string, reset = true):Promise<void>{
+    if (reset) this.prendasSubject.next([]);
     try{
-      const response = await this.http.get<any>(`${this.apiURLPrenda}/get_by_user/${user_id}`).toPromise();
-      return response;
+      const response:any = await this.http.get<any>(`${this.apiURLPrenda}/get_by_user/${user_id}`).toPromise();
+      this.prendasSubject.next(response.data ?? []);
     }catch(error:any){
       let mensajeError = procesarErrorHttp(error);
       throw mensajeError;

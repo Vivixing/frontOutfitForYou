@@ -4,8 +4,8 @@
     Tu Clóset
   </h2>
 
-  @if (prendasFiltradas.length > 0) {
-  <div class="flex items-center justify-center gap-6 mb-10">
+  <!-- Filtros solo si hay prendas -->
+  <div *ngIf="prendasFiltradas.length > 0" class="flex items-center justify-center gap-6 mb-10">
 
     <div class="flex flex-col items-center cursor-pointer group" (click)="onAplicarFiltro()">
       <div
@@ -32,9 +32,7 @@
       <span class="mt-2 text-sm font-medium text-[#BBAAA0] group-hover:text-[#735E51]">Inferior</span>
     </div>
   </div>
-  }
 
-  @if (prendasFiltradas.length > 0) {
 
   <!-- Loading skeleton -->
   <div *ngIf="isLoading" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 animate-pulse">
@@ -61,7 +59,8 @@
     </div>
   </div>
 
-  <div *ngIf="!isLoading" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+  <!-- Prendas -->
+  <div *ngIf="!isLoading && prendasFiltradas.length > 0" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
     <div *ngFor="let prenda of prendasFiltradas"
       class="bg-white rounded-2xl shadow-md p-4 relative transform transition-all duration-200 hover:scale-[1.02]">
 
@@ -88,10 +87,9 @@
       </div>
     </div>
   </div>
-  }
 
-  @if (!isLoading && prendasFiltradas.length === 0) {
-  <div
+  <!--Mensaje vacío -->
+  <div *ngIf="!isLoading && prendasFiltradas.length === 0"
     class="w-full flex flex-col items-center justify-center p-8 sm:p-12 bg-white rounded-3xl shadow-lg border border-gray-100">
 
     <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-red-400 mb-6" fill="none" viewBox="0 0 24 24"
@@ -119,5 +117,4 @@
       </span>
     </button>
   </div>
-  }
 </div>
