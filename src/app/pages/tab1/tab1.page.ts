@@ -1,7 +1,6 @@
 import { VisualizacionService } from 'src/app/services/visualizacion.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { UiService } from 'src/app/services/ui.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -20,23 +19,20 @@ export class Tab1Page implements OnInit {
     private visualizacionService: VisualizacionService,
     private usuarioService: UsuarioService,
     private authService: AuthService,
-    private uiService: UiService
   ) { }
 
   ngOnInit() {
+    
   }
 
   async ionViewWillEnter() {
     this.isLoading = true;
     try {
-      const [name, visualizaciones] = await Promise.all([
-        this.usuarioService.obtenerNombreUsuarioLogueado(this.authService),
-        this.visualizacionService.obtenerVisualizacionesPorUsuario(this.authService.idUsuarioLogueado())
-      ]);
-      this.nombre = name;
-      this.visualizaciones = visualizaciones.data;
+      this.nombre = await this.usuarioService.obtenerNombreUsuarioLogueado(this.authService);
+      this.visualizaciones = await this.visualizacionService.obtenerVisualizacionesPorUsuario(this.authService.idUsuarioLogueado());
+      this.visualizaciones = this.visualizaciones.filter(v => v.estado === true);
     } catch (error: any) {
-      //this.uiService.showAlert(error);
+      console.error(error);
     } finally {
       this.isLoading = false;
     }

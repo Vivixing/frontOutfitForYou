@@ -50,7 +50,7 @@ export class TabClosetPage implements OnInit {
       this.prendas = response.data.filter((prenda:any )=> prenda.estado === true)
       this.prendasFiltradas = [...this.prendas];
     }catch(error:any){
-      this.uiService.showAlert(error)
+      //this.uiService.showAlert(error)
     }finally{
       //loading.dismiss();
       this.isLoading = false;

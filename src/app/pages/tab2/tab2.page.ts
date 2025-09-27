@@ -42,7 +42,7 @@ export class Tab2Page implements OnInit {
       const response = await this.favoritoService.obtenerFavoritosPorUsuario(this.usuarioId);
       this.favoritos = response.data.filter((f: any) => f.estado === true);
     } catch (error: any) {
-      this.uiService.showAlert(error);
+      //this.uiService.showAlert(error);
     } finally {
       //loading.dismiss();
       this.isLoading = false;
