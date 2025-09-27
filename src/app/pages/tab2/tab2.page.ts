@@ -45,13 +45,10 @@ export class Tab2Page implements OnInit {
 
   async cargarFavoritos() {
     this.isLoading = true;
-    //const loading = await this.uiService.presentLoading('Cargando Favoritos...');
     try {
       await this.favoritoService.obtenerFavoritosPorUsuario(this.usuarioId);
     } catch (error: any) {
-      //this.uiService.showAlert(error);
     } finally {
-      //loading.dismiss();
       this.isLoading = false;
     }
   }
