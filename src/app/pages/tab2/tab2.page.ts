@@ -3,6 +3,7 @@ import { NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { FavoritoService } from 'src/app/services/favorito.service';
 import { UiService } from 'src/app/services/ui.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tab2',
@@ -15,6 +16,7 @@ export class Tab2Page implements OnInit {
   favoritos: any[] = [];
   usuarioId: string = '';
   isLoading: boolean = true;
+  subs: Subscription[] = [];
 
   constructor(
     private navCtrl: NavController,
@@ -24,6 +26,12 @@ export class Tab2Page implements OnInit {
   ) { }
 
   ngOnInit() {
+    // Suscribirse a cambios en los favoritos
+    this.subs.push(
+      this.favoritoService.favoritos$.subscribe(data => {
+        this.favoritos = data.filter((f: any) => f.estado === true);
+      })
+    );
   }
 
   ionViewWillEnter() {
@@ -39,8 +47,7 @@ export class Tab2Page implements OnInit {
     this.isLoading = true;
     //const loading = await this.uiService.presentLoading('Cargando Favoritos...');
     try {
-      const response = await this.favoritoService.obtenerFavoritosPorUsuario(this.usuarioId);
-      this.favoritos = response.data.filter((f: any) => f.estado === true);
+      await this.favoritoService.obtenerFavoritosPorUsuario(this.usuarioId);
     } catch (error: any) {
       //this.uiService.showAlert(error);
     } finally {
