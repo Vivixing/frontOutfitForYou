@@ -1,4 +1,4 @@
-<div class="w-full max-w-lg mx-auto p-4 sm:p-6 lg:p-8">
+<div class="w-full max-w-xl mx-auto p-4 sm:p-6 lg:p-8">
   <h1 class="text-3xl font-light text-brown-700 leading-snug text-center mb-10">
     Vestirte <strong class="font-bold">nunca</strong><br />
     fue tan <span class="text-[#F4CFA6] font-semibold italic">fácil!</span>
@@ -26,27 +26,29 @@
     </div>
   </div>
 
+  <div *ngIf="!isLoading && visualizaciones.length === 0" class="w-full flex flex-col items-center justify-center 
+           p-8 sm:p-12 bg-white rounded-3xl shadow-lg border border-gray-100 
+           text-center max-w-xl mx-auto">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-red-400 mb-6 opacity-75" fill="currentColor"
+      viewBox="0 0 24 24">
+      <path d="M16 3c-1.1 0-2 .9-2 2h-4c0-1.1-.9-2-2-2H4l4 5v13h8V8l4-5h-4z" />
+    </svg>
+
+    <p class="text-center text-lg text-gray-600 font-medium mb-2">
+      ¡Guarda tus recomendaciones!
+    </p>
+    <p class="text-center text-sm text-gray-400">
+      Aún no tienes visualizaciones guardadas. Haz clic abajo para generar
+      una.
+    </p>
+
+    <button (click)="irAPedirRecomendacion()"
+      class="mt-6 w-full py-3 bg-[#F4CFA6] text-brown-700 font-semibold rounded-full shadow-lg transition hover:bg-[#e0b98f] focus:outline-none focus:ring-2 focus:ring-[#e0b98f] focus:ring-offset-2">
+      Generar una recomendación
+    </button>
+  </div>
+
   <div class="space-y-6">
-    <div *ngIf="!isLoading && visualizaciones.length === 0"
-      class="flex flex-col items-center justify-center p-8 bg-white rounded-3xl shadow-lg border border-gray-100">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-red-400 mb-6 opacity-75" fill="currentColor"
-        viewBox="0 0 24 24">
-        <path d="M16 3c-1.1 0-2 .9-2 2h-4c0-1.1-.9-2-2-2H4l4 5v13h8V8l4-5h-4z" />
-      </svg>
-
-      <p class="text-center text-lg text-gray-600 font-medium mb-2">
-        ¡Guarda tus recomendaciones!
-      </p>
-      <p class="text-center text-sm text-gray-400">
-        Aún no tienes visualizaciones guardadas. Haz clic abajo para generar
-        una.
-      </p>
-
-      <button (click)="irAPedirRecomendacion()"
-        class="mt-6 w-full py-3 bg-[#F4CFA6] text-brown-700 font-semibold rounded-full shadow-lg transition hover:bg-[#e0b98f] focus:outline-none focus:ring-2 focus:ring-[#e0b98f] focus:ring-offset-2">
-        Generar una recomendación
-      </button>
-    </div>
 
     <div *ngIf="!isLoading && visualizaciones.length > 0" class="space-y-6">
       <p class="text-sm font-medium text-gray-500 text-center">
