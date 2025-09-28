@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URL_BASE_API_BACK } from '../config/ur.api';
 import { procesarErrorHttp } from '../utils/error-handler';
+import { BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,9 @@ import { procesarErrorHttp } from '../utils/error-handler';
 export class VisualizacionService {
 
   constructor(private http:HttpClient) { }
+
+  private visualizacionesSubject = new BehaviorSubject<any[]>([]);
+  public visualizaciones$ = this.visualizacionesSubject.asObservable();
 
   apiURLVisualizacion = `${URL_BASE_API_BACK}/display`;
 
@@ -39,13 +43,16 @@ export class VisualizacionService {
     }
   }
 
-  async obtenerVisualizacionesPorUsuario(usuarioId:string):Promise<any>{
+  async obtenerVisualizacionesPorUsuario(usuarioId:string, reset = true):Promise<void>{
+    if (reset) this.visualizacionesSubject.next([]);
     try{
-      return await this.http.get(`${this.apiURLVisualizacion}/user/${usuarioId}`).toPromise();
+      const response:any = await this.http.get(`${this.apiURLVisualizacion}/user/${usuarioId}`).toPromise();
+      this.visualizacionesSubject.next(response.data ?? []);
     }catch(error:any){
       let mensajeError = procesarErrorHttp(error);
       throw mensajeError;
     } 
+    
   }
   
 }

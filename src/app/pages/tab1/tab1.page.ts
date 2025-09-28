@@ -1,8 +1,8 @@
 import { VisualizacionService } from 'src/app/services/visualizacion.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { UiService } from 'src/app/services/ui.service';
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tab1',
@@ -15,33 +15,48 @@ export class Tab1Page implements OnInit {
   isLoading: boolean = true;
   nombre: string = '';
   visualizaciones: any[] = [];
+  subs: Subscription[] = [];
 
   constructor(
     private visualizacionService: VisualizacionService,
     private usuarioService: UsuarioService,
     private authService: AuthService,
-    private uiService: UiService
   ) { }
 
   ngOnInit() {
+
+    // Suscribirse a cambios en el nombre del usuario
+    this.subs.push(
+      this.usuarioService.nombreUsuario$.subscribe(nombre => {
+        this.nombre = nombre;
+      })
+    );
+
+    // Suscribirse a cambios en las visualizaciones
+    this.subs.push(
+      this.visualizacionService.visualizaciones$.subscribe(data => {
+        this.visualizaciones = data;
+      })
+    );
   }
 
-  async ionViewWillEnter() {
+  ionViewWillEnter() {
+    this.refrescarDatos();
+  }
+
+  async refrescarDatos() {
     this.isLoading = true;
     try {
-      const [name, visualizaciones] = await Promise.all([
-        this.usuarioService.obtenerNombreUsuarioLogueado(this.authService),
-        this.visualizacionService.obtenerVisualizacionesPorUsuario(this.authService.idUsuarioLogueado())
-      ]);
-      this.nombre = name;
-      this.visualizaciones = visualizaciones.data;
-    } catch (error: any) {
-      //this.uiService.showAlert(error);
-    } finally {
-      this.isLoading = false;
+      await this.usuarioService.obtenerNombreUsuarioLogueado(this.authService);
+      await this.visualizacionService.obtenerVisualizacionesPorUsuario(this.authService.idUsuarioLogueado(), true);
+    } catch (error) {
+      console.error(error);
+    } finally{
+      this.isLoading= false;
     }
   }
 
-
-
+  ngOnDestroy() {
+    this.subs.forEach(sub => sub.unsubscribe());
+  }
 }
