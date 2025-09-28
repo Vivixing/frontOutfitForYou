@@ -1,18 +1,18 @@
-<div class="w-full max-w-lg mx-auto p-4 sm:p-6 lg:p-8">
-
+<div class="w-full max-w-xl mx-auto p-4 sm:p-6 lg:p-8">
   <h1 class="text-3xl font-light text-brown-700 leading-snug text-center mb-10">
-    Vestirte <strong class="font-bold">nunca</strong><br>
+    Vestirte <strong class="font-bold">nunca</strong><br />
     fue tan <span class="text-[#F4CFA6] font-semibold italic">fácil!</span>
   </h1>
 
   <!-- Loading skeleton -->
   <div *ngIf="isLoading" class="space-y-6 animate-pulse">
-    <p class="text-sm font-medium text-gray-400 text-center">Visualizaciones recientes</p>
+    <p class="text-sm font-medium text-gray-400 text-center">
+      Visualizaciones recientes
+    </p>
 
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
       <div *ngFor="let i of skeletonArray"
         class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-
         <!-- Imagen cuadrada -->
         <div class="relative w-full aspect-square">
           <div class="w-full h-full bg-gray-300"></div>
@@ -26,36 +26,38 @@
     </div>
   </div>
 
+  <div *ngIf="!isLoading && visualizaciones.length === 0" class="w-full flex flex-col items-center justify-center 
+           p-8 sm:p-12 bg-white rounded-3xl shadow-lg border border-gray-100 
+           text-center max-w-xl mx-auto">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-red-400 mb-6 opacity-75" fill="currentColor"
+      viewBox="0 0 24 24">
+      <path d="M16 3c-1.1 0-2 .9-2 2h-4c0-1.1-.9-2-2-2H4l4 5v13h8V8l4-5h-4z" />
+    </svg>
+
+    <p class="text-center text-lg text-gray-600 font-medium mb-2">
+      ¡Guarda tus recomendaciones!
+    </p>
+    <p class="text-center text-sm text-gray-400">
+      Aún no tienes visualizaciones guardadas. Haz clic abajo para generar
+      una.
+    </p>
+
+    <button (click)="irAPedirRecomendacion()"
+      class="mt-6 w-full py-3 bg-[#F4CFA6] text-brown-700 font-semibold rounded-full shadow-lg transition hover:bg-[#e0b98f] focus:outline-none focus:ring-2 focus:ring-[#e0b98f] focus:ring-offset-2">
+      Generar una recomendación
+    </button>
+  </div>
 
   <div class="space-y-6">
 
-    <div *ngIf="!isLoading && visualizaciones.length === 0" class="flex flex-col items-center justify-center p-8 bg-white rounded-3xl shadow-lg border border-gray-100">
-
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-red-400 mb-6 opacity-75" fill="currentColor"
-        viewBox="0 0 24 24">
-        <path d="M16 3c-1.1 0-2 .9-2 2h-4c0-1.1-.9-2-2-2H4l4 5v13h8V8l4-5h-4z" />
-      </svg>
-
-      <p class="text-center text-lg text-gray-600 font-medium mb-2">
-        ¡Guarda tus recomendaciones!
-      </p>
-      <p class="text-center text-sm text-gray-400">
-        Aún no tienes visualizaciones guardadas. Haz clic abajo para generar una.
-      </p>
-
-      <button (click)="irAPedirRecomendacion()"
-        class="mt-6 w-full py-3 bg-[#F4CFA6] text-brown-700 font-semibold rounded-full shadow-lg transition hover:bg-[#e0b98f] focus:outline-none focus:ring-2 focus:ring-[#e0b98f] focus:ring-offset-2">
-        Generar una recomendación
-      </button>
-    </div>
-
     <div *ngIf="!isLoading && visualizaciones.length > 0" class="space-y-6">
-      <p class="text-sm font-medium text-gray-500 text-center">Visualizaciones recientes</p>
+      <p class="text-sm font-medium text-gray-500 text-center">
+        Visualizaciones recientes
+      </p>
 
       <div class="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
         <div *ngFor="let visualizacion of visualizaciones"
           class="bg-gray-50 rounded-2xl shadow-sm border border-gray-200 overflow-hidden transform transition-all duration-200 hover:scale-[1.02] cursor-pointer">
-
           <div class="relative w-full aspect-square">
             <img [src]="'data:image/jpeg;base64,' + visualizacion.imagen" alt="visualización"
               class="w-full h-full object-cover" loading="lazy" />
@@ -63,7 +65,7 @@
 
           <div class="p-3 text-center">
             <p class="text-[10px] sm:text-xs text-gray-500 font-medium">
-              {{ visualizacion.fechaCreado | date:'mediumDate' }}
+              {{ visualizacion.fechaCreado | date : "mediumDate" }}
             </p>
           </div>
         </div>

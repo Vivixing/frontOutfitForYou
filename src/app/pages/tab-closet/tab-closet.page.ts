@@ -4,6 +4,7 @@ import { UiService } from 'src/app/services/ui.service';
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tab-closet',
@@ -16,16 +17,25 @@ export class TabClosetPage implements OnInit {
   prendas: any[] = [];
   prendasFiltradas: any[] = [];
   isLoading: boolean = true;
+  subs: Subscription[] = [];
 
   constructor(
-    private router: Router, 
-    private navCtrl: NavController, 
-    private prendaService: PrendaService, 
-    private authService:AuthService,  
-    private uiService: UiService  
+    private router: Router,
+    private navCtrl: NavController,
+    private prendaService: PrendaService,
+    private authService: AuthService,
+    private uiService: UiService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    // Suscribirse a cambios en los favoritos
+    this.subs.push(
+      this.prendaService.prendas$.subscribe(data => {
+        this.prendas = data.filter((f: any) => f.estado === true);
+        this.prendasFiltradas = [...this.prendas];
+      })
+    );
+  }
 
   goBack() {
     this.navCtrl.back();
@@ -35,41 +45,34 @@ export class TabClosetPage implements OnInit {
     this.cargarPrendas();
   }
 
-  async cargarPrendas(){
+  async cargarPrendas() {
 
     this.isLoading = true;
     const usuarioId = this.authService.idUsuarioLogueado();
-    //const loading = await this.uiService.presentLoading('Cargando Prendas...');
 
-    if(!usuarioId) {
+    if (!usuarioId) {
       this.uiService.showAlert('No se encontró el id del usuario')
     }
-
-    try{
-      const response = await this.prendaService.obtenerPrendasPorIdUsuario(usuarioId);
-      this.prendas = response.data.filter((prenda:any )=> prenda.estado === true)
-      this.prendasFiltradas = [...this.prendas];
-    }catch(error:any){
+    try {
+      await this.prendaService.obtenerPrendasPorIdUsuario(usuarioId);
+    } catch (error: any) {
       //this.uiService.showAlert(error)
-    }finally{
+    } finally {
       //loading.dismiss();
       this.isLoading = false;
     }
   }
 
-  async eliminarPrenda(prendaId: string){
+  async eliminarPrenda(prendaId: string) {
     const confirm = await this.uiService.confirmDeleteClothe();
     if (!confirm) return;
-    //const loading = await this.uiService.presentLoading('Eliminando...');
-    try{
+    try {
       await this.prendaService.eliminarPrenda(prendaId);
       this.prendas = this.prendas.filter(prenda => prenda._id !== prendaId);
       this.prendasFiltradas = this.prendasFiltradas.filter(prenda => prenda._id !== prendaId);
       this.uiService.showSuccessDelete('Prenda eliminada correctamente');
-    }catch(error:any){
+    } catch (error: any) {
       this.uiService.showAlert(error);
-    } finally{
-      //loading.dismiss();
     }
   }
 
@@ -87,7 +90,7 @@ export class TabClosetPage implements OnInit {
     return response
   }
 
-  irAtabAgregarPrenda(){
+  irAtabAgregarPrenda() {
     this.router.navigate(['/tabs/tabs/tabAgregarPrenda']);
   }
 }
