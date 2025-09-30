@@ -77,7 +77,6 @@ export class TabClosetPage implements OnInit {
   }
 
   aplicarFiltroCategoria(categoria?: string) {
-    console.log('Categoría seleccionada:', categoria);
     if (!categoria) {
       this.prendasFiltradas = [...this.prendas];
     } else {

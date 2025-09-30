@@ -52,13 +52,13 @@ export class TabAgregarPrendaPage implements OnInit {
 
         this.imagenPreview = lector.result as string;
 
-        const loading = await this.uiService.presentLoading('Analizando la prenda...'); // ✅ mostrar loading
+        const loading = await this.uiService.presentLoading('Analizando la prenda...');
 
         try{
 
           const response = await this.prendaService.predecirPrenda(base64String);
 
-          // Nombre y color siempre
+          // Nombre, color, estilo y ocasiones siempre
           this.nombre = response.nombre_prenda_predicha;
           this.color = response.color || "No detectado";
           this.estilo = response.estilo || '';
@@ -131,7 +131,6 @@ export class TabAgregarPrendaPage implements OnInit {
         estilo: this.estilo,     
         ocasiones: this.ocasiones
       };
-
       await this.prendaService.registrarPrenda(prenda);
       this.uiService.showSuccessAddClothe('Prenda registrada correctamente');
       this.limpiarCampos();

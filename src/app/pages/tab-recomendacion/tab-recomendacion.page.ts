@@ -22,7 +22,6 @@ export class TabRecomendacionPage implements OnInit {
 
   ngOnInit() { 
     this.vestuarioSugerido = this.localStorageService.getItem('vestuarioSugerido');
-    console.log('Vestuario recuperado', this.vestuarioSugerido);
   }
 
 
@@ -36,11 +35,10 @@ export class TabRecomendacionPage implements OnInit {
       const lector = new FileReader();
       lector.onload = () => {
         this.imagenUsuario = lector.result as string;
-        console.log('Imagen cargada:',this.imagenUsuario);
       };
       lector.readAsDataURL(archivo);
     }else{
-      this.uiService.showAlert('❌ Por favor selecciona un archivo de imagen válido')
+      this.uiService.showAlert('Por favor selecciona un archivo de imagen válido')
     }
   }
 

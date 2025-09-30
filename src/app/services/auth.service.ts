@@ -33,7 +33,6 @@ export class AuthService {
     this.usuarioLogueado = true;
     this.idUsuario = idUser;
     await this.storage.set('idUsuario', idUser);
-    console.log('Desde el front: Usuario logueado', this.idUsuario);
   }
 
   logout(): void {

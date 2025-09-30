@@ -30,7 +30,6 @@ export class PrendaService {
     try{
 
       const response = await this.http.post<any>(`${this.apiURLPrenda}/predict_clothe`, formData).toPromise();
-      console.log('Predicción:', response);
 
       this.predictedName = response.nombre_prenda_predicha;
       this.imageBase64 = response.imagen_base64;

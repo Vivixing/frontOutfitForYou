@@ -44,7 +44,6 @@ export class TabEditarPrendaPage implements OnInit {
   }
 
   async cargarPrenda(id: string) {
-    //const loading = await this.uiService.presentLoading('Cargando información de la prenda...')
     this.isLoading = true
     try {
       const prenda = await this.prendaService.obtenerPrendasPorIdPrenda(id);
@@ -53,7 +52,6 @@ export class TabEditarPrendaPage implements OnInit {
     } catch (error:any) {
       this.uiService.showAlert(error); 
     }finally{
-      //loading.dismiss();
       this.isLoading = false
     }
   }
@@ -73,7 +71,6 @@ export class TabEditarPrendaPage implements OnInit {
       return;
     }
 
-    //const loading = await this.uiService.presentLoading('Actualizando prenda...');
     try {
       if (this.prendaOriginal.tipoPrendaId?.categoria !== prendaEditada.tipoPrendaId?.categoria && prendaEditada.tipoPrendaId?.categoria !== null) {
         await this.tipoPrendaService.editarTipoPrenda(prendaEditada.tipoPrendaId.id, { categoria: prendaEditada.tipoPrendaId.categoria });
@@ -85,9 +82,7 @@ export class TabEditarPrendaPage implements OnInit {
 
     } catch (error:any) {
       this.uiService.showAlert(error);
-    } finally{
-      //loading.dismiss();
-    }
+    } 
   }
 
   validarPrenda(prendaEditada: any): string | null {

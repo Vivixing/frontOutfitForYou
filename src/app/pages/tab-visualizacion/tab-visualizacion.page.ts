@@ -3,7 +3,7 @@ import { VisualizacionService } from 'src/app/services/visualizacion.service';
 import { RecomendacionService } from '../../services/recomendacion.service';
 import { FavoritoService } from 'src/app/services/favorito.service';
 import { UiService } from 'src/app/services/ui.service';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -34,7 +34,6 @@ export class TabVisualizacionPage implements OnInit {
     const visualizacionData = this.localStorageService.getItem('visualizacionData');
 
     if (visualizacionData?.persona) {
-      // 👇 Procesar imágenes de manera diferida (no en el hilo inicial)
       setTimeout(() => {
         const personaFile = this.base64ToFile(visualizacionData.persona, "persona.png");
 
@@ -46,10 +45,9 @@ export class TabVisualizacionPage implements OnInit {
         if (personaFile && prendasFiles.length > 0) {
           this.visualizarOutfit(personaFile, prendasFiles);
         }
-      }, 0); // 👈 libera el main thread
+      }, 0);
     }
   }
-
 
   goBack() {
     this.navCtrl.back();
@@ -77,7 +75,6 @@ export class TabVisualizacionPage implements OnInit {
     }
     return new File([u8arr], filename, { type: mime });
   }
-
 
   async agregarAFavoritos() {
 
@@ -126,7 +123,6 @@ export class TabVisualizacionPage implements OnInit {
   async guardarRecomendacion(usuarioId: string, ocasion: string) {
     try {
       const response = await this.recomendacionService.guardarRecomendacion(usuarioId, ocasion);
-      console.log('Respuesta al guardar la recomendación:', response);
       if (response?.data?.vestuarioId) {
         this.localStorageService.setItem('vestuarioId', response.data.vestuarioId);
       } else {

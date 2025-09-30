@@ -39,15 +39,12 @@ export class TipoPrendaService {
       };
       await this.http.post<any>(`${this.apiURLTipoPrenda}/create`, body).toPromise();
       
-      //Obtener todos los tipoPrenda de esa categoría
       const response: any = await this.http.get<any>(`${this.apiURLTipoPrenda}/get_by_category/${categoria}`).toPromise();
 
-      //Buscar el más reciente por fechaCreado
       const lista = response?.data || [];
       const tipoPrendaMasReciente = lista
-        .filter((item: any) => item.fechaCreado) // Asegura que tenga fecha
+        .filter((item: any) => item.fechaCreado)
         .sort((a: any, b: any) => new Date(b.fechaCreado).getTime() - new Date(a.fechaCreado).getTime())[0];
-
       return tipoPrendaMasReciente;
       
     }catch(error:any){
