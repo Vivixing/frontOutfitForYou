@@ -19,6 +19,8 @@ export class TabAgregarPrendaPage implements OnInit {
   color= '';
   imagen_base64 = '';
   imagenPreview = '';
+  estilo = '';
+  ocasiones: string[] = [];
 
   constructor(
     private navCtrl: NavController, 
@@ -37,6 +39,9 @@ export class TabAgregarPrendaPage implements OnInit {
   }
 
   archivoSeleccionado(event:any){
+
+    this.limpiarCampos();
+    
     const archivo: File = event.target.files[0];
 
     if(archivo && archivo.type.startsWith('image/')){
@@ -56,6 +61,8 @@ export class TabAgregarPrendaPage implements OnInit {
           // Nombre y color siempre
           this.nombre = response.nombre_prenda_predicha;
           this.color = response.color || "No detectado";
+          this.estilo = response.estilo || '';
+          this.ocasiones = response.ocasiones || [];
 
           if(this.nombre !== "No detectada"){
             this.uiService.showSuccessPredictClothe(`La prenda detectada es: ${response.nombre_prenda_predicha}`)
@@ -120,7 +127,9 @@ export class TabAgregarPrendaPage implements OnInit {
         tipoPrendaId: tipoPrenda._id,
         nombre: this.nombre,
         color: this.color,
-        imagen_base64: this.imagen_base64
+        imagen_base64: this.imagen_base64,
+        estilo: this.estilo,     
+        ocasiones: this.ocasiones
       };
 
       await this.prendaService.registrarPrenda(prenda);
@@ -140,5 +149,7 @@ export class TabAgregarPrendaPage implements OnInit {
     this.color = '';
     this.imagen_base64 = '';
     this.imagenPreview = '';
+    this.estilo = '';
+    this.ocasiones = [];
   }
 }
