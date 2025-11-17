@@ -1,0 +1,16 @@
+services:
+  # Servicio Nginx standalone (opcional, para servir la app ya construida)
+  nginx:
+    build: .
+    container_name: outfitforyou-nginx
+    ports:
+      - "8088:80"
+    restart: unless-stopped
+    networks:
+      - outfitforyou-network
+
+networks:
+  outfitforyou-network:
+    # El 'driver: bridge' es el valor por defecto y el más común.
+    driver: bridge
+
